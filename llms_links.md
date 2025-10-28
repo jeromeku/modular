@@ -1,0 +1,2123 @@
+# Modular
+
+> Deploy fast and scalable GenAI inference
+
+This file contains links to documentation sections following the llmstxt.org standard.
+
+## Table of Contents
+
+- [Attention mask](https://docs.modular.com/glossary/ai/attention-mask): An attention mask is a mechanism used in the [attention](attention.mdx) layers
+- [Attention](https://docs.modular.com/glossary/ai/attention): A mechanism used in AI models such as [transformers](transformer.mdx) that
+- [Autoregression](https://docs.modular.com/glossary/ai/autoregression): Autoregression is a process by which an AI model iteratively predicts future
+- [Batching](https://docs.modular.com/glossary/ai/batching): Batching is the process of combining multiple inference requests into a single
+- [Context encoding](https://docs.modular.com/glossary/ai/context-encoding): Context encoding (also known as "prefill") is the first phase in a [transformer
+- [Continuous batching](https://docs.modular.com/glossary/ai/continuous-batching): Continuous batching is a [batching](batching.mdx) technique that can
+- [Embedding](https://docs.modular.com/glossary/ai/embedding): An embedding (also known as a "vector embedding") is a numerical representation
+- [Flash attention](https://docs.modular.com/glossary/ai/flash-attention): Flash attention is an optimization technique to compute attention blocks in
+- [AI terms](https://docs.modular.com/glossary/ai): import MDXListing from '@site/src/components/Listing/MDXListing';
+- [KV cache](https://docs.modular.com/glossary/ai/kv-cache): KV (key-value) cache is a memory structure used in
+- [Padding tokens](https://docs.modular.com/glossary/ai/padding-tokens): Padding tokens are extra tokens (usually zeros or special tokens) that are
+- [PagedAttention](https://docs.modular.com/glossary/ai/paged-attention): PagedAttention is a memory management technique designed to improve GPU memory
+- [Prefill](https://docs.modular.com/glossary/ai/prefill): Prefill is the first phase of an AI model's forward pass in which the model
+- [Ragged tensors](https://docs.modular.com/glossary/ai/ragged-tensors): Ragged tensors is a method for batching multiple requests with differing
+- [Self-attention](https://docs.modular.com/glossary/ai/self-attention): Self-attention is a mechanism in a [transformer](transformer.mdx) model that
+- [Tokenization](https://docs.modular.com/glossary/ai/tokenization): Tokenization is the process of dividing the input for an AI model into discrete
+- [Transformer](https://docs.modular.com/glossary/ai/transformer): A transformer is a neural network architecture designed to perform complex
+- [Block index](https://docs.modular.com/glossary/gpu/block-index): In GPU programming, a block index uniquely identifies a subset of
+- [Grid](https://docs.modular.com/glossary/gpu/grid): A grid is the top-level organizational structure of the threads executing a
+- [GPU terms](https://docs.modular.com/glossary/gpu): import MDXListing from '@site/src/components/Listing/MDXListing';
+- [Kernel](https://docs.modular.com/glossary/gpu/kernel): A kernel is a function that runs on a GPU, executing computations in parallel
+- [GPU memory](https://docs.modular.com/glossary/gpu/memory): GPU memory consists of both on-chip memory and external dynamic random-access
+- [Occupancy](https://docs.modular.com/glossary/gpu/occupancy): In GPU programming, occupancy is a measure of the efficiency of the GPU's
+- [Register](https://docs.modular.com/glossary/gpu/register): A GPU register is the fastest form of storage within a [streaming
+- [Streaming multiprocessor](https://docs.modular.com/glossary/gpu/streaming-multiprocessor): The basic building block of a GPU is called a *streaming multiprocessor* (SM)
+- [Thread block](https://docs.modular.com/glossary/gpu/thread-block): In GPU programming, a thread block (also known as *workgroup* on AMD GPUs) is a
+- [Thread index](https://docs.modular.com/glossary/gpu/thread-index): In GPU programming, a thread index uniquely identifies the position of a
+- [Thread](https://docs.modular.com/glossary/gpu/thread): In GPU programming, a thread (also known as a *work unit* on AMD GPUs) is the
+- [Warp](https://docs.modular.com/glossary/gpu/warp): In GPU programming, a warp (also known as a *wavefront* on AMD GPUs) is a subset
+- [Glossary](https://docs.modular.com/glossary): import MDXListing from '@site/src/components/Listing/MDXListing';
+- [Modular Documentation](https://docs.modular.com/index): import Homepage, { GetStartedButton } from '@site/src/components/Homepage';
+- [Disaggregated inference](https://docs.modular.com/mammoth/disaggregated-inference): Use separate prefill and decode nodes to optimize inference workloads
+- [Scale your GenAI deployments](https://docs.modular.com/mammoth): Scale your generative AI workloads with a Kubernetes-native inference cluster
+- [Routing and orchestration](https://docs.modular.com/mammoth/orchestrator): Learn how the orchestrator routes and schedules inference requests in Mammoth
+- [Common](https://docs.modular.com/max/api/c/common): ```c
+- [Context](https://docs.modular.com/max/api/c/context): ```c
+- [C API](https://docs.modular.com/max/api/c): The MAX C API reference.
+- [Model](https://docs.modular.com/max/api/c/model): ```c
+- [Tensor](https://docs.modular.com/max/api/c/tensor): ```c
+- [Types](https://docs.modular.com/max/api/c/types): ```c
+- [Value](https://docs.modular.com/max/api/c/value): ```c
+- [API references](https://docs.modular.com/max/api): REST, Python, and Mojo API libraries.
+- [BackgroundRecorder](https://docs.modular.com/max/api/python/diagnostics/gpu/BackgroundRecorder): Asynchronous GPU metrics collection for MAX Python Diagnostics API.
+- [GPUDiagContext](https://docs.modular.com/max/api/python/diagnostics/gpu/GPUDiagContext): Unified GPU diagnostic context manager for MAX Python Diagnostics API.
+- [GPUStats](https://docs.modular.com/max/api/python/diagnostics/gpu/GPUStats): Comprehensive GPU state snapshot for MAX Python Diagnostics API.
+- [MemoryStats](https://docs.modular.com/max/api/python/diagnostics/gpu/MemoryStats): Detailed GPU memory usage statistics for MAX Python Diagnostics API.
+- [UtilizationStats](https://docs.modular.com/max/api/python/diagnostics/gpu/UtilizationStats): GPU compute and memory utilization metrics for MAX Python Diagnostics API.
+- [gpu](https://docs.modular.com/max/api/python/diagnostics/gpu): The MAX Python GPU Diagnostics API reference.
+- [driver](https://docs.modular.com/max/api/python/driver): Exposes APIs for interacting with hardware, such as allocating tensors on a GPU
+- [dtype](https://docs.modular.com/max/api/python/dtype): The DType class for MAX Python API.
+- [engine](https://docs.modular.com/max/api/python/engine): The MAX Engine Python API reference.
+- [entrypoints](https://docs.modular.com/max/api/python/entrypoints): > class max.entrypoints.llm.LLM(pipeline\_config)
+- [functional](https://docs.modular.com/max/api/python/experimental/functional): Experimental functional tensor operations for MAX.
+- [experimental](https://docs.modular.com/max/api/python/experimental): Experimental MAX Python APIs for advanced users and early adopters.
+- [random](https://docs.modular.com/max/api/python/experimental/random): Experimental random tensor generation utilities for MAX.
+- [tensor](https://docs.modular.com/max/api/python/experimental/tensor): Experimental tensor class with eager execution for MAX.
+- [BufferValue](https://docs.modular.com/max/api/python/graph/BufferValue): The BufferValue class for MAX Python API.
+- [Graph](https://docs.modular.com/max/api/python/graph/Graph): The MAX Graph Python API reference.
+- [KernelLibrary](https://docs.modular.com/max/api/python/graph/KernelLibrary): > class max.graph.KernelLibrary(context, paths=\[])
+- [TensorValue](https://docs.modular.com/max/api/python/graph/TensorValue): The TensorValue class for MAX Python API.
+- [Value](https://docs.modular.com/max/api/python/graph/Value): The Value class for MAX Python API.
+- [Weight](https://docs.modular.com/max/api/python/graph/Weight): The Weight class for MAX Python API.
+- [dim](https://docs.modular.com/max/api/python/graph/dim): <a id="module-max.graph.dim"></a>
+- [graph](https://docs.modular.com/max/api/python/graph): The MAX Python Graph API reference.
+- [ops](https://docs.modular.com/max/api/python/graph/ops): <a id="module-max.graph.ops"></a>
+- [quantization](https://docs.modular.com/max/api/python/graph/quantization): APIs to quantize graph tensors.
+- [shape](https://docs.modular.com/max/api/python/graph/shape): <a id="module-max.graph.shape"></a>
+- [type](https://docs.modular.com/max/api/python/graph/type): <a id="module-max.graph.type"></a>
+- [weights](https://docs.modular.com/max/api/python/graph/weights): Weights are the learned parameters that store a neural networkâ€™s knowledge.
+- [max](https://docs.modular.com/max/api/python): The MAX Python API reference.
+- [interfaces](https://docs.modular.com/max/api/python/interfaces): The MAX Interfaces Python API reference.
+- [attention_with_rope](https://docs.modular.com/max/api/python/nn/attention/attention_with_rope): <a id="module-max.nn.attention.attention_with_rope"></a>
+- [attention](https://docs.modular.com/max/api/python/nn/attention): * [`attention_with_rope`](/max/api/python/nn/attention/attention_with_rope)
+- [interfaces](https://docs.modular.com/max/api/python/nn/attention/interfaces): <a id="module-max.nn.attention.interfaces"></a>
+- [mask_config](https://docs.modular.com/max/api/python/nn/attention/mask_config): <a id="module-max.nn.attention.mask_config"></a>
+- [multi_latent_attention](https://docs.modular.com/max/api/python/nn/attention/multi_latent_attention): <a id="module-max.nn.attention.multi_latent_attention"></a>
+- [multihead_attention](https://docs.modular.com/max/api/python/nn/attention/multihead_attention): <a id="module-max.nn.attention.multihead_attention"></a>
+- [ragged_attention](https://docs.modular.com/max/api/python/nn/attention/ragged_attention): <a id="module-max.nn.attention.ragged_attention"></a>
+- [clamp](https://docs.modular.com/max/api/python/nn/clamp): <a id="module-max.nn.clamp"></a>
+- [comm](https://docs.modular.com/max/api/python/nn/comm): <a id="module-max.nn.comm"></a>
+- [conv](https://docs.modular.com/max/api/python/nn/conv): The `conv` module provides classes for performing convolution operations in
+- [conv_transpose](https://docs.modular.com/max/api/python/nn/conv_transpose): <a id="module-max.nn.conv_transpose"></a>
+- [embedding](https://docs.modular.com/max/api/python/nn/embedding): The `embedding` module provides classes for mapping integer indices (like
+- [float8_config](https://docs.modular.com/max/api/python/nn/float8_config): <a id="module-max.nn.float8_config"></a>
+- [hooks](https://docs.modular.com/max/api/python/nn/hooks): <a id="module-max.nn.hooks"></a>
+- [nn](https://docs.modular.com/max/api/python/nn): The MAX Python Neural Network API reference.
+- [kernels](https://docs.modular.com/max/api/python/nn/kernels): <a id="module-max.nn.kernels"></a>
+- [cache_params](https://docs.modular.com/max/api/python/nn/kv_cache/cache_params): <a id="module-max.nn.kv_cache.cache_params"></a>
+- [kv_cache](https://docs.modular.com/max/api/python/nn/kv_cache): The MAX KV cache API reference.
+- [manager](https://docs.modular.com/max/api/python/nn/kv_cache/manager): <a id="module-max.nn.kv_cache.manager"></a>
+- [layer](https://docs.modular.com/max/api/python/nn/layer): <a id="module-max.nn.layer"></a>
+- [linear](https://docs.modular.com/max/api/python/nn/linear): <a id="module-max.nn.linear"></a>
+- [lora](https://docs.modular.com/max/api/python/nn/lora): <a id="module-max.nn.lora"></a>
+- [module_v3](https://docs.modular.com/max/api/python/nn/module_v3): <a id="module-max.nn.module_v3"></a>
+- [moe](https://docs.modular.com/max/api/python/nn/moe): <a id="module-max.nn.moe"></a>
+- [norm](https://docs.modular.com/max/api/python/nn/norm): <a id="module-max.nn.norm"></a>
+- [rotary_embedding](https://docs.modular.com/max/api/python/nn/rotary_embedding): <a id="module-max.nn.rotary_embedding"></a>
+- [sampling](https://docs.modular.com/max/api/python/nn/sampling): <a id="module-max.nn.sampling"></a>
+- [sequential](https://docs.modular.com/max/api/python/nn/sequential): <a id="module-max.nn.sequential"></a>
+- [distributed_transformer](https://docs.modular.com/max/api/python/nn/transformer/distributed_transformer): <a id="module-max.nn.transformer.distributed_transformer"></a>
+- [transformer](https://docs.modular.com/max/api/python/nn/transformer): * [`distributed_transformer`](/max/api/python/nn/transformer/distributed_transformer)
+- [transformer](https://docs.modular.com/max/api/python/nn/transformer/transformer): <a id="module-max.nn.transformer.transformer"></a>
+- [architectures](https://docs.modular.com/max/api/python/pipelines/architectures): <a id="module-max.pipelines.architectures"></a>
+- [config](https://docs.modular.com/max/api/python/pipelines/config): <a id="module-max.pipelines.lib.config"></a>
+- [core](https://docs.modular.com/max/api/python/pipelines/core): <a id="module-max.pipelines.core"></a>
+- [hf_utils](https://docs.modular.com/max/api/python/pipelines/hf_utils): <a id="module-max.pipelines.lib.hf_utils"></a>
+- [pipelines](https://docs.modular.com/max/api/python/pipelines): The MAX pipelines API reference.
+- [log_probabilities](https://docs.modular.com/max/api/python/pipelines/log_probabilities): <a id="module-max.pipelines.lib.log_probabilities"></a>
+- [pipeline](https://docs.modular.com/max/api/python/pipelines/pipeline): <a id="module-max.pipelines.lib.pipeline"></a>
+- [registry](https://docs.modular.com/max/api/python/pipelines/registry): <a id="module-max.pipelines.lib.registry"></a>
+- [sampling](https://docs.modular.com/max/api/python/pipelines/sampling): <a id="module-max.pipelines.lib.sampling.sampling"></a>
+- [tokenizer](https://docs.modular.com/max/api/python/pipelines/tokenizer): <a id="module-max.pipelines.lib.tokenizer"></a>
+- [torch](https://docs.modular.com/max/api/python/torch): <a id="module-max.torch"></a>
+- [What's new](https://docs.modular.com/max/changelog): Release notes for each version of the Modular platform.
+- [Using AI coding assistants](https://docs.modular.com/max/coding-assistants): Use AI coding assistants with Modular.
+- [MAX container](https://docs.modular.com/max/container): Learn more about the provided Docker container for MAX deployment
+- [Intro to custom ops](https://docs.modular.com/max/custom-ops): Custom operations (custom ops) extend [MAX Graph's
+- [Benchmark MAX on NVIDIA or AMD GPUs](https://docs.modular.com/max/deploy/benchmark): Learn how to use our benchmarking script to measure the performance of MAX.
+- [Developing](https://docs.modular.com/max/develop): import MDXListing from '@site/src/components/Listing/MDXListing';
+- [FAQ](https://docs.modular.com/max/faq): Answers to various questions about the Modular platform.
+- [Quickstart](https://docs.modular.com/max/get-started): A quickstart guide to run a GenAI model locally with Modular.
+- [Quantization](https://docs.modular.com/max/graph/quantize): An introduction to the MAX Graph quantization API.
+- [Embeddings](https://docs.modular.com/max/inference/embeddings): Learn how to use the MAX embeddings endpoint to create embeddings for input text
+- [Image to text](https://docs.modular.com/max/inference/image-to-text): Use the MAX chat completions endpoint with an input image to generate image descriptions
+- [Text to text](https://docs.modular.com/max/inference/text-to-text): Generate text using MAX with OpenAI-compatible chat and completion endpoints
+- [What is Modular](https://docs.modular.com/max/intro): An overview of the Modular platform, what it does, and how to use it.
+- [max CLI](https://docs.modular.com/max/max-cli): An introduction to the `max` command line interface
+- [Model support](https://docs.modular.com/max/model-formats): Learn about the model formats supported by MAX.
+- [Packages](https://docs.modular.com/max/packages): Learn how to install Modular tools, set up your environment, and choose between nightly and stable versions
+- [Function calling and tool use](https://docs.modular.com/max/serve/function-calling): Implement OpenAI-compatible function calling and tool use for agentic GenAI workflows
+- [Serving](https://docs.modular.com/max/serve): import MDXListing from '@site/src/components/Listing/MDXListing';
+- [Using LoRA adapters](https://docs.modular.com/max/serve/lora-adapters): Use LoRA adapters with MAX to serve task-specific, fine-tuned variants of LLMs
+- [Offline inference](https://docs.modular.com/max/serve/offline-inference): import MDXListing from '@site/src/components/Listing/MDXListing';
+- [Prefix caching with PagedAttention](https://docs.modular.com/max/serve/prefix-caching): Use prefix caching and PagedAttention when serving a model with the `max` CLI
+- [Speculative decoding](https://docs.modular.com/max/serve/speculative-decoding): Use speculative decoding to accelerate LLM inference
+- [Structured output](https://docs.modular.com/max/serve/structured-output): Enable structured output with your GenAI deployments for predictable responses
+- [Build an MLP block as a module](https://docs.modular.com/max/tutorials/build-an-mlp-block): An introduction to building custom model architecture with MAX.
+- [Build custom ops for GPUs](https://docs.modular.com/max/tutorials/build-custom-ops): Introducing custom GPU operations in Mojo.
+- [Write hardware-agnostic custom ops for PyTorch](https://docs.modular.com/max/tutorials/custom-kernels-pytorch): Learn to write custom operators in Mojo for PyTorch.
+- [Optimize custom ops for GPUs with Mojo](https://docs.modular.com/max/tutorials/custom-ops-matmul): Learn to use Mojo's GPU programming abstractions to progressively optimize a matrix multiplication
+- [Deploy Llama 3 on GPU-powered Kubernetes clusters](https://docs.modular.com/max/tutorials/deploy-max-serve-on-kubernetes): Create a GPU-enabled Kubernetes cluster with the cloud provider of your choice and deploy Llama 3.1 with MAX using Helm.
+- [Serverless GPU inference on Google Cloud Run](https://docs.modular.com/max/tutorials/deploy-serverless-cloud-run): Learn how to deploy Llama 3 on Google Cloud Run using MAX for serverless GPU inferencing
+- [Get started with MAX graphs](https://docs.modular.com/max/tutorials/get-started-with-max-graph-in-python): Learn how to build a model graph with our Python API for inference with MAX Engine.
+- [Featured tutorials](https://docs.modular.com/max/tutorials): Step-by-step programming guides using MAX APIs.
+- [Bring your own fine-tuned model to MAX pipelines](https://docs.modular.com/max/tutorials/max-pipeline-bring-your-own-model): Learn how to use your fine-tuned model in MAX pipelines.
+- [Deploy Llama 3 on GPU with MAX](https://docs.modular.com/max/tutorials/max-serve-local-to-cloud): Learn how to deploy MAX pipelines to cloud
+- [Serve custom model architectures](https://docs.modular.com/max/tutorials/serve-custom-model-architectures): Learn to create and serve your own MAX model architectures.
+- [Mojo changelog](https://docs.modular.com/mojo/changelog): A history of significant Mojo changes.
+- [mojo build](https://docs.modular.com/mojo/cli/build): Builds an executable from a Mojo file.
+- [mojo debug](https://docs.modular.com/mojo/cli/debug): Launches the Mojo debugger using the command-line interface or an external editor.
+- [mojo demangle](https://docs.modular.com/mojo/cli/demangle): Demangles the given name.
+- [mojo doc](https://docs.modular.com/mojo/cli/doc): Compiles docstrings from a Mojo file.
+- [mojo format](https://docs.modular.com/mojo/cli/format): Formats Mojo source files.
+- [mojo](https://docs.modular.com/mojo/cli): The MojoðŸ”¥ command line interface.
+- [mojo package](https://docs.modular.com/mojo/cli/package): Compiles a Mojo package.
+- [mojo repl](https://docs.modular.com/mojo/cli/repl): Launches the Mojo REPL.
+- [mojo run](https://docs.modular.com/mojo/cli/run): Builds and executes a Mojo file.
+- [mojo test](https://docs.modular.com/mojo/cli/test): DEPRECATED. Execute unit, integration, and documentation tests.
+- [Mojo documentation code examples](https://docs.modular.com/mojo/code/README): This directory includes code examples used in the Mojo Manual and related
+- [Mojo FAQ](https://docs.modular.com/mojo/faq): Answers to questions we expect about Mojo.
+- [allgather](https://docs.modular.com/mojo/kernels/comm/allgather/allgather): Performs all-gather across GPUs with variadic output.
+- [allgather](https://docs.modular.com/mojo/kernels/comm/allgather): Multi-GPU allgather implementation that gathers values from multiple GPUs into an output buffer.
+- [Signal](https://docs.modular.com/mojo/kernels/comm/allreduce/Signal): A synchronization primitive for coordinating GPU thread blocks across multiple devices.
+- [TuningConfigAllreduce](https://docs.modular.com/mojo/kernels/comm/allreduce/TuningConfigAllreduce): Parameters:     ngpus: Number of GPUs for running allreduce.     num_bytes: Total number of input bytes supported by the config.     sm_version: SM...
+- [allreduce](https://docs.modular.com/mojo/kernels/comm/allreduce/allreduce): Per-device allreduce: one instance per GPU builds its own output.
+- [allreduce_2stage_quickreduce](https://docs.modular.com/mojo/kernels/comm/allreduce/allreduce_2stage_quickreduce): Mojo function `comm.allreduce.allreduce_2stage_quickreduce` documentation
+- [allreduce_2stage_quickreduce_tile](https://docs.modular.com/mojo/kernels/comm/allreduce/allreduce_2stage_quickreduce_tile): Mojo function `comm.allreduce.allreduce_2stage_quickreduce_tile` documentation
+- [can_enable_p2p](https://docs.modular.com/mojo/kernels/comm/allreduce/can_enable_p2p): If peer-to-peer access is supported, enables it between all GPU pairs.
+- [get_sm_version](https://docs.modular.com/mojo/kernels/comm/allreduce/get_sm_version): Mojo function `comm.allreduce.get_sm_version` documentation
+- [allreduce](https://docs.modular.com/mojo/kernels/comm/allreduce): Multi-GPU allreduce implementation for efficient tensor reduction across GPUs.
+- [comm](https://docs.modular.com/mojo/kernels/comm): Provides communication primitives for GPUs.
+- [extensibility](https://docs.modular.com/mojo/kernels/extensibility): Includes the tensor package.
+- [tensor](https://docs.modular.com/mojo/kernels/extensibility/tensor): APIs to create and manage tensors in a graph.
+- [IO](https://docs.modular.com/mojo/kernels/extensibility/tensor/io_spec/IO): Mojo struct `tensor.io_spec.IO` documentation
+- [IOSpec](https://docs.modular.com/mojo/kernels/extensibility/tensor/io_spec/IOSpec): Parameter used to encode whether a particular tensor argument to a DPS kernel is an output, input, or mutable input.
+- [io_spec](https://docs.modular.com/mojo/kernels/extensibility/tensor/io_spec): Mojo module tensor.io_spec documentation
+- [ManagedTensorSlice](https://docs.modular.com/mojo/kernels/extensibility/tensor/managed_tensor_slice/ManagedTensorSlice): A view of a tensor that does not own the underlying allocated pointer. When the object lifetime ends it does not free the underlying pointer. Conve...
+- [VariadicTensors](https://docs.modular.com/mojo/kernels/extensibility/tensor/managed_tensor_slice/VariadicTensors): A tuple-like container of tensors representing variadic arguments from the graph compiler.
+- [foreach](https://docs.modular.com/mojo/kernels/extensibility/tensor/managed_tensor_slice/foreach): Apply the function `func` to each element of the tensor slice.
+- [managed_tensor_slice](https://docs.modular.com/mojo/kernels/extensibility/tensor/managed_tensor_slice): Implements the `ManagedTensorSlice` type - a view of a tensor that doesn't own the underlying data. This type is used to build custom graph operati...
+- [rebuild_mix_precision_static_tensor_specs_with_input_lambda](https://docs.modular.com/mojo/kernels/extensibility/tensor/managed_tensor_slice/rebuild_mix_precision_static_tensor_specs_with_input_lambda): Mojo function `tensor.managed_tensor_slice.rebuild_mix_precision_static_tensor_specs_with_input_lambda` documentation
+- [rebuild_static_tensor_specs_with_compute_output_lambda](https://docs.modular.com/mojo/kernels/extensibility/tensor/managed_tensor_slice/rebuild_static_tensor_specs_with_compute_output_lambda): Mojo function `tensor.managed_tensor_slice.rebuild_static_tensor_specs_with_compute_output_lambda` documentation
+- [rebuild_static_tensor_specs_with_input_lambda](https://docs.modular.com/mojo/kernels/extensibility/tensor/managed_tensor_slice/rebuild_static_tensor_specs_with_input_lambda): Mojo function `tensor.managed_tensor_slice.rebuild_static_tensor_specs_with_input_lambda` documentation
+- [rebuild_static_tensor_specs_with_output_lambda](https://docs.modular.com/mojo/kernels/extensibility/tensor/managed_tensor_slice/rebuild_static_tensor_specs_with_output_lambda): Mojo function `tensor.managed_tensor_slice.rebuild_static_tensor_specs_with_output_lambda` documentation
+- [trace_slice_arg](https://docs.modular.com/mojo/kernels/extensibility/tensor/managed_tensor_slice/trace_slice_arg): Helper to stringify the type and shape of a kernel argument for tracing.
+- [ElementwiseBinaryComparisonOp](https://docs.modular.com/mojo/kernels/extensibility/tensor/operation_traits/ElementwiseBinaryComparisonOp): Mojo trait `tensor.operation_traits.ElementwiseBinaryComparisonOp` documentation
+- [ElementwiseBinaryOp](https://docs.modular.com/mojo/kernels/extensibility/tensor/operation_traits/ElementwiseBinaryOp): Mojo trait `tensor.operation_traits.ElementwiseBinaryOp` documentation
+- [ElementwiseUnaryMixedOp](https://docs.modular.com/mojo/kernels/extensibility/tensor/operation_traits/ElementwiseUnaryMixedOp): Mojo trait `tensor.operation_traits.ElementwiseUnaryMixedOp` documentation
+- [ElementwiseUnaryOp](https://docs.modular.com/mojo/kernels/extensibility/tensor/operation_traits/ElementwiseUnaryOp): Mojo trait `tensor.operation_traits.ElementwiseUnaryOp` documentation
+- [operation_traits](https://docs.modular.com/mojo/kernels/extensibility/tensor/operation_traits): Mojo module tensor.operation_traits documentation
+- [RuntimeTensorSpec](https://docs.modular.com/mojo/kernels/extensibility/tensor/tensor_spec/RuntimeTensorSpec): Mojo struct `tensor.tensor_spec.RuntimeTensorSpec` documentation
+- [tensor_spec](https://docs.modular.com/mojo/kernels/extensibility/tensor/tensor_spec): You can import these APIs from the `max.tensor` package. For example:
+- [transitional](https://docs.modular.com/mojo/kernels/extensibility/tensor/transitional): Utilities for transitional period during NDBuffer deprecation.
+- [managed_tensor_slice_to_ndbuffer](https://docs.modular.com/mojo/kernels/extensibility/tensor/transitional/managed_tensor_slice_to_ndbuffer): Mojo function `tensor.transitional.managed_tensor_slice_to_ndbuffer` documentation
+- [kv_cache](https://docs.modular.com/mojo/kernels/kv_cache): Contains implementations for several types of key-value caches.
+- [ContinuousBatchingKVCache](https://docs.modular.com/mojo/kernels/kv_cache/types/ContinuousBatchingKVCache): Wrapper for the ContinuousKVCache of a given layer in the transformer model.
+- [ContinuousBatchingKVCacheCollection](https://docs.modular.com/mojo/kernels/kv_cache/types/ContinuousBatchingKVCacheCollection): This is a "view" of the cache for the given sequences in the batch.
+- [KVCacheStaticParams](https://docs.modular.com/mojo/kernels/kv_cache/types/KVCacheStaticParams): Mojo struct `kv_cache.types.KVCacheStaticParams` documentation
+- [KVCacheT](https://docs.modular.com/mojo/kernels/kv_cache/types/KVCacheT): Trait for different KVCache types and implementations.
+- [KVCollectionT](https://docs.modular.com/mojo/kernels/kv_cache/types/KVCollectionT): Trait for a pair of caches (keys and values).
+- [PagedKVCache](https://docs.modular.com/mojo/kernels/kv_cache/types/PagedKVCache): The PagedKVCache is a wrapper around the KVCache blocks for a given layer. It is used to access the KVCache blocks for PagedAttention.
+- [PagedKVCacheCollection](https://docs.modular.com/mojo/kernels/kv_cache/types/PagedKVCacheCollection): Mojo struct `kv_cache.types.PagedKVCacheCollection` documentation
+- [types](https://docs.modular.com/mojo/kernels/kv_cache/types): This module contains the types for the key-value cache APIs.
+- [Element](https://docs.modular.com/mojo/kernels/layout/element/Element): A wrapper around SIMD types that provides layout-driven vectorized operations.
+- [MemoryElement](https://docs.modular.com/mojo/kernels/layout/element/MemoryElement): Represents data in memory organized according to a specific layout.
+- [element](https://docs.modular.com/mojo/kernels/layout/element): Provides element-based access to memory using layout-driven vectorization.
+- [layout](https://docs.modular.com/mojo/kernels/layout): Provides layout and layout tensor types, which abstract memory layout for multidimensional data.
+- [IntArray](https://docs.modular.com/mojo/kernels/layout/int_tuple/IntArray): A memory-efficient, register-passable array of integers.
+- [IntTuple](https://docs.modular.com/mojo/kernels/layout/int_tuple/IntTuple): A hierarchical, nested tuple of integers with efficient memory management.
+- [abs](https://docs.modular.com/mojo/kernels/layout/int_tuple/abs): Compute the absolute value of each element in an `IntTuple`.
+- [apply](https://docs.modular.com/mojo/kernels/layout/int_tuple/apply): Apply a function to each integer value in an `IntTuple`.
+- [apply_predicate](https://docs.modular.com/mojo/kernels/layout/int_tuple/apply_predicate): Apply a predicate function recursively to two `IntTuple`s.
+- [apply_zip](https://docs.modular.com/mojo/kernels/layout/int_tuple/apply_zip): Apply a function to pairs of elements from two `IntTuple`s.
+- [compact_order](https://docs.modular.com/mojo/kernels/layout/int_tuple/compact_order): Create a compact stride based on shape and order.
+- [compatible](https://docs.modular.com/mojo/kernels/layout/int_tuple/compatible): Test if two shapes are compatible for tensor operations.
+- [congruent](https://docs.modular.com/mojo/kernels/layout/int_tuple/congruent): Test if two `IntTuple`s have the same hierarchical structure.
+- [crd2idx](https://docs.modular.com/mojo/kernels/layout/int_tuple/crd2idx): Map a logical coordinate to a linear index.
+- [depth](https://docs.modular.com/mojo/kernels/layout/int_tuple/depth): Calculates the maximum nesting depth of an `IntTuple`.
+- [fill_like](https://docs.modular.com/mojo/kernels/layout/int_tuple/fill_like): Creates an `IntTuple` with the same structure as the source but filled with a specified value.
+- [flatten](https://docs.modular.com/mojo/kernels/layout/int_tuple/flatten): Flatten a nested `IntTuple` into a single-level `IntTuple`.
+- [idx2crd](https://docs.modular.com/mojo/kernels/layout/int_tuple/idx2crd): Converts a linear index to a coordinate tuple within a given shape.
+- [idx2crd2](https://docs.modular.com/mojo/kernels/layout/int_tuple/idx2crd2): Convert a linear index to coordinates.
+- [int_tuple](https://docs.modular.com/mojo/kernels/layout/int_tuple): Hierarchical integer tuple data structures for high-performance tensor operations.
+- [inner_product](https://docs.modular.com/mojo/kernels/layout/int_tuple/inner_product): Compute the inner product of two `IntTuple`s.
+- [is_flat](https://docs.modular.com/mojo/kernels/layout/int_tuple/is_flat): Check if an `IntTuple` is flat.
+- [is_int](https://docs.modular.com/mojo/kernels/layout/int_tuple/is_int): Check if an `IntTuple` represents a single integer value.
+- [is_tuple](https://docs.modular.com/mojo/kernels/layout/int_tuple/is_tuple): Check if an `IntTuple` represents a nested tuple.
+- [mul](https://docs.modular.com/mojo/kernels/layout/int_tuple/mul): Multiply each element in an `IntTuple` by a scalar value.
+- [prefix_product](https://docs.modular.com/mojo/kernels/layout/int_tuple/prefix_product): Compute the exclusive prefix product of an `IntTuple`.
+- [product](https://docs.modular.com/mojo/kernels/layout/int_tuple/product): Calculate the product of all values in an `IntTuple`.
+- [product_each](https://docs.modular.com/mojo/kernels/layout/int_tuple/product_each): Compute the product of elements in each sub-tuple of an `IntTuple`.
+- [propagate_unknown](https://docs.modular.com/mojo/kernels/layout/int_tuple/propagate_unknown): Propagates unknown dimensions from the target `IntTuple` to the source `IntTuple`.
+- [reduce](https://docs.modular.com/mojo/kernels/layout/int_tuple/reduce): Apply a reduction function to an `IntTuple` with an initial value.
+- [reverse](https://docs.modular.com/mojo/kernels/layout/int_tuple/reverse): Reverses the order of elements in an `IntTuple`, recursively.
+- [shallow_apply](https://docs.modular.com/mojo/kernels/layout/int_tuple/shallow_apply): Apply a function to each top-level element of an `IntTuple`.
+- [shape_div](https://docs.modular.com/mojo/kernels/layout/int_tuple/shape_div): Performs division operation between shape tuples.
+- [signum](https://docs.modular.com/mojo/kernels/layout/int_tuple/signum): Calculate the sign of an integer.
+- [size](https://docs.modular.com/mojo/kernels/layout/int_tuple/size): Calculate the total size (product of all elements) of an `IntTuple`.
+- [sorted](https://docs.modular.com/mojo/kernels/layout/int_tuple/sorted): Sort an IntTuple using the provided comparison function.
+- [sum](https://docs.modular.com/mojo/kernels/layout/int_tuple/sum): Calculate the sum of all values in an `IntTuple`.
+- [to_index_list](https://docs.modular.com/mojo/kernels/layout/int_tuple/to_index_list): Converts an IntTuple to a flattened IndexList with the same values.
+- [to_nest](https://docs.modular.com/mojo/kernels/layout/int_tuple/to_nest): Nests a flat `IntTuple` according to the structure of a nested `IntTuple`.
+- [to_unknown](https://docs.modular.com/mojo/kernels/layout/int_tuple/to_unknown): Create an `IntTuple` with the same structure but filled with `UNKNOWN_VALUE`.
+- [tuple_max](https://docs.modular.com/mojo/kernels/layout/int_tuple/tuple_max): Calculate the maximum value in an `IntTuple`.
+- [tuple_min](https://docs.modular.com/mojo/kernels/layout/int_tuple/tuple_min): Compute the element-wise minimum of two `IntTuple`s.
+- [weakly_compatible](https://docs.modular.com/mojo/kernels/layout/int_tuple/weakly_compatible): Test if shape A is weakly compatible with shape B.
+- [weakly_congruent](https://docs.modular.com/mojo/kernels/layout/int_tuple/weakly_congruent): Test if two IntTuples have similar hierarchical structures.
+- [Layout](https://docs.modular.com/mojo/kernels/layout/layout/Layout): Represents a memory layout for multi-dimensional data.
+- [LayoutTrait](https://docs.modular.com/mojo/kernels/layout/layout/LayoutTrait): Defines the interface for mapping between logical coordinates and memory indices.
+- [MakeLayoutList](https://docs.modular.com/mojo/kernels/layout/layout/MakeLayoutList): Creates a list containing two layouts.
+- [MakeTileLayoutList](https://docs.modular.com/mojo/kernels/layout/layout/MakeTileLayoutList): Creates a list of layouts for tiling operations.
+- [apply_tiler](https://docs.modular.com/mojo/kernels/layout/layout/apply_tiler): Applies a layout transformation function to each element of a layout with a tiler.
+- [blocked_product](https://docs.modular.com/mojo/kernels/layout/layout/blocked_product): Creates a blocked layout by combining two layouts.
+- [coalesce](https://docs.modular.com/mojo/kernels/layout/layout/coalesce): Simplifies a layout by combining dimensions with contiguous strides.
+- [complement](https://docs.modular.com/mojo/kernels/layout/layout/complement): Computes the complement layout for a given layout.
+- [composition](https://docs.modular.com/mojo/kernels/layout/layout/composition): Composes two layouts to create a new layout.
+- [cosize](https://docs.modular.com/mojo/kernels/layout/layout/cosize): Returns the size of the memory region spanned by the layout.
+- [downcast](https://docs.modular.com/mojo/kernels/layout/layout/downcast): Splits elements in a layout to create a finer layout without changing the total number of elements so that the alignment is preserved.
+- [expand_modes_alike](https://docs.modular.com/mojo/kernels/layout/layout/expand_modes_alike): Aligns two shape-stride pairs to have the same hierarchical structure.
+- [expand_strides](https://docs.modular.com/mojo/kernels/layout/layout/expand_strides): Expands a scalar stride into a stride tuple matching a shape tuple.
+- [format_layout](https://docs.modular.com/mojo/kernels/layout/layout/format_layout): Formats a 2D layout as a table and writes it to the specified writer.
+- [hierarchical_unzip](https://docs.modular.com/mojo/kernels/layout/layout/hierarchical_unzip): Hierarchically unzips a layout according to a list of layouts.
+- [layout](https://docs.modular.com/mojo/kernels/layout/layout): Provides a high-performance tensor layout system for memory mapping and indexing.
+- [is_contiguous_dim](https://docs.modular.com/mojo/kernels/layout/layout/is_contiguous_dim): Checks if a flat layout is contiguous in a specific dimension.
+- [is_row_major](https://docs.modular.com/mojo/kernels/layout/layout/is_row_major): Checks if a layout has row-major ordering for the specified rank.
+- [logical_divide](https://docs.modular.com/mojo/kernels/layout/layout/logical_divide): Divides a layout into blocks according to another layout.
+- [logical_product](https://docs.modular.com/mojo/kernels/layout/layout/logical_product): Creates a product of two layouts.
+- [make_layout](https://docs.modular.com/mojo/kernels/layout/layout/make_layout): Creates a composite layout by concatenating multiple layouts.
+- [make_ordered_layout](https://docs.modular.com/mojo/kernels/layout/layout/make_ordered_layout): Creates a layout with strides ordered according to a specified traversal order.
+- [print_layout](https://docs.modular.com/mojo/kernels/layout/layout/print_layout): Prints a 2D layout to the standard output.
+- [right_inverse](https://docs.modular.com/mojo/kernels/layout/layout/right_inverse): Creates a right inverse of a layout.
+- [size](https://docs.modular.com/mojo/kernels/layout/layout/size): Returns the total number of elements in the layout's domain.
+- [sublayout](https://docs.modular.com/mojo/kernels/layout/layout/sublayout): Creates a sublayout by selecting specific dimensions from a layout.
+- [tile_to_shape](https://docs.modular.com/mojo/kernels/layout/layout/tile_to_shape): Creates a layout by tiling a base layout to match a target shape.
+- [upcast](https://docs.modular.com/mojo/kernels/layout/layout/upcast): Fuses consecutive elements in a layout to create a coarser layout.
+- [zip_modes](https://docs.modular.com/mojo/kernels/layout/layout/zip_modes): Combines corresponding modes from two layouts.
+- [zipped_divide](https://docs.modular.com/mojo/kernels/layout/layout/zipped_divide): Divides a layout into blocks according to another layout.
+- [LayoutTensor](https://docs.modular.com/mojo/kernels/layout/layout_tensor/LayoutTensor): A high-performance tensor with explicit memory layout and hardware-optimized access patterns.
+- [LayoutTensorIter](https://docs.modular.com/mojo/kernels/layout/layout_tensor/LayoutTensorIter): Iterator for traversing a memory buffer with a specific layout.
+- [ThreadScope](https://docs.modular.com/mojo/kernels/layout/layout_tensor/ThreadScope): Represents the scope of thread operations in GPU programming.
+- [copy_dram_to_local](https://docs.modular.com/mojo/kernels/layout/layout_tensor/copy_dram_to_local): Efficiently copy data from global memory (DRAM) to registers for AMD GPUs.
+- [copy_dram_to_sram](https://docs.modular.com/mojo/kernels/layout/layout_tensor/copy_dram_to_sram): Synchronously copy data from DRAM (global memory) to SRAM (shared memory) in a GPU context.
+- [copy_dram_to_sram_async](https://docs.modular.com/mojo/kernels/layout/layout_tensor/copy_dram_to_sram_async): Asynchronously copy data from DRAM (global memory) to SRAM (shared memory) in a GPU context.
+- [copy_local_to_dram](https://docs.modular.com/mojo/kernels/layout/layout_tensor/copy_local_to_dram): Efficiently copy data from registers (LOCAL) to global memory (DRAM).
+- [copy_local_to_local](https://docs.modular.com/mojo/kernels/layout/layout_tensor/copy_local_to_local): Synchronously copy data between local memory (register) tensors with type conversion.
+- [copy_local_to_shared](https://docs.modular.com/mojo/kernels/layout/layout_tensor/copy_local_to_shared): Synchronously copy data from local memory (registers) to SRAM (shared memory).
+- [copy_sram_to_dram](https://docs.modular.com/mojo/kernels/layout/layout_tensor/copy_sram_to_dram): Synchronously copy data from SRAM (shared memory) to DRAM (global memory).
+- [copy_sram_to_local](https://docs.modular.com/mojo/kernels/layout/layout_tensor/copy_sram_to_local): Synchronously copy data from SRAM (shared memory) to local memory.
+- [cp_async_k_major](https://docs.modular.com/mojo/kernels/layout/layout_tensor/cp_async_k_major): Asynchronously copy data from DRAM to SRAM using TMA (Tensor Memory Accelerator) with K-major layout.
+- [cp_async_mn_major](https://docs.modular.com/mojo/kernels/layout/layout_tensor/cp_async_mn_major): Asynchronously copy data from DRAM to SRAM using TMA (Tensor Memory Accelerator) with MN-major layout.
+- [layout_tensor](https://docs.modular.com/mojo/kernels/layout/layout_tensor): Provides the `LayoutTensor` type for representing multidimensional data.
+- [stack_allocation_like](https://docs.modular.com/mojo/kernels/layout/layout_tensor/stack_allocation_like): Create a stack-allocated tensor with the same layout as an existing tensor.
+- [math](https://docs.modular.com/mojo/kernels/layout/math): Implements math methods that work on layout tensors.
+- [max](https://docs.modular.com/mojo/kernels/layout/math/max): Computes maximum reduction along specified axis.
+- [mean](https://docs.modular.com/mojo/kernels/layout/math/mean): Computes the mean value of the elements in a buffer.
+- [outer_product_acc](https://docs.modular.com/mojo/kernels/layout/math/outer_product_acc): Updates result tensor with the outer product of two vectors.
+- [sum](https://docs.modular.com/mojo/kernels/layout/math/sum): Computes sum reduction along specified axis.
+- [variance](https://docs.modular.com/mojo/kernels/layout/math/variance): Computes the variance value of the elements in a buffer.
+- [RuntimeLayout](https://docs.modular.com/mojo/kernels/layout/runtime_layout/RuntimeLayout): A runtime-configurable layout that uses `RuntimeTuple` for storage.
+- [coalesce](https://docs.modular.com/mojo/kernels/layout/runtime_layout/coalesce): Coalesce adjacent dimensions in a runtime layout when possible.
+- [runtime_layout](https://docs.modular.com/mojo/kernels/layout/runtime_layout): Provides the `RuntimeLayout` type and functions for working with it. You can use `RuntimeLayout` to define a layout where the dimensions are not kn...
+- [make_layout](https://docs.modular.com/mojo/kernels/layout/runtime_layout/make_layout): Combine two runtime layouts into a single composite layout.
+- [RuntimeTuple](https://docs.modular.com/mojo/kernels/layout/runtime_tuple/RuntimeTuple): A struct representing tuple-like data with compile-time and runtime elements. RuntimeTuple combines static (compile-time) and dynamic (runtime) han...
+- [concat](https://docs.modular.com/mojo/kernels/layout/runtime_tuple/concat): Concatenates two `IntTuple` instances into a single `IntTuple`.
+- [crd2idx](https://docs.modular.com/mojo/kernels/layout/runtime_tuple/crd2idx): Converts multi-dimensional coordinates to a linear index.
+- [idx2crd](https://docs.modular.com/mojo/kernels/layout/runtime_tuple/idx2crd): Converts a linear index to multi-dimensional coordinates. This function transforms a flat index into coordinate values based on the provided shape ...
+- [runtime_tuple](https://docs.modular.com/mojo/kernels/layout/runtime_tuple): Provides the `RuntimeTuple` data structure and related utility functions for handling tuple-like data with both compile-time and runtime elements. ...
+- [is_int](https://docs.modular.com/mojo/kernels/layout/runtime_tuple/is_int): Determines if a `RuntimeTuple` represents a scalar integer value.
+- [is_tuple](https://docs.modular.com/mojo/kernels/layout/runtime_tuple/is_tuple): Determines if a `RuntimeTuple` represents a tuple rather than a scalar value.
+- [prefix_product](https://docs.modular.com/mojo/kernels/layout/runtime_tuple/prefix_product): Computes the prefix products of elements in the `RuntimeTuple`.
+- [product](https://docs.modular.com/mojo/kernels/layout/runtime_tuple/product): Computes the product of all elements in the `RuntimeTuple`.
+- [shape_div](https://docs.modular.com/mojo/kernels/layout/runtime_tuple/shape_div): Performs specialized shape division between `RuntimeTuple`s.
+- [signum](https://docs.modular.com/mojo/kernels/layout/runtime_tuple/signum): Returns the sign of an integer value.
+- [ComposedLayout](https://docs.modular.com/mojo/kernels/layout/swizzle/ComposedLayout): Layout composed of two layouts applied sequentially.
+- [Swizzle](https://docs.modular.com/mojo/kernels/layout/swizzle/Swizzle): Swizzle functor for memory access pattern optimization.
+- [eval_composed](https://docs.modular.com/mojo/kernels/layout/swizzle/eval_composed): Evaluate a composed layout with swizzle.
+- [swizzle](https://docs.modular.com/mojo/kernels/layout/swizzle): Defines swizzle layouts for optimizing memory access patterns.
+- [make_ldmatrix_swizzle](https://docs.modular.com/mojo/kernels/layout/swizzle/make_ldmatrix_swizzle): Make swizzle to avoid bank conflict for ldmatrix ops.
+- [make_swizzle](https://docs.modular.com/mojo/kernels/layout/swizzle/make_swizzle): Create a 2D swizzle to avoid bank conflicts.
+- [shiftl](https://docs.modular.com/mojo/kernels/layout/swizzle/shiftl): Shift left or right based on sign of shift amount.
+- [shiftr](https://docs.modular.com/mojo/kernels/layout/swizzle/shiftr): Shift right or left based on sign of shift amount.
+- [TensorCore](https://docs.modular.com/mojo/kernels/layout/tensor_core/TensorCore): TensorCore provides an abstraction for GPU tensor core hardware to perform optimized matrix operations.
+- [TiledTensorCore](https://docs.modular.com/mojo/kernels/layout/tensor_core/TiledTensorCore): TiledTensorCore provides a wrapper around TensorCore to support multiple MMAs along the K dimension.
+- [get_fragment_size](https://docs.modular.com/mojo/kernels/layout/tensor_core/get_fragment_size): Calculates the fragment size per thread for a given MMA shape.
+- [get_mma_shape](https://docs.modular.com/mojo/kernels/layout/tensor_core/get_mma_shape): Returns the appropriate matrix multiply-accumulate (MMA) shape for tensor core operations.
+- [tensor_core](https://docs.modular.com/mojo/kernels/layout/tensor_core): Tensor Core Module for High-Performance Matrix Operations
+- [num_matrix_reg](https://docs.modular.com/mojo/kernels/layout/tensor_core/num_matrix_reg): Calculates the number of matrix registers required per thread.
+- [TensorCoreAsync](https://docs.modular.com/mojo/kernels/layout/tensor_core_async/TensorCoreAsync): High-performance asynchronous tensor core operations for matrix multiplication.
+- [tensor_core_async](https://docs.modular.com/mojo/kernels/layout/tensor_core_async): Tensor Core Async Module
+- [select_k_atom](https://docs.modular.com/mojo/kernels/layout/tensor_core_async/select_k_atom): Creates a core matrix layout for tensor core operations.
+- [st_matrix_n_atom](https://docs.modular.com/mojo/kernels/layout/tensor_core_async/st_matrix_n_atom): Creates a layout for N-major `st_matrix` atom in the context of WGMMA C matrix.
+- [st_matrix_n_layout](https://docs.modular.com/mojo/kernels/layout/tensor_core_async/st_matrix_n_layout): Creates a layout for N-major `st_matrix` in the context of WGMMA C matrix.
+- [tile_layout_k_major](https://docs.modular.com/mojo/kernels/layout/tensor_core_async/tile_layout_k_major): Creates a K-major layout for tensor core operations.
+- [tile_layout_mn_major](https://docs.modular.com/mojo/kernels/layout/tensor_core_async/tile_layout_mn_major): Creates an MN-major layout for tensor core operations.
+- [tile_to_descriptor](https://docs.modular.com/mojo/kernels/layout/tensor_core_async/tile_to_descriptor): Transforms a layout into a WGMMA descriptor-compatible layout.
+- [warpgroup_fence](https://docs.modular.com/mojo/kernels/layout/tensor_core_async/warpgroup_fence): Code motion fence to ensure the registers of the WGMMA instruction do not get touched by anything.
+- [wgmma_c_layout](https://docs.modular.com/mojo/kernels/layout/tensor_core_async/wgmma_c_layout): Generates three layouts for mapping WGMMA C matrix coordinates.
+- [wgmma_c_thread_layout](https://docs.modular.com/mojo/kernels/layout/tensor_core_async/wgmma_c_thread_layout): Returns the thread layout component for WGMMA C matrix.
+- [wgmma_output_layout](https://docs.modular.com/mojo/kernels/layout/tensor_core_async/wgmma_output_layout): Returns the output layout component for WGMMA C matrix.
+- [PipelineState](https://docs.modular.com/mojo/kernels/layout/tma_async/PipelineState): Manages state for a multi-stage pipeline with circular buffer semantics.
+- [SharedMemBarrier](https://docs.modular.com/mojo/kernels/layout/tma_async/SharedMemBarrier): A hardware-accelerated synchronization primitive for GPU shared memory operations.
+- [TMATensorTile](https://docs.modular.com/mojo/kernels/layout/tma_async/TMATensorTile): A hardware-accelerated tensor memory access (TMA) tile for efficient asynchronous data movement.
+- [TMATensorTileArray](https://docs.modular.com/mojo/kernels/layout/tma_async/TMATensorTileArray): An array of TMA descripotr.
+- [create_nested_tma_tile](https://docs.modular.com/mojo/kernels/layout/tma_async/create_nested_tma_tile): Creates a rank 2 `TMATensorTile` with a nested layout using `tile_layout_k_major` is `is_k_major` or `tile_layout_mn_major` otherwise.
+- [create_tma_tile](https://docs.modular.com/mojo/kernels/layout/tma_async/create_tma_tile): Creates a `TMATensorTile` with specified tile dimensions and swizzle mode.
+- [create_tma_tile_template](https://docs.modular.com/mojo/kernels/layout/tma_async/create_tma_tile_template): Same as create_tma_tile expect the descriptor is only a placeholder or a template for later replacement.
+- [tma_async](https://docs.modular.com/mojo/kernels/layout/tma_async): Tensor Memory Accelerator (TMA) Asynchronous Operations Module
+- [accumulate](https://docs.modular.com/mojo/kernels/linalg/accumulate): Mojo module linalg.accumulate documentation
+- [dot_at_b](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/apple_amx_intrinsics/dot_at_b): Mojo function `linalg.arch.cpu.apple_amx_intrinsics.dot_at_b` documentation
+- [dot_at_b_impl](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/apple_amx_intrinsics/dot_at_b_impl): Mojo function `linalg.arch.cpu.apple_amx_intrinsics.dot_at_b_impl` documentation
+- [extrx](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/apple_amx_intrinsics/extrx): Extracts a row or moves it to x, result in amx0.
+- [extry](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/apple_amx_intrinsics/extry): Extracts a row or moves it to y, result in amx0.
+- [fma](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/apple_amx_intrinsics/fma): Mojo function `linalg.arch.cpu.apple_amx_intrinsics.fma` documentation
+- [fma16](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/apple_amx_intrinsics/fma16): Float16 matrix multiply and subtract.
+- [fma32](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/apple_amx_intrinsics/fma32): Float32 matrix multiply and add.
+- [fma64](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/apple_amx_intrinsics/fma64): Float64 matrix multiply and add.
+- [fms16](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/apple_amx_intrinsics/fms16): Float16 matrix multiply and add.
+- [fsm32](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/apple_amx_intrinsics/fsm32): Float32 matrix multiply and subtract.
+- [fsm64](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/apple_amx_intrinsics/fsm64): Float64 matrix multiply and subtract.
+- [genlut](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/apple_amx_intrinsics/genlut): Mojo function `linalg.arch.cpu.apple_amx_intrinsics.genlut` documentation
+- [apple_amx_intrinsics](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/apple_amx_intrinsics): Mojo module linalg.arch.cpu.apple_amx_intrinsics documentation
+- [ldx](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/apple_amx_intrinsics/ldx): Mojo function `linalg.arch.cpu.apple_amx_intrinsics.ldx` documentation
+- [ldy](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/apple_amx_intrinsics/ldy): Mojo function `linalg.arch.cpu.apple_amx_intrinsics.ldy` documentation
+- [ldz](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/apple_amx_intrinsics/ldz): Mojo function `linalg.arch.cpu.apple_amx_intrinsics.ldz` documentation
+- [ldzi](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/apple_amx_intrinsics/ldzi): Mojo function `linalg.arch.cpu.apple_amx_intrinsics.ldzi` documentation
+- [load_z](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/apple_amx_intrinsics/load_z): Mojo function `linalg.arch.cpu.apple_amx_intrinsics.load_z` documentation
+- [mac16](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/apple_amx_intrinsics/mac16): SI16 matrix multiply and add.
+- [matfp](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/apple_amx_intrinsics/matfp): Float16 matrix multiply.
+- [max_int__](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/apple_amx_intrinsics/max_int__): UI16 matrix multiply.
+- [read_x](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/apple_amx_intrinsics/read_x): Mojo function `linalg.arch.cpu.apple_amx_intrinsics.read_x` documentation
+- [read_y](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/apple_amx_intrinsics/read_y): Mojo function `linalg.arch.cpu.apple_amx_intrinsics.read_y` documentation
+- [store_x](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/apple_amx_intrinsics/store_x): Mojo function `linalg.arch.cpu.apple_amx_intrinsics.store_x` documentation
+- [store_y](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/apple_amx_intrinsics/store_y): Mojo function `linalg.arch.cpu.apple_amx_intrinsics.store_y` documentation
+- [store_z](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/apple_amx_intrinsics/store_z): Mojo function `linalg.arch.cpu.apple_amx_intrinsics.store_z` documentation
+- [stx](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/apple_amx_intrinsics/stx): Mojo function `linalg.arch.cpu.apple_amx_intrinsics.stx` documentation
+- [sty](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/apple_amx_intrinsics/sty): Mojo function `linalg.arch.cpu.apple_amx_intrinsics.sty` documentation
+- [stz](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/apple_amx_intrinsics/stz): Mojo function `linalg.arch.cpu.apple_amx_intrinsics.stz` documentation
+- [stzi](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/apple_amx_intrinsics/stzi): Mojo function `linalg.arch.cpu.apple_amx_intrinsics.stzi` documentation
+- [transpose_z_to_x_or_y](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/apple_amx_intrinsics/transpose_z_to_x_or_y): Mojo function `linalg.arch.cpu.apple_amx_intrinsics.transpose_z_to_x_or_y` documentation
+- [vec_int__](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/apple_amx_intrinsics/vec_int__): Horizontal ui16 multiply `z0[i] += x0[i] + y0[i]`.
+- [vecfp](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/apple_amx_intrinsics/vecfp): Horizontal float16 multiply `z0[i] += x0[i] + y0[i]`.
+- [cpu](https://docs.modular.com/mojo/kernels/linalg/arch/cpu): Provides cpu architecture specific utility functions.
+- [intel_amx_intrinsics](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/intel_amx_intrinsics): Mojo module linalg.arch.cpu.intel_amx_intrinsics documentation
+- [init_intel_amx](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/intel_amx_intrinsics/init_intel_amx): Mojo function `linalg.arch.cpu.intel_amx_intrinsics.init_intel_amx` documentation
+- [tileconfig](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/intel_amx_intrinsics/tileconfig): Mojo struct `linalg.arch.cpu.intel_amx_intrinsics.tileconfig` documentation
+- [neon_intrinsics](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/neon_intrinsics): Mojo module linalg.arch.cpu.neon_intrinsics documentation
+- [dot_i16_to_i32_AVX2](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/vnni_intrinsics/dot_i16_to_i32_AVX2): The dot product of the two words in each int32 element of a and b plus a int32 from src.
+- [dot_i16_to_i32_x86](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/vnni_intrinsics/dot_i16_to_i32_x86): The dot product of the two words in each int32 element of a and b plus a int32 from src using VNNI or AVX2.
+- [dot_i8_to_i32_AVX2](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/vnni_intrinsics/dot_i8_to_i32_AVX2): The dot product of the four bytes in each int32 element of a and b plus a int32 from src.
+- [dot_i8_to_i32_saturated_AVX2](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/vnni_intrinsics/dot_i8_to_i32_saturated_AVX2): The dot product of the four bytes in each int32 element of a and b plus a int32 from src.
+- [dot_i8_to_i32_saturated_x86](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/vnni_intrinsics/dot_i8_to_i32_saturated_x86): The dot product of the four bytes in each int32 element of a and b plus a int32 from src using VNNI or AVX2.
+- [dot_i8_to_i32_x86](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/vnni_intrinsics/dot_i8_to_i32_x86): The dot product of the four bytes in each int32 element of a and b plus a int32 from src using VNNI or AVX2.
+- [vnni_intrinsics](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/vnni_intrinsics): Mojo module linalg.arch.cpu.vnni_intrinsics documentation
+- [pmaddubs](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/vnni_intrinsics/pmaddubs): Mojo function `linalg.arch.cpu.vnni_intrinsics.pmaddubs` documentation
+- [pmaddw](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/vnni_intrinsics/pmaddw): Mojo function `linalg.arch.cpu.vnni_intrinsics.pmaddw` documentation
+- [vpdpbusd](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/vnni_intrinsics/vpdpbusd): Mojo function `linalg.arch.cpu.vnni_intrinsics.vpdpbusd` documentation
+- [vpdpbusds](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/vnni_intrinsics/vpdpbusds): Mojo function `linalg.arch.cpu.vnni_intrinsics.vpdpbusds` documentation
+- [vpdpwssd](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/vnni_intrinsics/vpdpwssd): Mojo function `linalg.arch.cpu.vnni_intrinsics.vpdpwssd` documentation
+- [vpdpwssds](https://docs.modular.com/mojo/kernels/linalg/arch/cpu/vnni_intrinsics/vpdpwssds): Mojo function `linalg.arch.cpu.vnni_intrinsics.vpdpwssds` documentation
+- [arch](https://docs.modular.com/mojo/kernels/linalg/arch): Provides architecture specific utility functions.
+- [sm100](https://docs.modular.com/mojo/kernels/linalg/arch/sm100): Provides Nvidia Blackwell architecture specific utility functions.
+- [Major](https://docs.modular.com/mojo/kernels/linalg/arch/sm100/mma/Major): Mojo struct `linalg.arch.sm100.mma.Major` documentation
+- [MmaOpSM100_SS](https://docs.modular.com/mojo/kernels/linalg/arch/sm100/mma/MmaOpSM100_SS): Mojo struct `linalg.arch.sm100.mma.MmaOpSM100_SS` documentation
+- [extract_first_2_modes](https://docs.modular.com/mojo/kernels/linalg/arch/sm100/mma/extract_first_2_modes): Mojo function `linalg.arch.sm100.mma.extract_first_2_modes` documentation
+- [mma](https://docs.modular.com/mojo/kernels/linalg/arch/sm100/mma): Mojo module linalg.arch.sm100.mma documentation
+- [batched_matmul](https://docs.modular.com/mojo/kernels/linalg/bmm/batched_matmul): Mojo function `linalg.bmm.batched_matmul` documentation
+- [batched_matmul_dynamic_scaled_fp8](https://docs.modular.com/mojo/kernels/linalg/bmm/batched_matmul_dynamic_scaled_fp8): Mojo function `linalg.bmm.batched_matmul_dynamic_scaled_fp8` documentation
+- [batched_matmul_dynamic_scaled_fp8_naive](https://docs.modular.com/mojo/kernels/linalg/bmm/batched_matmul_dynamic_scaled_fp8_naive): Mojo function `linalg.bmm.batched_matmul_dynamic_scaled_fp8_naive` documentation
+- [batched_matmul_kernel_gpu](https://docs.modular.com/mojo/kernels/linalg/bmm/batched_matmul_kernel_gpu): Mojo function `linalg.bmm.batched_matmul_kernel_gpu` documentation
+- [batched_matmul_shape](https://docs.modular.com/mojo/kernels/linalg/bmm/batched_matmul_shape): Compute the output shape of a `batch_matmul` operation, and assert the inputs are compatible.
+- [bmm_sm100_blockwise_scaled_fp8](https://docs.modular.com/mojo/kernels/linalg/bmm/bmm_sm100_blockwise_scaled_fp8): Mojo function `linalg.bmm.bmm_sm100_blockwise_scaled_fp8` documentation
+- [get_shape_index_list](https://docs.modular.com/mojo/kernels/linalg/bmm/get_shape_index_list): Mojo function `linalg.bmm.get_shape_index_list` documentation
+- [bmm](https://docs.modular.com/mojo/kernels/linalg/bmm): Mojo module linalg.bmm documentation
+- [naive_batched_matmul_kernel](https://docs.modular.com/mojo/kernels/linalg/bmm/naive_batched_matmul_kernel): Mojo function `linalg.bmm.naive_batched_matmul_kernel` documentation
+- [distributed_matmul](https://docs.modular.com/mojo/kernels/linalg/distributed_matmul): Mojo module linalg.distributed_matmul documentation
+- [matmul_allreduce](https://docs.modular.com/mojo/kernels/linalg/distributed_matmul/matmul_allreduce): Performs C = matmul(A, B^T) followed with Out = allreduce(C) operation across multiple GPUs. Split the A or B and C matrices into `num_partitions` ...
+- [config_in_smem](https://docs.modular.com/mojo/kernels/linalg/dual_gemm/config_in_smem): Mojo function `linalg.dual_gemm.config_in_smem` documentation
+- [dual_gemm](https://docs.modular.com/mojo/kernels/linalg/dual_gemm/dual_gemm): Mojo function `linalg.dual_gemm.dual_gemm` documentation
+- [dual_gemv](https://docs.modular.com/mojo/kernels/linalg/dual_gemm/dual_gemv): Mojo function `linalg.dual_gemm.dual_gemv` documentation
+- [dual_gemv_kernel](https://docs.modular.com/mojo/kernels/linalg/dual_gemm/dual_gemv_kernel): Mojo function `linalg.dual_gemm.dual_gemv_kernel` documentation
+- [dual_gemm](https://docs.modular.com/mojo/kernels/linalg/dual_gemm): Mojo module linalg.dual_gemm documentation
+- [multistage_dual_gemm](https://docs.modular.com/mojo/kernels/linalg/dual_gemm/multistage_dual_gemm): Mojo function `linalg.dual_gemm.multistage_dual_gemm` documentation
+- [multistage_dual_gemm_kernel](https://docs.modular.com/mojo/kernels/linalg/dual_gemm/multistage_dual_gemm_kernel): Mojo function `linalg.dual_gemm.multistage_dual_gemm_kernel` documentation
+- [multistage_dual_mma](https://docs.modular.com/mojo/kernels/linalg/dual_gemm/multistage_dual_mma): Mojo function `linalg.dual_gemm.multistage_dual_mma` documentation
+- [swilu](https://docs.modular.com/mojo/kernels/linalg/dual_gemm/swilu): Mojo function `linalg.dual_gemm.swilu` documentation
+- [swishGLU](https://docs.modular.com/mojo/kernels/linalg/dual_gemm/swishGLU): Reference:     GLU Variants Improve Transformer     by Noam Shazeer     https://arxiv.org/pdf/2002.05202v1 The implementation follows cutlass, usin...
+- [batched_quantize_dynamic_scaled_fp8](https://docs.modular.com/mojo/kernels/linalg/fp8_quantization/batched_quantize_dynamic_scaled_fp8): Mojo function `linalg.fp8_quantization.batched_quantize_dynamic_scaled_fp8` documentation
+- [batched_quantize_fp8_kernel](https://docs.modular.com/mojo/kernels/linalg/fp8_quantization/batched_quantize_fp8_kernel): Mojo function `linalg.fp8_quantization.batched_quantize_fp8_kernel` documentation
+- [convert_e4m3fn_to_e4m3fnuz](https://docs.modular.com/mojo/kernels/linalg/fp8_quantization/convert_e4m3fn_to_e4m3fnuz): Convert E4M3FN weights to E4M3FNUZ format for AMD GPU compatibility.
+- [fp8_quantization](https://docs.modular.com/mojo/kernels/linalg/fp8_quantization): Mojo module linalg.fp8_quantization documentation
+- [matmul_dynamic_scaled_fp8](https://docs.modular.com/mojo/kernels/linalg/fp8_quantization/matmul_dynamic_scaled_fp8): Mojo function `linalg.fp8_quantization.matmul_dynamic_scaled_fp8` documentation
+- [naive_blockwise_scaled_fp8_grouped_matmul](https://docs.modular.com/mojo/kernels/linalg/fp8_quantization/naive_blockwise_scaled_fp8_grouped_matmul): Mojo function `linalg.fp8_quantization.naive_blockwise_scaled_fp8_grouped_matmul` documentation
+- [naive_blockwise_scaled_fp8_grouped_matmul_kernel](https://docs.modular.com/mojo/kernels/linalg/fp8_quantization/naive_blockwise_scaled_fp8_grouped_matmul_kernel): Mojo function `linalg.fp8_quantization.naive_blockwise_scaled_fp8_grouped_matmul_kernel` documentation
+- [naive_blockwise_scaled_fp8_matmul](https://docs.modular.com/mojo/kernels/linalg/fp8_quantization/naive_blockwise_scaled_fp8_matmul): Mojo function `linalg.fp8_quantization.naive_blockwise_scaled_fp8_matmul` documentation
+- [naive_blockwise_scaled_fp8_matmul_kernel](https://docs.modular.com/mojo/kernels/linalg/fp8_quantization/naive_blockwise_scaled_fp8_matmul_kernel): Mojo function `linalg.fp8_quantization.naive_blockwise_scaled_fp8_matmul_kernel` documentation
+- [quantize_dynamic_scaled_fp8](https://docs.modular.com/mojo/kernels/linalg/fp8_quantization/quantize_dynamic_scaled_fp8): Mojo function `linalg.fp8_quantization.quantize_dynamic_scaled_fp8` documentation
+- [quantize_fp8_kernel](https://docs.modular.com/mojo/kernels/linalg/fp8_quantization/quantize_fp8_kernel): Mojo function `linalg.fp8_quantization.quantize_fp8_kernel` documentation
+- [quantize_static_scaled_fp8](https://docs.modular.com/mojo/kernels/linalg/fp8_quantization/quantize_static_scaled_fp8): Mojo function `linalg.fp8_quantization.quantize_static_scaled_fp8` documentation
+- [GEMVAlgorithm](https://docs.modular.com/mojo/kernels/linalg/gemv/GEMVAlgorithm): Mojo struct `linalg.gemv.GEMVAlgorithm` documentation
+- [gemv](https://docs.modular.com/mojo/kernels/linalg/gemv/gemv): Mojo function `linalg.gemv.gemv` documentation
+- [gemv_gpu](https://docs.modular.com/mojo/kernels/linalg/gemv/gemv_gpu): Mojo function `linalg.gemv.gemv_gpu` documentation
+- [gemv_gpu_dispatch](https://docs.modular.com/mojo/kernels/linalg/gemv/gemv_gpu_dispatch): Mojo function `linalg.gemv.gemv_gpu_dispatch` documentation
+- [gemv_kernel](https://docs.modular.com/mojo/kernels/linalg/gemv/gemv_kernel): Mojo function `linalg.gemv.gemv_kernel` documentation
+- [gemv_kernel_vector](https://docs.modular.com/mojo/kernels/linalg/gemv/gemv_kernel_vector): Mojo function `linalg.gemv.gemv_kernel_vector` documentation
+- [gemv_split_k](https://docs.modular.com/mojo/kernels/linalg/gemv/gemv_split_k): GEMV with tiling in K dimension. Assuming the B (weight) matrix is transposed i.e. row major N x K, this kernel implements a vector (1 x K) times a...
+- [gevm_kernel](https://docs.modular.com/mojo/kernels/linalg/gemv/gevm_kernel): Mojo function `linalg.gemv.gevm_kernel` documentation
+- [gemv](https://docs.modular.com/mojo/kernels/linalg/gemv): Mojo module linalg.gemv documentation
+- [log_shape](https://docs.modular.com/mojo/kernels/linalg/gemv/log_shape): Mojo function `linalg.gemv.log_shape` documentation
+- [naive_gemv](https://docs.modular.com/mojo/kernels/linalg/gemv/naive_gemv): Mojo function `linalg.gemv.naive_gemv` documentation
+- [reverse_idx](https://docs.modular.com/mojo/kernels/linalg/gemv/reverse_idx): Mojo function `linalg.gemv.reverse_idx` documentation
+- [dispatch_amd_matmul_by_block_shape](https://docs.modular.com/mojo/kernels/linalg/grouped_matmul/dispatch_amd_matmul_by_block_shape): Dispatches to the best kernel configuration based on runtime M dimension.
+- [grouped_matmul](https://docs.modular.com/mojo/kernels/linalg/grouped_matmul/grouped_matmul): Mojo function `linalg.grouped_matmul.grouped_matmul` documentation
+- [grouped_matmul_amd](https://docs.modular.com/mojo/kernels/linalg/grouped_matmul/grouped_matmul_amd): Mojo function `linalg.grouped_matmul.grouped_matmul_amd` documentation
+- [grouped_matmul_amd_kernel_launcher](https://docs.modular.com/mojo/kernels/linalg/grouped_matmul/grouped_matmul_amd_kernel_launcher): Mojo function `linalg.grouped_matmul.grouped_matmul_amd_kernel_launcher` documentation
+- [grouped_matmul_kernel_sm100](https://docs.modular.com/mojo/kernels/linalg/grouped_matmul/grouped_matmul_kernel_sm100): Mojo function `linalg.grouped_matmul.grouped_matmul_kernel_sm100` documentation
+- [grouped_matmul_sm100](https://docs.modular.com/mojo/kernels/linalg/grouped_matmul/grouped_matmul_sm100): Mojo function `linalg.grouped_matmul.grouped_matmul_sm100` documentation
+- [grouped_matmul_vendor](https://docs.modular.com/mojo/kernels/linalg/grouped_matmul/grouped_matmul_vendor): Mojo function `linalg.grouped_matmul.grouped_matmul_vendor` documentation
+- [grouped_matmul](https://docs.modular.com/mojo/kernels/linalg/grouped_matmul): Mojo module linalg.grouped_matmul documentation
+- [naive_epilogue](https://docs.modular.com/mojo/kernels/linalg/grouped_matmul/naive_epilogue): Mojo function `linalg.grouped_matmul.naive_epilogue` documentation
+- [naive_epilogue_kernel](https://docs.modular.com/mojo/kernels/linalg/grouped_matmul/naive_epilogue_kernel): Mojo function `linalg.grouped_matmul.naive_epilogue_kernel` documentation
+- [naive_grouped_matmul](https://docs.modular.com/mojo/kernels/linalg/grouped_matmul/naive_grouped_matmul): Mojo function `linalg.grouped_matmul.naive_grouped_matmul` documentation
+- [naive_grouped_matmul_kernel](https://docs.modular.com/mojo/kernels/linalg/grouped_matmul/naive_grouped_matmul_kernel): Mojo function `linalg.grouped_matmul.naive_grouped_matmul_kernel` documentation
+- [WarpRole](https://docs.modular.com/mojo/kernels/linalg/grouped_matmul_sm100/WarpRole): Mojo struct `linalg.grouped_matmul_sm100.WarpRole` documentation
+- [blackwell_tma_umma_warp_specialized_kernel](https://docs.modular.com/mojo/kernels/linalg/grouped_matmul_sm100/blackwell_tma_umma_warp_specialized_kernel): Mojo function `linalg.grouped_matmul_sm100.blackwell_tma_umma_warp_specialized_kernel` documentation
+- [consumer_main_loop](https://docs.modular.com/mojo/kernels/linalg/grouped_matmul_sm100/consumer_main_loop): Mojo function `linalg.grouped_matmul_sm100.consumer_main_loop` documentation
+- [grouped_matmul_sm100_persistent](https://docs.modular.com/mojo/kernels/linalg/grouped_matmul_sm100/grouped_matmul_sm100_persistent): Mojo function `linalg.grouped_matmul_sm100.grouped_matmul_sm100_persistent` documentation
+- [grouped_matmul_sm100](https://docs.modular.com/mojo/kernels/linalg/grouped_matmul_sm100): Mojo module linalg.grouped_matmul_sm100 documentation
+- [load_AB](https://docs.modular.com/mojo/kernels/linalg/grouped_matmul_sm100/load_AB): Mojo function `linalg.grouped_matmul_sm100.load_AB` documentation
+- [multi_stage_store_C](https://docs.modular.com/mojo/kernels/linalg/grouped_matmul_sm100/multi_stage_store_C): Mojo function `linalg.grouped_matmul_sm100.multi_stage_store_C` documentation
+- [stsm_helper](https://docs.modular.com/mojo/kernels/linalg/grouped_matmul_sm100/stsm_helper): Mojo function `linalg.grouped_matmul_sm100.stsm_helper` documentation
+- [zero_output](https://docs.modular.com/mojo/kernels/linalg/grouped_matmul_sm100/zero_output): Mojo function `linalg.grouped_matmul_sm100.zero_output` documentation
+- [grouped_matmul_dynamic_scaled_fp8](https://docs.modular.com/mojo/kernels/linalg/grouped_matmul_sm100_blockwise_fp8/grouped_matmul_dynamic_scaled_fp8): Mojo function `linalg.grouped_matmul_sm100_blockwise_fp8.grouped_matmul_dynamic_scaled_fp8` documentation
+- [grouped_matmul_sm100_blockwise_scaled_fp8](https://docs.modular.com/mojo/kernels/linalg/grouped_matmul_sm100_blockwise_fp8/grouped_matmul_sm100_blockwise_scaled_fp8): Mojo function `linalg.grouped_matmul_sm100_blockwise_fp8.grouped_matmul_sm100_blockwise_scaled_fp8` documentation
+- [grouped_matmul_sm100_blockwise_fp8](https://docs.modular.com/mojo/kernels/linalg/grouped_matmul_sm100_blockwise_fp8): Mojo module linalg.grouped_matmul_sm100_blockwise_fp8 documentation
+- [matmul_sm100_grouped_blockwise_scaled_fp8_1d2d_kernel](https://docs.modular.com/mojo/kernels/linalg/grouped_matmul_sm100_blockwise_fp8/matmul_sm100_grouped_blockwise_scaled_fp8_1d2d_kernel): Mojo function `linalg.grouped_matmul_sm100_blockwise_fp8.matmul_sm100_grouped_blockwise_scaled_fp8_1d2d_kernel` documentation
+- [RasterOrder](https://docs.modular.com/mojo/kernels/linalg/grouped_matmul_tile_scheduler/RasterOrder): Mojo struct `linalg.grouped_matmul_tile_scheduler.RasterOrder` documentation
+- [TileScheduler](https://docs.modular.com/mojo/kernels/linalg/grouped_matmul_tile_scheduler/TileScheduler): Mojo struct `linalg.grouped_matmul_tile_scheduler.TileScheduler` documentation
+- [WorkInfo](https://docs.modular.com/mojo/kernels/linalg/grouped_matmul_tile_scheduler/WorkInfo): Mojo struct `linalg.grouped_matmul_tile_scheduler.WorkInfo` documentation
+- [grouped_matmul_tile_scheduler](https://docs.modular.com/mojo/kernels/linalg/grouped_matmul_tile_scheduler): Mojo module linalg.grouped_matmul_tile_scheduler documentation
+- [linalg](https://docs.modular.com/mojo/kernels/linalg): Provides CPU and GPU implementations of linear algebra functions.
+- [lora](https://docs.modular.com/mojo/kernels/linalg/lora): Mojo module linalg.lora documentation
+- [shrink_qkv_permute_3mn_sm100](https://docs.modular.com/mojo/kernels/linalg/lora/shrink_qkv_permute_3mn_sm100): LoRA shrink GMM with planar Q/K/V output on SM100.
+- [apple_batched_matmul](https://docs.modular.com/mojo/kernels/linalg/matmul/cpu/apple_accelerate/apple_batched_matmul): Mojo function `linalg.matmul.cpu.apple_accelerate.apple_batched_matmul` documentation
+- [apple_gemv](https://docs.modular.com/mojo/kernels/linalg/matmul/cpu/apple_accelerate/apple_gemv): Mojo function `linalg.matmul.cpu.apple_accelerate.apple_gemv` documentation
+- [apple_matmul](https://docs.modular.com/mojo/kernels/linalg/matmul/cpu/apple_accelerate/apple_matmul): Mojo function `linalg.matmul.cpu.apple_accelerate.apple_matmul` documentation
+- [get_cblas_f32_function](https://docs.modular.com/mojo/kernels/linalg/matmul/cpu/apple_accelerate/get_cblas_f32_function): Mojo function `linalg.matmul.cpu.apple_accelerate.get_cblas_f32_function` documentation
+- [apple_accelerate](https://docs.modular.com/mojo/kernels/linalg/matmul/cpu/apple_accelerate): Mojo module linalg.matmul.cpu.apple_accelerate documentation
+- [use_apple_accelerate_lib](https://docs.modular.com/mojo/kernels/linalg/matmul/cpu/apple_accelerate/use_apple_accelerate_lib): Mojo function `linalg.matmul.cpu.apple_accelerate.use_apple_accelerate_lib` documentation
+- [Inner_matmul_default](https://docs.modular.com/mojo/kernels/linalg/matmul/cpu/default/Inner_matmul_default): Mojo struct `linalg.matmul.cpu.default.Inner_matmul_default` documentation
+- [default](https://docs.modular.com/mojo/kernels/linalg/matmul/cpu/default): Mojo module linalg.matmul.cpu.default documentation
+- [Inner_matmul_i8mm](https://docs.modular.com/mojo/kernels/linalg/matmul/cpu/i8mm/Inner_matmul_i8mm): Mojo struct `linalg.matmul.cpu.i8mm.Inner_matmul_i8mm` documentation
+- [LoadStore_i8mm](https://docs.modular.com/mojo/kernels/linalg/matmul/cpu/i8mm/LoadStore_i8mm): Mojo struct `linalg.matmul.cpu.i8mm.LoadStore_i8mm` documentation
+- [i8mm](https://docs.modular.com/mojo/kernels/linalg/matmul/cpu/i8mm): Mojo module linalg.matmul.cpu.i8mm documentation
+- [InnerMatmulKernel](https://docs.modular.com/mojo/kernels/linalg/matmul/cpu/impl/InnerMatmulKernel): Mojo trait `linalg.matmul.cpu.impl.InnerMatmulKernel` documentation
+- [TiledMatmul](https://docs.modular.com/mojo/kernels/linalg/matmul/cpu/impl/TiledMatmul): Tiled matmul implementation integrating packing, inner loop and tile partitions.
+- [elementwise_epilogue_c_tile](https://docs.modular.com/mojo/kernels/linalg/matmul/cpu/impl/elementwise_epilogue_c_tile): Mojo function `linalg.matmul.cpu.impl.elementwise_epilogue_c_tile` documentation
+- [impl](https://docs.modular.com/mojo/kernels/linalg/matmul/cpu/impl): Mojo module linalg.matmul.cpu.impl documentation
+- [matmul](https://docs.modular.com/mojo/kernels/linalg/matmul/cpu/impl/matmul): Mojo function `linalg.matmul.cpu.impl.matmul` documentation
+- [tiled_matmul_run](https://docs.modular.com/mojo/kernels/linalg/matmul/cpu/impl/tiled_matmul_run): Interface function to run tiled matmul on a given sub-tile.
+- [cpu](https://docs.modular.com/mojo/kernels/linalg/matmul/cpu): Provides the CPU backend implementations for matmuls.
+- [Inner_matmul_neon](https://docs.modular.com/mojo/kernels/linalg/matmul/cpu/neon/Inner_matmul_neon): Mojo struct `linalg.matmul.cpu.neon.Inner_matmul_neon` documentation
+- [neon](https://docs.modular.com/mojo/kernels/linalg/matmul/cpu/neon): Mojo module linalg.matmul.cpu.neon documentation
+- [Inner_matmul_vnni](https://docs.modular.com/mojo/kernels/linalg/matmul/cpu/vnni/Inner_matmul_vnni): Mojo struct `linalg.matmul.cpu.vnni.Inner_matmul_vnni` documentation
+- [vnni](https://docs.modular.com/mojo/kernels/linalg/matmul/cpu/vnni): Mojo module linalg.matmul.cpu.vnni documentation
+- [amd](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/amd): Provides the AMD GPU backend implementations for matmuls.
+- [MMATileBuffers](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/amd/matmul/MMATileBuffers): Manages memory for a single matrix (A or B) in GEMM computation.
+- [MmaOpAMD](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/amd/matmul/MmaOpAMD): Mojo struct `linalg.matmul.gpu.amd.matmul.MmaOpAMD` documentation
+- [gemm_kernel_amd](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/amd/matmul/gemm_kernel_amd): AMD-optimized GEMM kernel for matrix multiplication C = A * B.
+- [matmul](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/amd/matmul): Mojo module linalg.matmul.gpu.amd.matmul documentation
+- [write_output_fragments](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/amd/matmul/write_output_fragments): Write output fragments from registers to global memory with optional elementwise operations.
+- [AmdTileOperator](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/amd/structured/AmdTileOperator): Mojo struct `linalg.matmul.gpu.amd.structured.AmdTileOperator` documentation
+- [AmdWarpBlockScatterGather](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/amd/structured/AmdWarpBlockScatterGather): Transports data from global -> register -> shared memory. Does this by warp tile each warp is responsible for moving one warp block of smem.
+- [MMAConfig](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/amd/structured/MMAConfig): Mojo struct `linalg.matmul.gpu.amd.structured.MMAConfig` documentation
+- [RingBuffer](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/amd/structured/RingBuffer): Manages access to shared memory tiles using barriers based in shared memory.
+- [SharedMemoryBuffer](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/amd/structured/SharedMemoryBuffer): Manages shared memory and returns 2D tile slices of the buffer.
+- [ThreadRole](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/amd/structured/ThreadRole): Mojo struct `linalg.matmul.gpu.amd.structured.ThreadRole` documentation
+- [structured](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/amd/structured): Mojo module linalg.matmul.gpu.amd.structured documentation
+- [load_from_gmem_to_reg](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/amd/structured/load_from_gmem_to_reg): Mojo function `linalg.matmul.gpu.amd.structured.load_from_gmem_to_reg` documentation
+- [pipeline_layout](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/amd/structured/pipeline_layout): Mojo function `linalg.matmul.gpu.amd.structured.pipeline_layout` documentation
+- [get_producer_warp_thread_layout](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/amd/warp_spec_matmul/get_producer_warp_thread_layout): Mojo function `linalg.matmul.gpu.amd.warp_spec_matmul.get_producer_warp_thread_layout` documentation
+- [warp_spec_matmul](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/amd/warp_spec_matmul): Mojo module linalg.matmul.gpu.amd.warp_spec_matmul documentation
+- [smem_tile_layout](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/amd/warp_spec_matmul/smem_tile_layout): Mojo function `linalg.matmul.gpu.amd.warp_spec_matmul.smem_tile_layout` documentation
+- [store_c](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/amd/warp_spec_matmul/store_c): Mojo function `linalg.matmul.gpu.amd.warp_spec_matmul.store_c` documentation
+- [warp_specialized_matmul](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/amd/warp_spec_matmul/warp_specialized_matmul): Mojo function `linalg.matmul.gpu.amd.warp_spec_matmul.warp_specialized_matmul` documentation
+- [gpu](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu): Mojo package linalg.matmul.gpu.gpu documentation
+- [matmul_kernel](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/matmul_kernel): Matrix Multiplication using shared memory. This version loads blocks of size tile_size x tile_size from A and B and updates a tile_size x tile_size...
+- [matmul_kernel_naive](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/matmul_kernel_naive): Mojo function `linalg.matmul.gpu.__init__.matmul_kernel_naive` documentation
+- [multistage_gemm](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/multistage_gemm): Mojo function `linalg.matmul.gpu.__init__.multistage_gemm` documentation
+- [BlackwellProfileWarp](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/profiler/BlackwellProfileWarp): This struct calculates execution time for a warp/s, and writes a single entry to the workspace.
+- [BlackwellWarpProfilingWorkspaceManager](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/profiler/BlackwellWarpProfilingWorkspaceManager): This struct manages the profiling workspace. The workspaces consists of equal sized chunks, the total number of which is equal to the total number ...
+- [profiler](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/profiler): Mojo module linalg.matmul.gpu.profiler documentation
+- [blockwise_fp8](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/blockwise_fp8): Mojo module linalg.matmul.gpu.sm100.blockwise_fp8 documentation
+- [matmul_sm100_blockwise_scaled_fp8](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/blockwise_fp8/matmul_sm100_blockwise_scaled_fp8): Mojo function `linalg.matmul.gpu.sm100.blockwise_fp8.matmul_sm100_blockwise_scaled_fp8` documentation
+- [matmul_sm100_blockwise_scaled_fp8_1d2d_kernel](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/blockwise_fp8/matmul_sm100_blockwise_scaled_fp8_1d2d_kernel): Mojo function `linalg.matmul.gpu.sm100.blockwise_fp8.matmul_sm100_blockwise_scaled_fp8_1d2d_kernel` documentation
+- [matmul_sm100_blockwise_scaled_fp8_1d2d_wrapper](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/blockwise_fp8/matmul_sm100_blockwise_scaled_fp8_1d2d_wrapper): Mojo function `linalg.matmul.gpu.sm100.blockwise_fp8.matmul_sm100_blockwise_scaled_fp8_1d2d_wrapper` documentation
+- [LoadOp](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/composable/LoadOp): Mojo trait `linalg.matmul.gpu.sm100.composable.LoadOp` documentation
+- [MmaOp](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/composable/MmaOp): Mojo trait `linalg.matmul.gpu.sm100.composable.MmaOp` documentation
+- [OpArgs](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/composable/OpArgs): Mojo trait `linalg.matmul.gpu.sm100.composable.OpArgs` documentation
+- [OutputOp](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/composable/OutputOp): Mojo trait `linalg.matmul.gpu.sm100.composable.OutputOp` documentation
+- [Pipeline](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/composable/Pipeline): Mojo struct `linalg.matmul.gpu.sm100.composable.Pipeline` documentation
+- [PipelineArgs](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/composable/PipelineArgs): Mojo struct `linalg.matmul.gpu.sm100.composable.PipelineArgs` documentation
+- [PipelineOp](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/composable/PipelineOp): Mojo trait `linalg.matmul.gpu.sm100.composable.PipelineOp` documentation
+- [R2GOutputOp](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/composable/R2GOutputOp): Mojo struct `linalg.matmul.gpu.sm100.composable.R2GOutputOp` documentation
+- [STOutputOpArgs](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/composable/STOutputOpArgs): Mojo struct `linalg.matmul.gpu.sm100.composable.STOutputOpArgs` documentation
+- [TMALoadOp](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/composable/TMALoadOp): Mojo struct `linalg.matmul.gpu.sm100.composable.TMALoadOp` documentation
+- [TMALoadOpArgs](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/composable/TMALoadOpArgs): Mojo struct `linalg.matmul.gpu.sm100.composable.TMALoadOpArgs` documentation
+- [composable](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/composable): Mojo module linalg.matmul.gpu.sm100.composable documentation
+- [matmul_kernel](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/composable/matmul_kernel): Mojo function `linalg.matmul.gpu.sm100.composable.matmul_kernel` documentation
+- [matmul_sm100](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/composable/matmul_sm100): Mojo function `linalg.matmul.gpu.sm100.composable.matmul_sm100` documentation
+- [MatmulConfig](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/config/MatmulConfig): Static configuration of GPU matmul.
+- [build_configs](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/config/build_configs): Mojo function `linalg.matmul.gpu.sm100.config.build_configs` documentation
+- [choose_config](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/config/choose_config): Mojo function `linalg.matmul.gpu.sm100.config.choose_config` documentation
+- [config](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/config): Mojo module linalg.matmul.gpu.sm100.config documentation
+- [dispatch](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/dispatch): Mojo module linalg.matmul.gpu.sm100.dispatch documentation
+- [matmul_dispatch_sm100](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/dispatch/matmul_dispatch_sm100): Mojo function `linalg.matmul.gpu.sm100.dispatch.matmul_dispatch_sm100` documentation
+- [matmul_dispatch_sm100_bf16](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/dispatch/matmul_dispatch_sm100_bf16): Mojo function `linalg.matmul.gpu.sm100.dispatch.matmul_dispatch_sm100_bf16` documentation
+- [matmul_dispatch_sm100_fp8](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/dispatch/matmul_dispatch_sm100_fp8): Mojo function `linalg.matmul.gpu.sm100.dispatch.matmul_dispatch_sm100_fp8` documentation
+- [sm100](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100): Provides the Nvidia Blackwell backend implementations for matmuls.
+- [WarpRole](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/matmul/WarpRole): Mojo struct `linalg.matmul.gpu.sm100.matmul.WarpRole` documentation
+- [blackwell_matmul_tma_umma_warp_specialized](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/matmul/blackwell_matmul_tma_umma_warp_specialized): Mojo function `linalg.matmul.gpu.sm100.matmul.blackwell_matmul_tma_umma_warp_specialized` documentation
+- [blackwell_tma_umma_warp_specialized_kernel](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/matmul/blackwell_tma_umma_warp_specialized_kernel): Mojo function `linalg.matmul.gpu.sm100.matmul.blackwell_tma_umma_warp_specialized_kernel` documentation
+- [consumer_main_loop](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/matmul/consumer_main_loop): Mojo function `linalg.matmul.gpu.sm100.matmul.consumer_main_loop` documentation
+- [matmul](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/matmul): Mojo module linalg.matmul.gpu.sm100.matmul documentation
+- [load_AB](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/matmul/load_AB): Mojo function `linalg.matmul.gpu.sm100.matmul.load_AB` documentation
+- [matmul_sm100_fallback](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/matmul/matmul_sm100_fallback): Mojo function `linalg.matmul.gpu.sm100.matmul.matmul_sm100_fallback` documentation
+- [matmul_sm100_fallback_kernel](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/matmul/matmul_sm100_fallback_kernel): Mojo function `linalg.matmul.gpu.sm100.matmul.matmul_sm100_fallback_kernel` documentation
+- [multi_stage_store_C](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/matmul/multi_stage_store_C): Mojo function `linalg.matmul.gpu.sm100.matmul.multi_stage_store_C` documentation
+- [register_epilogue](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/matmul/register_epilogue): Mojo function `linalg.matmul.gpu.sm100.matmul.register_epilogue` documentation
+- [shared_memory_epilogue](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/matmul/shared_memory_epilogue): Mojo function `linalg.matmul.gpu.sm100.matmul.shared_memory_epilogue` documentation
+- [stsm_helper](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/matmul/stsm_helper): Mojo function `linalg.matmul.gpu.sm100.matmul.stsm_helper` documentation
+- [ProducerConsumerPipeline](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/pipeline/ProducerConsumerPipeline): A producer-consumer pipeline using shared memory barriers to enforce synchronization (between producer and consumer warps).
+- [pipeline](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/pipeline): Mojo module linalg.matmul.gpu.sm100.pipeline documentation
+- [TileScheduler](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/tile_scheduler/TileScheduler): Mojo struct `linalg.matmul.gpu.sm100.tile_scheduler.TileScheduler` documentation
+- [WorkInfo](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/tile_scheduler/WorkInfo): Mojo struct `linalg.matmul.gpu.sm100.tile_scheduler.WorkInfo` documentation
+- [tile_scheduler](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/tile_scheduler): Mojo module linalg.matmul.gpu.sm100.tile_scheduler documentation
+- [TuningConfigSM100](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/tuning_configs/TuningConfigSM100): Mojo struct `linalg.matmul.gpu.sm100.tuning_configs.TuningConfigSM100` documentation
+- [tuning_configs](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/tuning_configs): Mojo module linalg.matmul.gpu.sm100.tuning_configs documentation
+- [blackwell_tma_umma_warp_specialized_blockwise_fp8_kernel](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/warp_specialized_blockwise_fp8/blackwell_tma_umma_warp_specialized_blockwise_fp8_kernel): Mojo function `linalg.matmul.gpu.sm100.warp_specialized_blockwise_fp8.blackwell_tma_umma_warp_specialized_blockwise_fp8_kernel` documentation
+- [warp_specialized_blockwise_fp8](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/warp_specialized_blockwise_fp8): Mojo module linalg.matmul.gpu.sm100.warp_specialized_blockwise_fp8 documentation
+- [load_AB](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/warp_specialized_blockwise_fp8/load_AB): Mojo function `linalg.matmul.gpu.sm100.warp_specialized_blockwise_fp8.load_AB` documentation
+- [multi_stage_reg_epilogue](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/warp_specialized_blockwise_fp8/multi_stage_reg_epilogue): Mojo function `linalg.matmul.gpu.sm100.warp_specialized_blockwise_fp8.multi_stage_reg_epilogue` documentation
+- [promote_accumulators](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/warp_specialized_blockwise_fp8/promote_accumulators): Mojo function `linalg.matmul.gpu.sm100.warp_specialized_blockwise_fp8.promote_accumulators` documentation
+- [sm100_warp_specialized_blockwise_fp8](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm100/warp_specialized_blockwise_fp8/sm100_warp_specialized_blockwise_fp8): Mojo function `linalg.matmul.gpu.sm100.warp_specialized_blockwise_fp8.sm100_warp_specialized_blockwise_fp8` documentation
+- [create_matmul_configs_ampere](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm80/dispatch/create_matmul_configs_ampere): Mojo function `linalg.matmul.gpu.sm80.dispatch.create_matmul_configs_ampere` documentation
+- [get_dispatch_table](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm80/dispatch/get_dispatch_table): Mojo function `linalg.matmul.gpu.sm80.dispatch.get_dispatch_table` documentation
+- [dispatch](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm80/dispatch): Mojo module linalg.matmul.gpu.sm80.dispatch documentation
+- [sm80](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm80): Provides the CPU Hopper backend implementations for matmuls.
+- [TuningConfigSM90](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/dispatch/TuningConfigSM90): Mojo struct `linalg.matmul.gpu.sm90.dispatch.TuningConfigSM90` documentation
+- [dispatch](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/dispatch): Mojo module linalg.matmul.gpu.sm90.dispatch documentation
+- [matmul_dispatch_sm90](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/dispatch/matmul_dispatch_sm90): Mojo function `linalg.matmul.gpu.sm90.dispatch.matmul_dispatch_sm90` documentation
+- [matmul_dispatch_sm90_bf16_fp32](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/dispatch/matmul_dispatch_sm90_bf16_fp32): Mojo function `linalg.matmul.gpu.sm90.dispatch.matmul_dispatch_sm90_bf16_fp32` documentation
+- [matmul_dispatch_sm90_fp8](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/dispatch/matmul_dispatch_sm90_fp8): Mojo function `linalg.matmul.gpu.sm90.dispatch.matmul_dispatch_sm90_fp8` documentation
+- [default_config_sm90](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/grouped_matmul/default_config_sm90): Mojo function `linalg.matmul.gpu.sm90.grouped_matmul.default_config_sm90` documentation
+- [grouped_matmul_sm90](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/grouped_matmul/grouped_matmul_sm90): Mojo function `linalg.matmul.gpu.sm90.grouped_matmul.grouped_matmul_sm90` documentation
+- [grouped_matmul](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/grouped_matmul): Mojo module linalg.matmul.gpu.sm90.grouped_matmul documentation
+- [sm90](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90): Provides the Nvidia Hopper backend implementations for matmuls.
+- [matmul](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/matmul): Mojo module linalg.matmul.gpu.sm90.matmul documentation
+- [warp_specialize_gemm_with_multicasting](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/matmul/warp_specialize_gemm_with_multicasting): Unified dispatcher for all matmul kernel variants.
+- [warp_specialize_gemm_with_multicasting_splitk](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/matmul/warp_specialize_gemm_with_multicasting_splitk): Mojo function `linalg.matmul.gpu.sm90.matmul.warp_specialize_gemm_with_multicasting_splitk` documentation
+- [matmul_kernel_persistent](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/matmul_kernel_persistent): Mojo module linalg.matmul.gpu.sm90.matmul_kernel_persistent documentation
+- [HopperMatmulSM90Kernel](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/matmul_kernels/HopperMatmulSM90Kernel): Hopper SM90 Matrix Multiplication kernel optimized for NVIDIA H100 GPUs.
+- [HopperMatmulSM90Kernel_SMem](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/matmul_kernels/HopperMatmulSM90Kernel_SMem): Shared memory layout for Hopper SM90 matrix multiplication kernel.
+- [find_K_alignment_upto_16B](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/matmul_kernels/find_K_alignment_upto_16B): Find alignment among 1B, 2B, 4B, 16B based on the row's bytes.
+- [matmul_kernels](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/matmul_kernels): Mojo module linalg.matmul.gpu.sm90.matmul_kernels documentation
+- [apply_epilogue_to_output_tile](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/matmul_output/apply_epilogue_to_output_tile): Apply the epilogue lambda function to the output data.
+- [calculate_output_tile_bounds](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/matmul_output/calculate_output_tile_bounds): Calculate the output bounds for the current thread block.
+- [handle_optimized_bfloat16_output](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/matmul_output/handle_optimized_bfloat16_output): Handle output using st.matrix instructions for optimized bf16 output.
+- [matmul_output](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/matmul_output): Mojo module linalg.matmul.gpu.sm90.matmul_output documentation
+- [write_gemm_output](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/matmul_output/write_gemm_output): Mojo function `linalg.matmul.gpu.sm90.matmul_output.write_gemm_output` documentation
+- [write_gemm_output_to_global_memory](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/matmul_output/write_gemm_output_to_global_memory): Write matrix multiplication output from registers to global memory.
+- [ConsumerTiles](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/ring_buffer/ConsumerTiles): Context manager for consumer access to ring buffer tiles.
+- [ProducerTiles](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/ring_buffer/ProducerTiles): Context manager for producer access to ring buffer tiles.
+- [RingBuffer](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/ring_buffer/RingBuffer): Ring buffer for managing pipeline synchronization between producers and consumers.
+- [RingBufferConsumer](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/ring_buffer/RingBufferConsumer): Consumer view of the ring buffer.
+- [RingBufferProducer](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/ring_buffer/RingBufferProducer): Producer view of the ring buffer.
+- [ring_buffer](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/ring_buffer): Ring buffer implementation for producer-consumer synchronization in GPU kernels.
+- [testbed](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/testbed): Mojo module linalg.matmul.gpu.sm90.testbed documentation
+- [test_matmul_sm90](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/testbed/test_matmul_sm90): Mojo function `linalg.matmul.gpu.sm90.testbed.test_matmul_sm90` documentation
+- [TileLoader](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/tile_loader/TileLoader): Base trait for tile loading mechanisms in matrix multiplication.
+- [TileLoaderCPAsync](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/tile_loader/TileLoaderCPAsync): Software-based tile loader using cp.async instructions.
+- [TileLoaderTMA](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/tile_loader/TileLoaderTMA): TMA-based tile loader for hardware-accelerated memory transfers.
+- [async_copy_with_bound_check](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/tile_loader/async_copy_with_bound_check): Helper function for cp.async with boundary checking.
+- [tile_loader](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/tile_loader): TileLoader module for efficient tile loading in GPU matrix multiplication.
+- [FragmentToSMemWriter](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/tile_writer/FragmentToSMemWriter): Writes WGMMA accumulator results from registers to shared memory using st.matrix.
+- [RegTileWriter](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/tile_writer/RegTileWriter): Base trait for tile writing mechanisms in matrix multiplication.
+- [RegisterToGMemWriter](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/tile_writer/RegisterToGMemWriter): Writer for transferring accumulator registers directly to global memory.
+- [SMemTileWriter](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/tile_writer/SMemTileWriter): Base trait for tile writing mechanisms in matrix multiplication.
+- [ThreadInfo](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/tile_writer/ThreadInfo): Thread identification within the warp group.
+- [TileCoordinates](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/tile_writer/TileCoordinates): Helper struct for managing tile coordinate offsets.
+- [TileWriterRegular](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/tile_writer/TileWriterRegular): Mojo struct `linalg.matmul.gpu.sm90.tile_writer.TileWriterRegular` documentation
+- [TileWriterTMA](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/tile_writer/TileWriterTMA): TMA-based tile writer for hardware-accelerated memory transfers.
+- [tile_writer](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/sm90/tile_writer): TileWriter module for efficient tile writing in GPU matrix multiplication.
+- [split_k_reduce](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/split_k_reduce): Mojo function `linalg.matmul.gpu.__init__.split_k_reduce` documentation
+- [MatmulSchedule](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/tile_scheduler/MatmulSchedule): Mojo struct `linalg.matmul.gpu.tile_scheduler.MatmulSchedule` documentation
+- [RasterOrder](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/tile_scheduler/RasterOrder): Mojo struct `linalg.matmul.gpu.tile_scheduler.RasterOrder` documentation
+- [TileScheduler](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/tile_scheduler/TileScheduler): Mojo struct `linalg.matmul.gpu.tile_scheduler.TileScheduler` documentation
+- [WorkInfo](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/tile_scheduler/WorkInfo): Mojo struct `linalg.matmul.gpu.tile_scheduler.WorkInfo` documentation
+- [tile_scheduler](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/tile_scheduler): Mojo module linalg.matmul.gpu.tile_scheduler documentation
+- [ReductionMode](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/tile_scheduler_splitk/ReductionMode): Mojo struct `linalg.matmul.gpu.tile_scheduler_splitk.ReductionMode` documentation
+- [SplitKTileScheduler](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/tile_scheduler_splitk/SplitKTileScheduler): Mojo struct `linalg.matmul.gpu.tile_scheduler_splitk.SplitKTileScheduler` documentation
+- [tile_scheduler_splitk](https://docs.modular.com/mojo/kernels/linalg/matmul/gpu/tile_scheduler_splitk): Mojo module linalg.matmul.gpu.tile_scheduler_splitk documentation
+- [matmul](https://docs.modular.com/mojo/kernels/linalg/matmul): Provides the backend implementation for matmuls.
+- [matmul](https://docs.modular.com/mojo/kernels/linalg/matmul/matmul): Mojo function `linalg.matmul.__init__.matmul` documentation
+- [Backend](https://docs.modular.com/mojo/kernels/linalg/matmul/vendor/blas/Backend): Mojo struct `linalg.matmul.vendor.blas.Backend` documentation
+- [Handle](https://docs.modular.com/mojo/kernels/linalg/matmul/vendor/blas/Handle): Mojo struct `linalg.matmul.vendor.blas.Handle` documentation
+- [blas](https://docs.modular.com/mojo/kernels/linalg/matmul/vendor/blas): Mojo module linalg.matmul.vendor.blas documentation
+- [matmul](https://docs.modular.com/mojo/kernels/linalg/matmul/vendor/blas/matmul): Matmul using the vendor BLAS library. With a global handle.
+- [vendor](https://docs.modular.com/mojo/kernels/linalg/matmul/vendor): Provides the Vendor backend implementations for matmuls.
+- [matmul](https://docs.modular.com/mojo/kernels/linalg/matmul/vendor/matmul): Mojo module linalg.matmul.vendor.matmul documentation
+- [matmul](https://docs.modular.com/mojo/kernels/linalg/matmul/vendor/matmul/matmul): This implements the matmul kernel for the Blackwell architecture. Note that we do not currently have pure mojo kernels which would utilize blackwel...
+- [matrix_band_part](https://docs.modular.com/mojo/kernels/linalg/matrix_band_part): The module implements matrix band part functions.
+- [matrix_band_part](https://docs.modular.com/mojo/kernels/linalg/matrix_band_part/matrix_band_part): Mojo function `linalg.matrix_band_part.matrix_band_part` documentation
+- [BTileGenerator](https://docs.modular.com/mojo/kernels/linalg/packing/BTileGenerator): Struct to encapsulate a tile of B that supports prepacking.
+- [PackMatrixCols](https://docs.modular.com/mojo/kernels/linalg/packing/PackMatrixCols): Pack columns from a matrix into the mlas packed layout and extract inner vectors of columns into the packed inner dimension, e.g. extracts [X, Y] a...
+- [PackMatrixRows](https://docs.modular.com/mojo/kernels/linalg/packing/PackMatrixRows): Pack rows from a matrix into the mlas packed layout and extract inner vectors of rows into the packed inner dimension, e.g. extract tile [X, Y] and...
+- [packing](https://docs.modular.com/mojo/kernels/linalg/packing): Mojo module linalg.packing documentation
+- [pack_b](https://docs.modular.com/mojo/kernels/linalg/packing/pack_b): Utility function to pack the entire B matrix, such that each [tile_n // inner_size, tile_k, inner_size] tile of src is contiguous in dst.
+- [pack_b_ndbuffer](https://docs.modular.com/mojo/kernels/linalg/packing/pack_b_ndbuffer): Mojo function `linalg.packing.pack_b_ndbuffer` documentation
+- [pack_matmul_b_shape_func](https://docs.modular.com/mojo/kernels/linalg/packing/pack_matmul_b_shape_func): Mojo function `linalg.packing.pack_matmul_b_shape_func` documentation
+- [pack_transposed_b_ndbuffer](https://docs.modular.com/mojo/kernels/linalg/packing/pack_transposed_b_ndbuffer): Mojo function `linalg.packing.pack_transposed_b_ndbuffer` documentation
+- [apply_q](https://docs.modular.com/mojo/kernels/linalg/qr_factorization/apply_q): Applies the implicit Q factor stored in `A` and `sigma` after calling `qr_factorization` to the `X` matrix.
+- [form_q](https://docs.modular.com/mojo/kernels/linalg/qr_factorization/form_q): Forms the Q factor from the implicit Q factor stored in `A` and `sigma` after calling `qr_factorization` and stores the result in `Q`.
+- [qr_factorization](https://docs.modular.com/mojo/kernels/linalg/qr_factorization): Mojo module linalg.qr_factorization documentation
+- [qr_factorization](https://docs.modular.com/mojo/kernels/linalg/qr_factorization/qr_factorization): Performs QR factorization of a matrix `A` using the Householder reflector method.
+- [IteratorScatterGatherAmd](https://docs.modular.com/mojo/kernels/linalg/structuring/IteratorScatterGatherAmd): Iterator-based AMD scatter-gather for DRAM-register data movement.
+- [NVIDIASharedMemoryBasePtr](https://docs.modular.com/mojo/kernels/linalg/structuring/NVIDIASharedMemoryBasePtr): Mojo struct `linalg.structuring.NVIDIASharedMemoryBasePtr` documentation
+- [SMemArrayType](https://docs.modular.com/mojo/kernels/linalg/structuring/SMemArrayType): Shared memory array of fixed size.
+- [SMemTileArrayType](https://docs.modular.com/mojo/kernels/linalg/structuring/SMemTileArrayType): Array of tiles in shared memory.
+- [ScatterGatherAmd](https://docs.modular.com/mojo/kernels/linalg/structuring/ScatterGatherAmd): AMD tile-based scatter-gather for DRAM-register data movement.
+- [SharedMemoryBasePtr](https://docs.modular.com/mojo/kernels/linalg/structuring/SharedMemoryBasePtr): Mojo trait `linalg.structuring.SharedMemoryBasePtr` documentation
+- [SharedMemoryManager](https://docs.modular.com/mojo/kernels/linalg/structuring/SharedMemoryManager): Mojo struct `linalg.structuring.SharedMemoryManager` documentation
+- [structuring](https://docs.modular.com/mojo/kernels/linalg/structuring): Mojo module linalg.structuring documentation
+- [transpose](https://docs.modular.com/mojo/kernels/linalg/transpose): The module implements Transpose functions.
+- [transpose](https://docs.modular.com/mojo/kernels/linalg/transpose/transpose): Permute the axis of `input` based on `perms`, and place the result in `output`.
+- [transpose_2d](https://docs.modular.com/mojo/kernels/linalg/transpose/transpose_2d): Mojo function `linalg.transpose.transpose_2d` documentation
+- [transpose_3d_swap_inner](https://docs.modular.com/mojo/kernels/linalg/transpose/transpose_3d_swap_inner): Mojo function `linalg.transpose.transpose_3d_swap_inner` documentation
+- [transpose_3d_swap_outer](https://docs.modular.com/mojo/kernels/linalg/transpose/transpose_3d_swap_outer): Mojo function `linalg.transpose.transpose_3d_swap_outer` documentation
+- [transpose_4d_swap_middle](https://docs.modular.com/mojo/kernels/linalg/transpose/transpose_4d_swap_middle): Mojo function `linalg.transpose.transpose_4d_swap_middle` documentation
+- [transpose_inplace](https://docs.modular.com/mojo/kernels/linalg/transpose/transpose_inplace): Mojo function `linalg.transpose.transpose_inplace` documentation
+- [transpose_strided](https://docs.modular.com/mojo/kernels/linalg/transpose/transpose_strided): Mojo function `linalg.transpose.transpose_strided` documentation
+- [transpose_trivial_memcpy](https://docs.modular.com/mojo/kernels/linalg/transpose/transpose_trivial_memcpy): Mojo function `linalg.transpose.transpose_trivial_memcpy` documentation
+- [GemmShape](https://docs.modular.com/mojo/kernels/linalg/utils/GemmShape): Helper class to unpack gemm dimension and layout.
+- [InnerKernelID](https://docs.modular.com/mojo/kernels/linalg/utils/InnerKernelID): Mojo struct `linalg.utils.InnerKernelID` documentation
+- [KernelConfig](https://docs.modular.com/mojo/kernels/linalg/utils/KernelConfig): Static configuration of the matmul inner kernel.
+- [MicroKernelShape](https://docs.modular.com/mojo/kernels/linalg/utils/MicroKernelShape): Record describing the inner kernel shape.
+- [SubMatmulConfig](https://docs.modular.com/mojo/kernels/linalg/utils/SubMatmulConfig): Static configuration of sub-matrices in parallel matmul.
+- [apply_epilogue](https://docs.modular.com/mojo/kernels/linalg/utils/apply_epilogue): Mojo function `linalg.utils.apply_epilogue` documentation
+- [calculate_tile_n_k](https://docs.modular.com/mojo/kernels/linalg/utils/calculate_tile_n_k): Helper heuristic function to decide on tile size to partition the matmul given the cache size and desired data layout.
+- [dispatch_get_kernel_type](https://docs.modular.com/mojo/kernels/linalg/utils/dispatch_get_kernel_type): Mojo function `linalg.utils.dispatch_get_kernel_type` documentation
+- [get_kernel_config](https://docs.modular.com/mojo/kernels/linalg/utils/get_kernel_config): Utility function to extract matmul configuration parameters for exported Functions.     TODO: Add target dependent configuration parameters.
+- [get_kernel_type](https://docs.modular.com/mojo/kernels/linalg/utils/get_kernel_type): Mojo function `linalg.utils.get_kernel_type` documentation
+- [get_matmul_arch_factor](https://docs.modular.com/mojo/kernels/linalg/utils/get_matmul_arch_factor): Mojo function `linalg.utils.get_matmul_arch_factor` documentation
+- [get_matmul_kernel_shape](https://docs.modular.com/mojo/kernels/linalg/utils/get_matmul_kernel_shape): Mojo function `linalg.utils.get_matmul_kernel_shape` documentation
+- [get_matmul_kernel_shape_ARM](https://docs.modular.com/mojo/kernels/linalg/utils/get_matmul_kernel_shape_ARM): Mojo function `linalg.utils.get_matmul_kernel_shape_ARM` documentation
+- [get_matmul_kernel_shape_x86](https://docs.modular.com/mojo/kernels/linalg/utils/get_matmul_kernel_shape_x86): Mojo function `linalg.utils.get_matmul_kernel_shape_x86` documentation
+- [get_matmul_num_tasks](https://docs.modular.com/mojo/kernels/linalg/utils/get_matmul_num_tasks): Compute the number of tasks for parallel matmul. The max number of tasks is typically the number of threads/cores.
+- [get_matmul_prefetch_b_distance_k](https://docs.modular.com/mojo/kernels/linalg/utils/get_matmul_prefetch_b_distance_k): Mojo function `linalg.utils.get_matmul_prefetch_b_distance_k` documentation
+- [get_min_task_size](https://docs.modular.com/mojo/kernels/linalg/utils/get_min_task_size): Mojo function `linalg.utils.get_min_task_size` documentation
+- [get_packB_unroll_factor](https://docs.modular.com/mojo/kernels/linalg/utils/get_packB_unroll_factor): Mojo function `linalg.utils.get_packB_unroll_factor` documentation
+- [get_pack_data_size](https://docs.modular.com/mojo/kernels/linalg/utils/get_pack_data_size): Utility to compute the number of elements to pack in each tile. Returns:     The number of elements to pack.
+- [get_partitioned_matmul](https://docs.modular.com/mojo/kernels/linalg/utils/get_partitioned_matmul): Mojo function `linalg.utils.get_partitioned_matmul` documentation
+- [get_partitioned_matmul_mojo](https://docs.modular.com/mojo/kernels/linalg/utils/get_partitioned_matmul_mojo): Mojo function `linalg.utils.get_partitioned_matmul_mojo` documentation
+- [get_partitioned_matmul_mojo_shape](https://docs.modular.com/mojo/kernels/linalg/utils/get_partitioned_matmul_mojo_shape): Mojo function `linalg.utils.get_partitioned_matmul_mojo_shape` documentation
+- [utils](https://docs.modular.com/mojo/kernels/linalg/utils): Mojo module linalg.utils documentation
+- [packA_i8mm](https://docs.modular.com/mojo/kernels/linalg/utils/packA_i8mm): Mojo function `linalg.utils.packA_i8mm` documentation
+- [partition_work](https://docs.modular.com/mojo/kernels/linalg/utils/partition_work): Mojo function `linalg.utils.partition_work` documentation
+- [select_inner_kernel](https://docs.modular.com/mojo/kernels/linalg/utils/select_inner_kernel): Mojo function `linalg.utils.select_inner_kernel` documentation
+- [use_i8mm_fn](https://docs.modular.com/mojo/kernels/linalg/utils/use_i8mm_fn): Mojo function `linalg.utils.use_i8mm_fn` documentation
+- [use_vnni_fn](https://docs.modular.com/mojo/kernels/linalg/utils/use_vnni_fn): Mojo function `linalg.utils.use_vnni_fn` documentation
+- [MatmulConfig](https://docs.modular.com/mojo/kernels/linalg/utils_gpu/MatmulConfig): Static configuration of GPU matmul.
+- [MatmulKernels](https://docs.modular.com/mojo/kernels/linalg/utils_gpu/MatmulKernels): Supported matmul kernels.
+- [block_swizzle](https://docs.modular.com/mojo/kernels/linalg/utils_gpu/block_swizzle): Mojo function `linalg.utils_gpu.block_swizzle` documentation
+- [create_hilbert_lut](https://docs.modular.com/mojo/kernels/linalg/utils_gpu/create_hilbert_lut): Precompute Hilbert-curve block swizzle lookup-table for a rectangular grid.
+- [get_hilbert_lut_with_cache](https://docs.modular.com/mojo/kernels/linalg/utils_gpu/get_hilbert_lut_with_cache): Get Hilbert lookup table using global cache (no struct needed).
+- [utils_gpu](https://docs.modular.com/mojo/kernels/linalg/utils_gpu): Mojo module linalg.utils_gpu documentation
+- [select_config](https://docs.modular.com/mojo/kernels/linalg/utils_gpu/select_config): Mojo function `linalg.utils_gpu.select_config` documentation
+- [elu](https://docs.modular.com/mojo/kernels/nn/activations/elu): Compute the Elu Op using the equation $z if z >= 0 else alpha*(e^z -1)$.
+- [activations](https://docs.modular.com/mojo/kernels/nn/activations): The module contains implementations of activation functions.
+- [leaky_relu](https://docs.modular.com/mojo/kernels/nn/activations/leaky_relu): Compute the Leaky ReLU using the equation $max(0, x) + negative_slope * min(0, x)$.
+- [relu](https://docs.modular.com/mojo/kernels/nn/activations/relu): Compute the Relu Op using the equation $max(0, x)$.
+- [relu_n1](https://docs.modular.com/mojo/kernels/nn/activations/relu_n1): Compute the Relu N1 Op using the equation $max(min(x,1),-1)$.
+- [sign](https://docs.modular.com/mojo/kernels/nn/activations/sign): Compute the sign (0, 1) of the input value.
+- [arange](https://docs.modular.com/mojo/kernels/nn/arange/arange): Mojo function `nn.arange.arange` documentation
+- [arange_shape](https://docs.modular.com/mojo/kernels/nn/arange/arange_shape): Mojo function `nn.arange.arange_shape` documentation
+- [arange](https://docs.modular.com/mojo/kernels/nn/arange): Mojo module nn.arange documentation
+- [arg_nonzero](https://docs.modular.com/mojo/kernels/nn/arg_nonzero/arg_nonzero): Gather the indices of all non-zero elements in input buffer storing the indices in the output_buffer.
+- [arg_nonzero_shape](https://docs.modular.com/mojo/kernels/nn/arg_nonzero/arg_nonzero_shape): Return [NumNonZeros, InputRank] where NumNonZeros are the number of non-zero elements in the input.
+- [arg_nonzero](https://docs.modular.com/mojo/kernels/nn/arg_nonzero): Mojo module nn.arg_nonzero documentation
+- [argmax](https://docs.modular.com/mojo/kernels/nn/argmaxmin/argmax): Finds the indices of the maximum element along the specified axis.
+- [argmin](https://docs.modular.com/mojo/kernels/nn/argmaxmin/argmin): Finds the indices of the minimum element along the specified axis.
+- [argmaxmin](https://docs.modular.com/mojo/kernels/nn/argmaxmin): Mojo module nn.argmaxmin documentation
+- [argmax_gpu](https://docs.modular.com/mojo/kernels/nn/argmaxmin_gpu/argmax_gpu): Mojo function `nn.argmaxmin_gpu.argmax_gpu` documentation
+- [argmaxmin_gpu](https://docs.modular.com/mojo/kernels/nn/argmaxmin_gpu/argmaxmin_gpu): Wraps the Top-K GPU kernel with K=1 to perform argmax on the inner-most dimension.
+- [argmin_gpu](https://docs.modular.com/mojo/kernels/nn/argmaxmin_gpu/argmin_gpu): Mojo function `nn.argmaxmin_gpu.argmin_gpu` documentation
+- [argmaxmin_gpu](https://docs.modular.com/mojo/kernels/nn/argmaxmin_gpu): Mojo module nn.argmaxmin_gpu documentation
+- [argsort](https://docs.modular.com/mojo/kernels/nn/argsort/argsort): Performs argsort on input buffer, storing indices in output buffer.
+- [argsort](https://docs.modular.com/mojo/kernels/nn/argsort): Mojo module nn.argsort documentation
+- [Attention](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/attention/Attention): Mojo struct `nn.attention.gpu.amd.attention.Attention` documentation
+- [AttentionConfig](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/attention/AttentionConfig): Mojo trait `nn.attention.gpu.amd.attention.AttentionConfig` documentation
+- [attention](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/attention): Mojo module nn.attention.gpu.amd.attention documentation
+- [KBufferConfig](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/buffers/KBufferConfig): Mojo struct `nn.attention.gpu.amd.buffers.KBufferConfig` documentation
+- [KVBuffer](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/buffers/KVBuffer): Mojo trait `nn.attention.gpu.amd.buffers.KVBuffer` documentation
+- [KVBufferConfig](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/buffers/KVBufferConfig): Mojo trait `nn.attention.gpu.amd.buffers.KVBufferConfig` documentation
+- [KVBufferImpl](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/buffers/KVBufferImpl): Mojo struct `nn.attention.gpu.amd.buffers.KVBufferImpl` documentation
+- [OutputRegisterBuffer](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/buffers/OutputRegisterBuffer): Mojo struct `nn.attention.gpu.amd.buffers.OutputRegisterBuffer` documentation
+- [PRegisterBuffer](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/buffers/PRegisterBuffer): Mojo struct `nn.attention.gpu.amd.buffers.PRegisterBuffer` documentation
+- [QRegisterBuffer](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/buffers/QRegisterBuffer): Mojo struct `nn.attention.gpu.amd.buffers.QRegisterBuffer` documentation
+- [RegisterBuffer](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/buffers/RegisterBuffer): Mojo trait `nn.attention.gpu.amd.buffers.RegisterBuffer` documentation
+- [RegisterMMABuffer](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/buffers/RegisterMMABuffer): Mojo trait `nn.attention.gpu.amd.buffers.RegisterMMABuffer` documentation
+- [VBufferConfig](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/buffers/VBufferConfig): Mojo struct `nn.attention.gpu.amd.buffers.VBufferConfig` documentation
+- [VBufferTransposeLoads](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/buffers/VBufferTransposeLoads): Mojo struct `nn.attention.gpu.amd.buffers.VBufferTransposeLoads` documentation
+- [buffers](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/buffers): Mojo module nn.attention.gpu.amd.buffers documentation
+- [amd](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd): AMD GPU attention operations.
+- [MHAAttentionConfig](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/mha_gfx942/MHAAttentionConfig): Mojo struct `nn.attention.gpu.amd.mha_gfx942.MHAAttentionConfig` documentation
+- [mha_gfx942](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/mha_gfx942): Mojo module nn.attention.gpu.amd.mha_gfx942 documentation
+- [KVBuffer](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/mha_gfx950/KVBuffer): Mojo struct `nn.attention.gpu.amd.mha_gfx950.KVBuffer` documentation
+- [KVCacheIterator](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/mha_gfx950/KVCacheIterator): Mojo struct `nn.attention.gpu.amd.mha_gfx950.KVCacheIterator` documentation
+- [WaitCountArg](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/mha_gfx950/WaitCountArg): Mojo struct to encapsulate waitcnt argument bitfields and helpers.
+- [block_sync_lds](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/mha_gfx950/block_sync_lds): Synchronize LDS (local data share) with waitcnt barrier.
+- [block_sync_lds_direct_load](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/mha_gfx950/block_sync_lds_direct_load): Synchronize LDS for direct load with waitcnt barrier.
+- [copy_dram_to_sram_lds](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/mha_gfx950/copy_dram_to_sram_lds): Mojo function `nn.attention.gpu.amd.mha_gfx950.copy_dram_to_sram_lds` documentation
+- [mha_gfx950](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/mha_gfx950): Mojo module nn.attention.gpu.amd.mha_gfx950 documentation
+- [load_16x32](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/mha_gfx950/load_16x32): Mojo function `nn.attention.gpu.amd.mha_gfx950.load_16x32` documentation
+- [load_4x16](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/mha_gfx950/load_4x16): Mojo function `nn.attention.gpu.amd.mha_gfx950.load_4x16` documentation
+- [load_8x32](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/mha_gfx950/load_8x32): Mojo function `nn.attention.gpu.amd.mha_gfx950.load_8x32` documentation
+- [load_b](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/mha_gfx950/load_b): Mojo function `nn.attention.gpu.amd.mha_gfx950.load_b` documentation
+- [load_b_](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/mha_gfx950/load_b_): Mojo function `nn.attention.gpu.amd.mha_gfx950.load_b_` documentation
+- [s_waitcnt](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/mha_gfx950/s_waitcnt): Issues an s_waitcnt with the specified counters.
+- [s_waitcnt_barrier](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/mha_gfx950/s_waitcnt_barrier): Issues an s_waitcnt followed by a barrier.
+- [MLAAttentionConfig](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/mla/MLAAttentionConfig): Mojo struct `nn.attention.gpu.amd.mla.MLAAttentionConfig` documentation
+- [mla](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/mla): Mojo module nn.attention.gpu.amd.mla documentation
+- [mma](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/mma): Mojo module nn.attention.gpu.amd.mma documentation
+- [mma](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/mma/mma): Mojo function `nn.attention.gpu.amd.mma.mma` documentation
+- [GlobalMemoryManager](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/utils/GlobalMemoryManager): Mojo struct `nn.attention.gpu.amd.utils.GlobalMemoryManager` documentation
+- [SharedMemoryManager](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/utils/SharedMemoryManager): Mojo struct `nn.attention.gpu.amd.utils.SharedMemoryManager` documentation
+- [convert_f32_to_bf16](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/utils/convert_f32_to_bf16): Mojo function `nn.attention.gpu.amd.utils.convert_f32_to_bf16` documentation
+- [copy_local_to_dram2](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/utils/copy_local_to_dram2): Mojo function `nn.attention.gpu.amd.utils.copy_local_to_dram2` documentation
+- [get_fragment_layout](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/utils/get_fragment_layout): Mojo function `nn.attention.gpu.amd.utils.get_fragment_layout` documentation
+- [get_nested_fragment_layout](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/utils/get_nested_fragment_layout): Mojo function `nn.attention.gpu.amd.utils.get_nested_fragment_layout` documentation
+- [get_warp_coords](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/utils/get_warp_coords): Mojo function `nn.attention.gpu.amd.utils.get_warp_coords` documentation
+- [get_warp_layout](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/utils/get_warp_layout): Mojo function `nn.attention.gpu.amd.utils.get_warp_layout` documentation
+- [utils](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/utils): Mojo module nn.attention.gpu.amd.utils documentation
+- [pad](https://docs.modular.com/mojo/kernels/nn/attention/gpu/amd/utils/pad): Mojo function `nn.attention.gpu.amd.utils.pad` documentation
+- [gpu](https://docs.modular.com/mojo/kernels/nn/attention/gpu): GPU attention operations.
+- [attention](https://docs.modular.com/mojo/kernels/nn/attention): Attention operations.
+- [cpu_bicubic_kernel](https://docs.modular.com/mojo/kernels/nn/bicubic/cpu_bicubic_kernel): Perform bicubic interpolation on a LayoutTensor of form NCHW.
+- [cubic_kernel](https://docs.modular.com/mojo/kernels/nn/bicubic/cubic_kernel): Cubic interpolation kernel matching PyTorch/torchvision's BICUBIC filter.
+- [gpu_bicubic_kernel](https://docs.modular.com/mojo/kernels/nn/bicubic/gpu_bicubic_kernel): Perform bicubic interpolation using GPU.
+- [bicubic](https://docs.modular.com/mojo/kernels/nn/bicubic): This module provides CPU and GPU implementations for bicubic interpolation.
+- [map_output_to_input_coord](https://docs.modular.com/mojo/kernels/nn/bicubic/map_output_to_input_coord): Map output pixel coordinate to input coordinate using center alignment. This implements the standard coordinate mapping for image resizing: input_c...
+- [resize_bicubic](https://docs.modular.com/mojo/kernels/nn/bicubic/resize_bicubic): Perform bicubic interpolation.
+- [broadcast](https://docs.modular.com/mojo/kernels/nn/broadcast/broadcast): For each axis of `input`, if the dimension is 1, duplicate the data at each index of the corresponding axis in `output`, otherwise copy over the en...
+- [broadcast_impl](https://docs.modular.com/mojo/kernels/nn/broadcast/broadcast_impl): For each axis of `input` âˆˆ [axis, rank), if the dimension is 1, duplicate the data at each index of the corresponding axis in `output`, otherwise c...
+- [broadcast](https://docs.modular.com/mojo/kernels/nn/broadcast): Mojo module nn.broadcast documentation
+- [concat](https://docs.modular.com/mojo/kernels/nn/concat/concat): Mojo function `nn.concat.concat` documentation
+- [concat_shape](https://docs.modular.com/mojo/kernels/nn/concat/concat_shape): Compute the output shape of a `pad` operation, and assert the inputs are compatible.
+- [fused_concat](https://docs.modular.com/mojo/kernels/nn/concat/fused_concat): Mojo function `nn.concat.fused_concat` documentation
+- [concat](https://docs.modular.com/mojo/kernels/nn/concat): Mojo module nn.concat documentation
+- [memcpy_or_fuse](https://docs.modular.com/mojo/kernels/nn/concat/memcpy_or_fuse): Mojo function `nn.concat.memcpy_or_fuse` documentation
+- [ConvDirectNHWC](https://docs.modular.com/mojo/kernels/nn/conv/ConvDirectNHWC): Implement the outer loops for direct convolution. Collapse N, HO, WO into one dimension n_ho_wo. Tile n_ho_wo, C, and F. The tile factor for C and ...
+- [CuDNNConvMeta](https://docs.modular.com/mojo/kernels/nn/conv/CuDNNConvMeta): Mojo struct `nn.conv.CuDNNConvMeta` documentation
+- [Naive2dConvolution](https://docs.modular.com/mojo/kernels/nn/conv/Naive2dConvolution): Struct wrapper for naive 2d convolution implementation.
+- [accumulate_wo_tile_1d](https://docs.modular.com/mojo/kernels/nn/conv/accumulate_wo_tile_1d): Update one row in the output for a given (c, f) tile.
+- [accumulate_wo_tile_2d](https://docs.modular.com/mojo/kernels/nn/conv/accumulate_wo_tile_2d): Mojo function `nn.conv.accumulate_wo_tile_2d` documentation
+- [accumulate_wo_tile_3d](https://docs.modular.com/mojo/kernels/nn/conv/accumulate_wo_tile_3d): Mojo function `nn.conv.accumulate_wo_tile_3d` documentation
+- [check_cudnn_error](https://docs.modular.com/mojo/kernels/nn/conv/check_cudnn_error): Mojo function `nn.conv.check_cudnn_error` documentation
+- [conv1d_update_wo_tile](https://docs.modular.com/mojo/kernels/nn/conv/conv1d_update_wo_tile): Mojo function `nn.conv.conv1d_update_wo_tile` documentation
+- [conv2d_gpu_naive_nhwc_rscf](https://docs.modular.com/mojo/kernels/nn/conv/conv2d_gpu_naive_nhwc_rscf): Mojo function `nn.conv.conv2d_gpu_naive_nhwc_rscf` documentation
+- [conv2d_update_wo_tile](https://docs.modular.com/mojo/kernels/nn/conv/conv2d_update_wo_tile): Mojo function `nn.conv.conv2d_update_wo_tile` documentation
+- [conv3d_gpu_naive_ndhwc_qrscf](https://docs.modular.com/mojo/kernels/nn/conv/conv3d_gpu_naive_ndhwc_qrscf): Mojo function `nn.conv.conv3d_gpu_naive_ndhwc_qrscf` documentation
+- [conv3d_update_wo_tile](https://docs.modular.com/mojo/kernels/nn/conv/conv3d_update_wo_tile): Mojo function `nn.conv.conv3d_update_wo_tile` documentation
+- [conv_cudnn](https://docs.modular.com/mojo/kernels/nn/conv/conv_cudnn): Mojo function `nn.conv.conv_cudnn` documentation
+- [conv_gpu](https://docs.modular.com/mojo/kernels/nn/conv/conv_gpu): Mojo function `nn.conv.conv_gpu` documentation
+- [conv_nhwc_direct](https://docs.modular.com/mojo/kernels/nn/conv/conv_nhwc_direct): Mojo function `nn.conv.conv_nhwc_direct` documentation
+- [conv_shape](https://docs.modular.com/mojo/kernels/nn/conv/conv_shape): Compute the output shape of a `conv` operation, and assert the inputs are compatible.
+- [get_cudnn_dtype](https://docs.modular.com/mojo/kernels/nn/conv/get_cudnn_dtype): Map Mojo DType to cuDNN data type.
+- [conv](https://docs.modular.com/mojo/kernels/nn/conv): Mojo module nn.conv documentation
+- [pack_conv_filter_shape](https://docs.modular.com/mojo/kernels/nn/conv/pack_conv_filter_shape): Compute the output shape of convolution filter packing.
+- [pack_filter](https://docs.modular.com/mojo/kernels/nn/conv/pack_filter): This packs the filter form RSCF to FRSCf. Use the default micro kernel size for dynamic shapes.
+- [pack_filter_shape](https://docs.modular.com/mojo/kernels/nn/conv/pack_filter_shape): Compute the shape of packed filter. The packed layout is FRSCf. shape_ref should be allocated with size 5 outside this kernel.
+- [pack_filter_shape_impl](https://docs.modular.com/mojo/kernels/nn/conv/pack_filter_shape_impl): Compute the shape of packed filter. The packed layout is FRSCf. shape_ref should be allocated with size 5 outside this kernel.
+- [ConvTransposedPacked](https://docs.modular.com/mojo/kernels/nn/conv_transpose/ConvTransposedPacked): Mojo struct `nn.conv_transpose.ConvTransposedPacked` documentation
+- [accumulate_wo_tile](https://docs.modular.com/mojo/kernels/nn/conv_transpose/accumulate_wo_tile): Mojo function `nn.conv_transpose.accumulate_wo_tile` documentation
+- [conv_transpose_naive](https://docs.modular.com/mojo/kernels/nn/conv_transpose/conv_transpose_naive): Implements the ConvTranspose operator from the MO spec.
+- [conv_transpose_shape](https://docs.modular.com/mojo/kernels/nn/conv_transpose/conv_transpose_shape): Compute the output shape of a `conv-transpose` operation, and assert the inputs are compatible.
+- [conv_transposed_cpu](https://docs.modular.com/mojo/kernels/nn/conv_transpose/conv_transposed_cpu): Mojo function `nn.conv_transpose.conv_transposed_cpu` documentation
+- [conv_transposed_cudnn](https://docs.modular.com/mojo/kernels/nn/conv_transpose/conv_transposed_cudnn): Mojo function `nn.conv_transpose.conv_transposed_cudnn` documentation
+- [conv_transposed_gpu](https://docs.modular.com/mojo/kernels/nn/conv_transpose/conv_transposed_gpu): Mojo function `nn.conv_transpose.conv_transposed_gpu` documentation
+- [get_num_partitions](https://docs.modular.com/mojo/kernels/nn/conv_transpose/get_num_partitions): Partition the workload in (batch&group, C, F, H) dimensions. HOWO is the combination of HO and WO dimensions. The actual number of tasks are the pr...
+- [get_partition](https://docs.modular.com/mojo/kernels/nn/conv_transpose/get_partition): Mojo function `nn.conv_transpose.get_partition` documentation
+- [conv_transpose](https://docs.modular.com/mojo/kernels/nn/conv_transpose): Mojo module nn.conv_transpose documentation
+- [pack_filter](https://docs.modular.com/mojo/kernels/nn/conv_transpose/pack_filter): This packs the filter form RSFC to FRSCf.
+- [pack_filter_shape](https://docs.modular.com/mojo/kernels/nn/conv_transpose/pack_filter_shape): Compute the output shape of transposed convolution filter packing.
+- [update_w_tile_2d](https://docs.modular.com/mojo/kernels/nn/conv_transpose/update_w_tile_2d): Mojo function `nn.conv_transpose.update_w_tile_2d` documentation
+- [update_w_tile_3d](https://docs.modular.com/mojo/kernels/nn/conv_transpose/update_w_tile_3d): Mojo function `nn.conv_transpose.update_w_tile_3d` documentation
+- [ConvAlgorithm](https://docs.modular.com/mojo/kernels/nn/conv_utils/ConvAlgorithm): Mojo struct `nn.conv_utils.ConvAlgorithm` documentation
+- [ConvInfoStatic](https://docs.modular.com/mojo/kernels/nn/conv_utils/ConvInfoStatic): Mojo struct `nn.conv_utils.ConvInfoStatic` documentation
+- [ConvPartition](https://docs.modular.com/mojo/kernels/nn/conv_utils/ConvPartition): Work range for a partition.
+- [ConvShape](https://docs.modular.com/mojo/kernels/nn/conv_utils/ConvShape): A shape struct describing the convolution dimensions.
+- [align_down_residual](https://docs.modular.com/mojo/kernels/nn/conv_utils/align_down_residual): Returns the remainder after aligning down value to alignment.
+- [append_shape](https://docs.modular.com/mojo/kernels/nn/conv_utils/append_shape): Append input shape by inserting `last2nd` and `last` at the end.
+- [extend_shape](https://docs.modular.com/mojo/kernels/nn/conv_utils/extend_shape): Extend input shape by inserting `first` and `last` at both ends.
+- [get_conv2d_shape](https://docs.modular.com/mojo/kernels/nn/conv_utils/get_conv2d_shape): Mojo function `nn.conv_utils.get_conv2d_shape` documentation
+- [get_conv_num_partitions](https://docs.modular.com/mojo/kernels/nn/conv_utils/get_conv_num_partitions): Partition the workload in (batch, C, F, HOWO) dimensions. HOWO is the combination of HO and WO dimensions. The actual number of tasks are the produ...
+- [get_conv_num_tasks](https://docs.modular.com/mojo/kernels/nn/conv_utils/get_conv_num_tasks): Mojo function `nn.conv_utils.get_conv_num_tasks` documentation
+- [get_conv_shape](https://docs.modular.com/mojo/kernels/nn/conv_utils/get_conv_shape): Mojo function `nn.conv_utils.get_conv_shape` documentation
+- [get_conv_tile_shape](https://docs.modular.com/mojo/kernels/nn/conv_utils/get_conv_tile_shape): Compute the (c, f) tile shape in L2. Assume NHWC layout, the tile shape is (R, S, c_tile, f_tile). R and S are by default fully covered. The heuris...
+- [get_conv_tile_size](https://docs.modular.com/mojo/kernels/nn/conv_utils/get_conv_tile_size): Mojo function `nn.conv_utils.get_conv_tile_size` documentation
+- [get_direct_conv_micro_kernel_height](https://docs.modular.com/mojo/kernels/nn/conv_utils/get_direct_conv_micro_kernel_height): Mojo function `nn.conv_utils.get_direct_conv_micro_kernel_height` documentation
+- [get_direct_conv_micro_kernel_width](https://docs.modular.com/mojo/kernels/nn/conv_utils/get_direct_conv_micro_kernel_width): Mojo function `nn.conv_utils.get_direct_conv_micro_kernel_width` documentation
+- [get_micro_kernel_shape](https://docs.modular.com/mojo/kernels/nn/conv_utils/get_micro_kernel_shape): Mojo function `nn.conv_utils.get_micro_kernel_shape` documentation
+- [get_partition](https://docs.modular.com/mojo/kernels/nn/conv_utils/get_partition): Mojo function `nn.conv_utils.get_partition` documentation
+- [conv_utils](https://docs.modular.com/mojo/kernels/nn/conv_utils): Mojo module nn.conv_utils documentation
+- [reorder_padding](https://docs.modular.com/mojo/kernels/nn/conv_utils/reorder_padding): Mojo function `nn.conv_utils.reorder_padding` documentation
+- [cumsum](https://docs.modular.com/mojo/kernels/nn/cumsum/cumsum): Implements the CumSum operator from the ONNX spec: https://github.com/onnx/onnx/blob/main/docs/Operators.md#CumSum Computes cumulative sum of the i...
+- [cumsum](https://docs.modular.com/mojo/kernels/nn/cumsum): Mojo module nn.cumsum documentation
+- [flash_attention](https://docs.modular.com/mojo/kernels/nn/flash_attention/flash_attention): Mojo function `nn.flash_attention.flash_attention` documentation
+- [flash_attention_kv_cache](https://docs.modular.com/mojo/kernels/nn/flash_attention/flash_attention_kv_cache): Mojo function `nn.flash_attention.flash_attention_kv_cache` documentation
+- [flash_attention_split_kv](https://docs.modular.com/mojo/kernels/nn/flash_attention/flash_attention_split_kv): Variant of flash attention that takes the previous KV cache `input_{k,v}_cache_fn` and the current KV tensors `input_k_fn` and `input_v_fn` as sepa...
+- [flash_attention](https://docs.modular.com/mojo/kernels/nn/flash_attention): Mojo module nn.flash_attention documentation
+- [fold](https://docs.modular.com/mojo/kernels/nn/fold/fold): Folds array of sliding local blocks into a single output tensor.
+- [fold_shape](https://docs.modular.com/mojo/kernels/nn/fold/fold_shape): Returns the shape of the output tensor of the fold operation.
+- [fold](https://docs.modular.com/mojo/kernels/nn/fold): Implements the fold operation.
+- [fused_qk_rope](https://docs.modular.com/mojo/kernels/nn/fused_qk_rope/fused_qk_rope): Mojo function `nn.fused_qk_rope.fused_qk_rope` documentation
+- [fused_qk_rope_ragged](https://docs.modular.com/mojo/kernels/nn/fused_qk_rope/fused_qk_rope_ragged): Applies RoPE (Rotary Position Embedding) to query and key tensors.
+- [get_identity_rope_coeff](https://docs.modular.com/mojo/kernels/nn/fused_qk_rope/get_identity_rope_coeff): Mojo function `nn.fused_qk_rope.get_identity_rope_coeff` documentation
+- [get_safetensors_idx](https://docs.modular.com/mojo/kernels/nn/fused_qk_rope/get_safetensors_idx): Mojo function `nn.fused_qk_rope.get_safetensors_idx` documentation
+- [fused_qk_rope](https://docs.modular.com/mojo/kernels/nn/fused_qk_rope): Mojo module nn.fused_qk_rope documentation
+- [rope_k_cache](https://docs.modular.com/mojo/kernels/nn/fused_qk_rope/rope_k_cache): Mojo function `nn.fused_qk_rope.rope_k_cache` documentation
+- [rope_q_proj](https://docs.modular.com/mojo/kernels/nn/fused_qk_rope/rope_q_proj): Mojo function `nn.fused_qk_rope.rope_q_proj` documentation
+- [Axis](https://docs.modular.com/mojo/kernels/nn/gather_scatter/Axis): Mojo struct `nn.gather_scatter.Axis` documentation
+- [gather](https://docs.modular.com/mojo/kernels/nn/gather_scatter/gather): Gather operation as defined in https://github.com/onnx/onnx/blob/main/docs/Operators.md#Gather.
+- [gather_elements](https://docs.modular.com/mojo/kernels/nn/gather_scatter/gather_elements): Implements ONNX GatherElements op which is equivalent to Pytorch gather.
+- [gather_elementwise_fn_wrapper](https://docs.modular.com/mojo/kernels/nn/gather_scatter/gather_elementwise_fn_wrapper): Mojo function `nn.gather_scatter.gather_elementwise_fn_wrapper` documentation
+- [gather_guards](https://docs.modular.com/mojo/kernels/nn/gather_scatter/gather_guards): Mojo function `nn.gather_scatter.gather_guards` documentation
+- [gather_nd](https://docs.modular.com/mojo/kernels/nn/gather_scatter/gather_nd): GatherND operation as defined in https://github.com/onnx/onnx/blob/main/docs/Operators.md#GatherND. Based on reference implementation: https://gith...
+- [gather_nd_shape](https://docs.modular.com/mojo/kernels/nn/gather_scatter/gather_nd_shape): Compute the output shape of a `gather` operation, and assert the inputs are compatible.
+- [gather_reduce](https://docs.modular.com/mojo/kernels/nn/gather_scatter/gather_reduce): Computes output[i, j, k] = input[indices[i, j], k] and simultaneously reduces the output across axis 1 to produce output[i, k].
+- [gather_shape](https://docs.modular.com/mojo/kernels/nn/gather_scatter/gather_shape): Compute the output shape of a `gather` operation, and assert the inputs are compatible.
+- [gather_scatter](https://docs.modular.com/mojo/kernels/nn/gather_scatter): Mojo module nn.gather_scatter documentation
+- [normalize_neg_index](https://docs.modular.com/mojo/kernels/nn/gather_scatter/normalize_neg_index): Indices passed to gather and scatter ops may be negative. This performs a normalization so that they can be used to index into a buffer.
+- [scatter_elements](https://docs.modular.com/mojo/kernels/nn/gather_scatter/scatter_elements): Implements ONNX ScatterElements op which is equivalent to Pytorch scatter.
+- [scatter_elements_shape](https://docs.modular.com/mojo/kernels/nn/gather_scatter/scatter_elements_shape): Compute the output shape of a `scatter_elements` operation, and assert the inputs are compatible.
+- [scatter_nd](https://docs.modular.com/mojo/kernels/nn/gather_scatter/scatter_nd): Scatter_nd operation without any reduction.
+- [scatter_nd_generator](https://docs.modular.com/mojo/kernels/nn/gather_scatter/scatter_nd_generator): Implements ONNX ScatterND operation as defined in https://github.com/onnx/onnx/blob/main/docs/Operators.md#ScatterND.
+- [scatter_nd_shape](https://docs.modular.com/mojo/kernels/nn/gather_scatter/scatter_nd_shape): Compute the output shape of a `scatter_nd` operation, and assert the inputs are compatible.
+- [scatter_set_constant](https://docs.modular.com/mojo/kernels/nn/gather_scatter/scatter_set_constant): Scatter the fill_value into the data at the specified indices.
+- [Image2DLayout](https://docs.modular.com/mojo/kernels/nn/image/Image2DLayout): Mojo struct `nn.image.Image2DLayout` documentation
+- [ImageData](https://docs.modular.com/mojo/kernels/nn/image/ImageData): Utility class that generalizes conv2d data and filter tensor with a given data layout.
+- [ImageShape](https://docs.modular.com/mojo/kernels/nn/image/ImageShape): A data-layout agnostic representation of tensor shapes used in conv2d.
+- [PadHandling](https://docs.modular.com/mojo/kernels/nn/image/PadHandling): Mojo struct `nn.image.PadHandling` documentation
+- [image](https://docs.modular.com/mojo/kernels/nn/image): Mojo module nn.image documentation
+- [nn](https://docs.modular.com/mojo/kernels/nn): Provides neural network operators for deep learning models.
+- [advanced_indexing_getitem](https://docs.modular.com/mojo/kernels/nn/index_tensor/advanced_indexing_getitem): Implement basic numpy-style advanced indexing.
+- [advanced_indexing_getitem_shape](https://docs.modular.com/mojo/kernels/nn/index_tensor/advanced_indexing_getitem_shape): Calculate the output shape from advanced indexing.
+- [advanced_indexing_setitem_inplace](https://docs.modular.com/mojo/kernels/nn/index_tensor/advanced_indexing_setitem_inplace): Implement basic numpy-style advanced indexing with assignment.
+- [index_tensor](https://docs.modular.com/mojo/kernels/nn/index_tensor): Mojo module nn.index_tensor documentation
+- [index_tensor](https://docs.modular.com/mojo/kernels/nn/index_tensor/index_tensor): Index_tensor operation; based on modified implementation of gather_nd.
+- [index_tensor_shape](https://docs.modular.com/mojo/kernels/nn/index_tensor/index_tensor_shape): Compute the output shape of a `index_tensor` operation, and assert the inputs are compatible.
+- [global_cache_insert](https://docs.modular.com/mojo/kernels/nn/irfft/global_cache_insert): Mojo function `nn.irfft.global_cache_insert` documentation
+- [global_cache_lookup](https://docs.modular.com/mojo/kernels/nn/irfft/global_cache_lookup): Mojo function `nn.irfft.global_cache_lookup` documentation
+- [irfft](https://docs.modular.com/mojo/kernels/nn/irfft): Inverse real FFT kernel using cuFFT.
+- [irfft](https://docs.modular.com/mojo/kernels/nn/irfft/irfft): Compute the inverse real FFT of the input tensor.
+- [generic_flash_attention_kv_cache_padded](https://docs.modular.com/mojo/kernels/nn/kv_cache/generic_flash_attention_kv_cache_padded): Mojo function `nn.kv_cache.generic_flash_attention_kv_cache_padded` documentation
+- [generic_flash_attention_kv_cache_padded_materialized_mask](https://docs.modular.com/mojo/kernels/nn/kv_cache/generic_flash_attention_kv_cache_padded_materialized_mask): Mojo function `nn.kv_cache.generic_flash_attention_kv_cache_padded_materialized_mask` documentation
+- [generic_fused_qk_rope_bshd_continuous_batch](https://docs.modular.com/mojo/kernels/nn/kv_cache/generic_fused_qk_rope_bshd_continuous_batch): Performs a fused RoPE projection for Q and K projections.
+- [generic_fused_qkv_matmul_kv_cache_bshd_continuous_batch](https://docs.modular.com/mojo/kernels/nn/kv_cache/generic_fused_qkv_matmul_kv_cache_bshd_continuous_batch): Performs a fused QKV matmul. Q outputs are written to the output argument while K and V outputs are written in-place into k_cache and v_cache.
+- [generic_get_continuous_cache](https://docs.modular.com/mojo/kernels/nn/kv_cache/generic_get_continuous_cache): Mojo function `nn.kv_cache.generic_get_continuous_cache` documentation
+- [generic_get_paged_cache](https://docs.modular.com/mojo/kernels/nn/kv_cache/generic_get_paged_cache): Mojo function `nn.kv_cache.generic_get_paged_cache` documentation
+- [kv_cache](https://docs.modular.com/mojo/kernels/nn/kv_cache): Mojo module nn.kv_cache documentation
+- [managed_tensor_slice_to_ndbuffer](https://docs.modular.com/mojo/kernels/nn/kv_cache/managed_tensor_slice_to_ndbuffer): Mojo function `nn.kv_cache.managed_tensor_slice_to_ndbuffer` documentation
+- [print_kv_cache_cont_batch_generic_cpu](https://docs.modular.com/mojo/kernels/nn/kv_cache/print_kv_cache_cont_batch_generic_cpu): Mojo function `nn.kv_cache.print_kv_cache_cont_batch_generic_cpu` documentation
+- [print_kv_cache_cont_batch_generic_gpu](https://docs.modular.com/mojo/kernels/nn/kv_cache/print_kv_cache_cont_batch_generic_gpu): Mojo function `nn.kv_cache.print_kv_cache_cont_batch_generic_gpu` documentation
+- [print_kv_cache_paged_generic_cpu](https://docs.modular.com/mojo/kernels/nn/kv_cache/print_kv_cache_paged_generic_cpu): Mojo function `nn.kv_cache.print_kv_cache_paged_generic_cpu` documentation
+- [print_kv_cache_paged_generic_gpu](https://docs.modular.com/mojo/kernels/nn/kv_cache/print_kv_cache_paged_generic_gpu): Mojo function `nn.kv_cache.print_kv_cache_paged_generic_gpu` documentation
+- [rms_norm_kv_cache_ragged_continuous_batching](https://docs.modular.com/mojo/kernels/nn/kv_cache/rms_norm_kv_cache_ragged_continuous_batching): Performs RMSNorm in place on new entries in the key cache.
+- [rms_norm_kv_cache_ragged_paged](https://docs.modular.com/mojo/kernels/nn/kv_cache/rms_norm_kv_cache_ragged_paged): Performs RMSNorm in place on new entries in the key cache.
+- [generic_cross_attention_kv_cache](https://docs.modular.com/mojo/kernels/nn/kv_cache_ragged/generic_cross_attention_kv_cache): Mojo function `nn.kv_cache_ragged.generic_cross_attention_kv_cache` documentation
+- [generic_flare_mla_decode_kv_cache_ragged](https://docs.modular.com/mojo/kernels/nn/kv_cache_ragged/generic_flare_mla_decode_kv_cache_ragged): Mojo function `nn.kv_cache_ragged.generic_flare_mla_decode_kv_cache_ragged` documentation
+- [generic_flare_mla_decompress_k_cache_ragged_paged](https://docs.modular.com/mojo/kernels/nn/kv_cache_ragged/generic_flare_mla_decompress_k_cache_ragged_paged): Mojo function `nn.kv_cache_ragged.generic_flare_mla_decompress_k_cache_ragged_paged` documentation
+- [generic_flare_mla_prefill_kv_cache_ragged](https://docs.modular.com/mojo/kernels/nn/kv_cache_ragged/generic_flare_mla_prefill_kv_cache_ragged): Mojo function `nn.kv_cache_ragged.generic_flare_mla_prefill_kv_cache_ragged` documentation
+- [generic_flare_mla_prefill_ragged_paged_plan](https://docs.modular.com/mojo/kernels/nn/kv_cache_ragged/generic_flare_mla_prefill_ragged_paged_plan): Mojo function `nn.kv_cache_ragged.generic_flare_mla_prefill_ragged_paged_plan` documentation
+- [generic_flash_attention_kv_cache_ragged](https://docs.modular.com/mojo/kernels/nn/kv_cache_ragged/generic_flash_attention_kv_cache_ragged): Mojo function `nn.kv_cache_ragged.generic_flash_attention_kv_cache_ragged` documentation
+- [generic_flash_attention_kv_cache_ragged_sink](https://docs.modular.com/mojo/kernels/nn/kv_cache_ragged/generic_flash_attention_kv_cache_ragged_sink): Mojo function `nn.kv_cache_ragged.generic_flash_attention_kv_cache_ragged_sink` documentation
+- [generic_fused_qk_rope_bshd_continuous_batch_ragged](https://docs.modular.com/mojo/kernels/nn/kv_cache_ragged/generic_fused_qk_rope_bshd_continuous_batch_ragged): Mojo function `nn.kv_cache_ragged.generic_fused_qk_rope_bshd_continuous_batch_ragged` documentation
+- [generic_fused_qk_rope_bshd_paged_ragged](https://docs.modular.com/mojo/kernels/nn/kv_cache_ragged/generic_fused_qk_rope_bshd_paged_ragged): Performs a fused RoPE projection for Q and K projections.
+- [generic_fused_qkv_matmul_kv_cache_cont_batch_ragged](https://docs.modular.com/mojo/kernels/nn/kv_cache_ragged/generic_fused_qkv_matmul_kv_cache_cont_batch_ragged): Performs a fused QKV matmul. Q outputs are written to the output argument while K and V outputs are written in-place into k_cache and v_cache.
+- [generic_fused_qkv_matmul_kv_cache_paged_ragged](https://docs.modular.com/mojo/kernels/nn/kv_cache_ragged/generic_fused_qkv_matmul_kv_cache_paged_ragged): Performs a fused QKV matmul. Q outputs are written to the output argument while K and V outputs are written in-place into k_cache and v_cache.
+- [generic_fused_qkv_matmul_kv_cache_paged_ragged_bias](https://docs.modular.com/mojo/kernels/nn/kv_cache_ragged/generic_fused_qkv_matmul_kv_cache_paged_ragged_bias): Performs a fused QKV matmul. Q outputs are written to the output argument while K and V outputs are written in-place into k_cache and v_cache.
+- [generic_fused_qkv_matmul_kv_cache_paged_ragged_scale](https://docs.modular.com/mojo/kernels/nn/kv_cache_ragged/generic_fused_qkv_matmul_kv_cache_paged_ragged_scale): Performs a fused QKV matmul. Q outputs are written to the output argument while K and V outputs are written in-place into k_cache and v_cache.
+- [generic_kv_cache_radd_dispatch](https://docs.modular.com/mojo/kernels/nn/kv_cache_ragged/generic_kv_cache_radd_dispatch): Mojo function `nn.kv_cache_ragged.generic_kv_cache_radd_dispatch` documentation
+- [kv_cache_ragged](https://docs.modular.com/mojo/kernels/nn/kv_cache_ragged): Mojo module nn.kv_cache_ragged documentation
+- [k_matmul_ragged_paged](https://docs.modular.com/mojo/kernels/nn/kv_cache_ragged/k_matmul_ragged_paged): Performs a matmul, writing the output into a mutable PagedKVCacheCollection object.
+- [k_matmul_ragged_paged_scale](https://docs.modular.com/mojo/kernels/nn/kv_cache_ragged/k_matmul_ragged_paged_scale): Performs a matmul, writing the output into a mutable PagedKVCacheCollection object.
+- [kv_cache_store_ragged](https://docs.modular.com/mojo/kernels/nn/kv_cache_ragged/kv_cache_store_ragged): Mojo function `nn.kv_cache_ragged.kv_cache_store_ragged` documentation
+- [kv_matmul_ragged_paged](https://docs.modular.com/mojo/kernels/nn/kv_cache_ragged/kv_matmul_ragged_paged): Performs a matmul, writing the output into a mutable ContinuousBatchingKVCacheCollection object.
+- [unfused_qkv_matmul_ragged_paged_gguf_quantized](https://docs.modular.com/mojo/kernels/nn/kv_cache_ragged/unfused_qkv_matmul_ragged_paged_gguf_quantized): Performs a quantized matmul, writing the output into a mutable PagedKVCacheCollection object.
+- [depth_supported_by_gpu](https://docs.modular.com/mojo/kernels/nn/mha/depth_supported_by_gpu): Mojo function `nn.mha.depth_supported_by_gpu` documentation
+- [flash_attention](https://docs.modular.com/mojo/kernels/nn/mha/flash_attention): Mojo function `nn.mha.flash_attention` documentation
+- [flash_attention_dispatch](https://docs.modular.com/mojo/kernels/nn/mha/flash_attention_dispatch): Mojo function `nn.mha.flash_attention_dispatch` documentation
+- [flash_attention_hw_supported](https://docs.modular.com/mojo/kernels/nn/mha/flash_attention_hw_supported): Mojo function `nn.mha.flash_attention_hw_supported` documentation
+- [flash_attention_ragged](https://docs.modular.com/mojo/kernels/nn/mha/flash_attention_ragged): Mojo function `nn.mha.flash_attention_ragged` documentation
+- [get_mha_decoding_num_partitions](https://docs.modular.com/mojo/kernels/nn/mha/get_mha_decoding_num_partitions): Mojo function `nn.mha.get_mha_decoding_num_partitions` documentation
+- [mha](https://docs.modular.com/mojo/kernels/nn/mha): Mojo module nn.mha documentation
+- [mha](https://docs.modular.com/mojo/kernels/nn/mha/mha): Mojo function `nn.mha.mha` documentation
+- [mha_decoding](https://docs.modular.com/mojo/kernels/nn/mha/mha_decoding): Mojo function `nn.mha.mha_decoding` documentation
+- [mha_decoding_single_batch](https://docs.modular.com/mojo/kernels/nn/mha/mha_decoding_single_batch): Flash attention v2 algorithm.
+- [mha_decoding_single_batch_pipelined](https://docs.modular.com/mojo/kernels/nn/mha/mha_decoding_single_batch_pipelined): Flash attention v2 algorithm.
+- [mha_gpu_naive](https://docs.modular.com/mojo/kernels/nn/mha/mha_gpu_naive): Mojo function `nn.mha.mha_gpu_naive` documentation
+- [mha_single_batch](https://docs.modular.com/mojo/kernels/nn/mha/mha_single_batch): MHA for token gen where seqlen = 1 and num_keys >= 1.
+- [mha_single_batch_pipelined](https://docs.modular.com/mojo/kernels/nn/mha/mha_single_batch_pipelined): MHA for token gen where seqlen = 1 and num_keys >= 1.
+- [mha_splitk_reduce](https://docs.modular.com/mojo/kernels/nn/mha/mha_splitk_reduce): Mojo function `nn.mha.mha_splitk_reduce` documentation
+- [q_num_matrix_view_rows](https://docs.modular.com/mojo/kernels/nn/mha/q_num_matrix_view_rows): Mojo function `nn.mha.q_num_matrix_view_rows` documentation
+- [scale_and_mask_helper](https://docs.modular.com/mojo/kernels/nn/mha/scale_and_mask_helper): Mojo function `nn.mha.scale_and_mask_helper` documentation
+- [mha_cross](https://docs.modular.com/mojo/kernels/nn/mha_cross): Mojo module nn.mha_cross documentation
+- [mha_cross_gpu_naive](https://docs.modular.com/mojo/kernels/nn/mha_cross/mha_cross_gpu_naive): Naive cross attention on GPU.
+- [MHAPosition](https://docs.modular.com/mojo/kernels/nn/mha_fa3_utils/MHAPosition): Position of the MHA-kernel. When `decoding=False`, `q_head_stride == q_num_heads`. When `decoding=True`, `q_head_stride == 1`.
+- [NonNullPointer](https://docs.modular.com/mojo/kernels/nn/mha_fa3_utils/NonNullPointer): Mojo struct `nn.mha_fa3_utils.NonNullPointer` documentation
+- [NullPointer](https://docs.modular.com/mojo/kernels/nn/mha_fa3_utils/NullPointer): Mojo struct `nn.mha_fa3_utils.NullPointer` documentation
+- [OptionalPointer](https://docs.modular.com/mojo/kernels/nn/mha_fa3_utils/OptionalPointer): Mojo trait `nn.mha_fa3_utils.OptionalPointer` documentation
+- [Pack](https://docs.modular.com/mojo/kernels/nn/mha_fa3_utils/Pack): Mojo struct `nn.mha_fa3_utils.Pack` documentation
+- [mha_fa3_utils](https://docs.modular.com/mojo/kernels/nn/mha_fa3_utils): Mojo module nn.mha_fa3_utils documentation
+- [output_reg_to_smem](https://docs.modular.com/mojo/kernels/nn/mha_fa3_utils/output_reg_to_smem): Mojo function `nn.mha_fa3_utils.output_reg_to_smem` documentation
+- [produce](https://docs.modular.com/mojo/kernels/nn/mha_fa3_utils/produce): Mojo function `nn.mha_fa3_utils.produce` documentation
+- [q_out_tma](https://docs.modular.com/mojo/kernels/nn/mha_fa3_utils/q_out_tma): Mojo function `nn.mha_fa3_utils.q_out_tma` documentation
+- [AndMask](https://docs.modular.com/mojo/kernels/nn/mha_mask/AndMask): Mask that's the AND of two masks.
+- [CausalMask](https://docs.modular.com/mojo/kernels/nn/mha_mask/CausalMask): MHA causal mask ensures a token is only affected by previous tokens.
+- [ChunkedCausalMask](https://docs.modular.com/mojo/kernels/nn/mha_mask/ChunkedCausalMask): Mask implementing Chunked Causal attention for Llama4 models.
+- [ChunkedMask](https://docs.modular.com/mojo/kernels/nn/mha_mask/ChunkedMask): Mask implementing Chunked attention.
+- [MHAMask](https://docs.modular.com/mojo/kernels/nn/mha_mask/MHAMask): The MHAMask trait describes masks for MHA kernels, such as the causal mask.
+- [MaskName](https://docs.modular.com/mojo/kernels/nn/mha_mask/MaskName): A tile's masking status.
+- [MaterializedMask](https://docs.modular.com/mojo/kernels/nn/mha_mask/MaterializedMask): Mask that's backed by a materialized tensor.
+- [NullMask](https://docs.modular.com/mojo/kernels/nn/mha_mask/NullMask): Mask that's effectively a noop.
+- [OrMask](https://docs.modular.com/mojo/kernels/nn/mha_mask/OrMask): Mask that's the OR of two masks.
+- [SlidingWindowCausalMask](https://docs.modular.com/mojo/kernels/nn/mha_mask/SlidingWindowCausalMask): Mask implementing Sliding Window attention.
+- [TileMaskStatus](https://docs.modular.com/mojo/kernels/nn/mha_mask/TileMaskStatus): A tile's masking status.
+- [mha_mask](https://docs.modular.com/mojo/kernels/nn/mha_mask): Mojo module nn.mha_mask documentation
+- [KVCacheMHAOperand](https://docs.modular.com/mojo/kernels/nn/mha_operand/KVCacheMHAOperand): An implementation for `mo.opaque` KVCacheT arguments to MHA kernels.
+- [LayoutTensorMHAOperand](https://docs.modular.com/mojo/kernels/nn/mha_operand/LayoutTensorMHAOperand): An implementation for NDBuffer arguments to MHA kernels.
+- [MHAOperand](https://docs.modular.com/mojo/kernels/nn/mha_operand/MHAOperand): This serves as the trait to support arguments to our MHA kernel.
+- [RaggedMHAOperand](https://docs.modular.com/mojo/kernels/nn/mha_operand/RaggedMHAOperand): An implementation for ragged NDBuffer arguments to MHA kernels.
+- [mha_operand](https://docs.modular.com/mojo/kernels/nn/mha_operand): Mojo module nn.mha_operand documentation
+- [AlibiScoreMod](https://docs.modular.com/mojo/kernels/nn/mha_score_mod/AlibiScoreMod): AlibiScoreMod adds the appropriate ALiBi constant bias to attention score.
+- [IdentityScoreMod](https://docs.modular.com/mojo/kernels/nn/mha_score_mod/IdentityScoreMod): IdentityScoreMod simply returns attention score.
+- [ScoreModTrait](https://docs.modular.com/mojo/kernels/nn/mha_score_mod/ScoreModTrait): The ScoreMod trait desctribes score_mod for mha kernel like alibi bias.
+- [mha_score_mod](https://docs.modular.com/mojo/kernels/nn/mha_score_mod): Mojo module nn.mha_score_mod documentation
+- [AccumulatorTile](https://docs.modular.com/mojo/kernels/nn/mha_sm100/AccumulatorTile): Mojo trait `nn.mha_sm100.AccumulatorTile` documentation
+- [DescriptorPair](https://docs.modular.com/mojo/kernels/nn/mha_sm100/DescriptorPair): Mojo trait `nn.mha_sm100.DescriptorPair` documentation
+- [DescriptorPairTS](https://docs.modular.com/mojo/kernels/nn/mha_sm100/DescriptorPairTS): Mojo trait `nn.mha_sm100.DescriptorPairTS` documentation
+- [MMAOperandOffsetFn](https://docs.modular.com/mojo/kernels/nn/mha_sm100/MMAOperandOffsetFn): Mojo struct `nn.mha_sm100.MMAOperandOffsetFn` documentation
+- [RegisterAccumulatorDescription](https://docs.modular.com/mojo/kernels/nn/mha_sm100/RegisterAccumulatorDescription): Mojo struct `nn.mha_sm100.RegisterAccumulatorDescription` documentation
+- [RegisterAccumulatorLayout](https://docs.modular.com/mojo/kernels/nn/mha_sm100/RegisterAccumulatorLayout): Mojo struct `nn.mha_sm100.RegisterAccumulatorLayout` documentation
+- [SM100TensorAccumulatorSS](https://docs.modular.com/mojo/kernels/nn/mha_sm100/SM100TensorAccumulatorSS): Mojo struct `nn.mha_sm100.SM100TensorAccumulatorSS` documentation
+- [SM100TensorAccumulatorTS](https://docs.modular.com/mojo/kernels/nn/mha_sm100/SM100TensorAccumulatorTS): Mojo struct `nn.mha_sm100.SM100TensorAccumulatorTS` documentation
+- [TMemAccumulator](https://docs.modular.com/mojo/kernels/nn/mha_sm100/TMemAccumulator): Mojo struct `nn.mha_sm100.TMemAccumulator` documentation
+- [TMemOperand](https://docs.modular.com/mojo/kernels/nn/mha_sm100/TMemOperand): Mojo struct `nn.mha_sm100.TMemOperand` documentation
+- [UMMADescriptorSS](https://docs.modular.com/mojo/kernels/nn/mha_sm100/UMMADescriptorSS): Mojo struct `nn.mha_sm100.UMMADescriptorSS` documentation
+- [UMMADescriptorTS](https://docs.modular.com/mojo/kernels/nn/mha_sm100/UMMADescriptorTS): Mojo struct `nn.mha_sm100.UMMADescriptorTS` documentation
+- [WriteableMMAOperandDescriptor](https://docs.modular.com/mojo/kernels/nn/mha_sm100/WriteableMMAOperandDescriptor): Mojo trait `nn.mha_sm100.WriteableMMAOperandDescriptor` documentation
+- [mha_sm100](https://docs.modular.com/mojo/kernels/nn/mha_sm100): Mojo module nn.mha_sm100 documentation
+- [local_tensor_type](https://docs.modular.com/mojo/kernels/nn/mha_sm100/local_tensor_type): Mojo function `nn.mha_sm100.local_tensor_type` documentation
+- [mha_sm100_dispatch](https://docs.modular.com/mojo/kernels/nn/mha_sm100/mha_sm100_dispatch): Mojo function `nn.mha_sm100.mha_sm100_dispatch` documentation
+- [mha_sm90](https://docs.modular.com/mojo/kernels/nn/mha_sm90): Mojo module nn.mha_sm90 documentation
+- [mha_sm90_dispatch](https://docs.modular.com/mojo/kernels/nn/mha_sm90/mha_sm90_dispatch): Mojo function `nn.mha_sm90.mha_sm90_dispatch` documentation
+- [MHASchedule](https://docs.modular.com/mojo/kernels/nn/mha_tile_scheduler/MHASchedule): Mojo struct `nn.mha_tile_scheduler.MHASchedule` documentation
+- [MHASchedulerSynchronization](https://docs.modular.com/mojo/kernels/nn/mha_tile_scheduler/MHASchedulerSynchronization): Mojo struct `nn.mha_tile_scheduler.MHASchedulerSynchronization` documentation
+- [MHATileScheduler](https://docs.modular.com/mojo/kernels/nn/mha_tile_scheduler/MHATileScheduler): Mojo trait `nn.mha_tile_scheduler.MHATileScheduler` documentation
+- [MHATileState](https://docs.modular.com/mojo/kernels/nn/mha_tile_scheduler/MHATileState): Mojo struct `nn.mha_tile_scheduler.MHATileState` documentation
+- [MHATileSummary](https://docs.modular.com/mojo/kernels/nn/mha_tile_scheduler/MHATileSummary): Mojo struct `nn.mha_tile_scheduler.MHATileSummary` documentation
+- [QueuedTileScheduler](https://docs.modular.com/mojo/kernels/nn/mha_tile_scheduler/QueuedTileScheduler): If `decoding == False`, then `num_heads` is `q_num_heads`. If `decoding == True`, then `num_heads` is `kv_num_heads`.
+- [SeqInfo](https://docs.modular.com/mojo/kernels/nn/mha_tile_scheduler/SeqInfo): Mojo struct `nn.mha_tile_scheduler.SeqInfo` documentation
+- [TileScheduler](https://docs.modular.com/mojo/kernels/nn/mha_tile_scheduler/TileScheduler): Mojo struct `nn.mha_tile_scheduler.TileScheduler` documentation
+- [TransientScheduler](https://docs.modular.com/mojo/kernels/nn/mha_tile_scheduler/TransientScheduler): Mojo struct `nn.mha_tile_scheduler.TransientScheduler` documentation
+- [WorkInfo](https://docs.modular.com/mojo/kernels/nn/mha_tile_scheduler/WorkInfo): Mojo struct `nn.mha_tile_scheduler.WorkInfo` documentation
+- [mha_tile_scheduler](https://docs.modular.com/mojo/kernels/nn/mha_tile_scheduler): Mojo module nn.mha_tile_scheduler documentation
+- [DynamicInt](https://docs.modular.com/mojo/kernels/nn/mha_utils/DynamicInt): Mojo struct `nn.mha_utils.DynamicInt` documentation
+- [FlashAttentionAlgorithm](https://docs.modular.com/mojo/kernels/nn/mha_utils/FlashAttentionAlgorithm): Mojo struct `nn.mha_utils.FlashAttentionAlgorithm` documentation
+- [MHAConfig](https://docs.modular.com/mojo/kernels/nn/mha_utils/MHAConfig): Mojo struct `nn.mha_utils.MHAConfig` documentation
+- [MHAPartitionScheme](https://docs.modular.com/mojo/kernels/nn/mha_utils/MHAPartitionScheme): Mojo trait `nn.mha_utils.MHAPartitionScheme` documentation
+- [NoPartition](https://docs.modular.com/mojo/kernels/nn/mha_utils/NoPartition): Mojo struct `nn.mha_utils.NoPartition` documentation
+- [OptionallyStaticInt](https://docs.modular.com/mojo/kernels/nn/mha_utils/OptionallyStaticInt): Mojo trait `nn.mha_utils.OptionallyStaticInt` documentation
+- [SplitKPartition](https://docs.modular.com/mojo/kernels/nn/mha_utils/SplitKPartition): Mojo struct `nn.mha_utils.SplitKPartition` documentation
+- [StaticInt](https://docs.modular.com/mojo/kernels/nn/mha_utils/StaticInt): Mojo struct `nn.mha_utils.StaticInt` documentation
+- [dispatch_mask_and_score_mod](https://docs.modular.com/mojo/kernels/nn/mha_utils/dispatch_mask_and_score_mod): Mojo function `nn.mha_utils.dispatch_mask_and_score_mod` documentation
+- [dispatch_materialized_mask_and_score_mod](https://docs.modular.com/mojo/kernels/nn/mha_utils/dispatch_materialized_mask_and_score_mod): Mojo function `nn.mha_utils.dispatch_materialized_mask_and_score_mod` documentation
+- [get_start_and_end_for_partitions](https://docs.modular.com/mojo/kernels/nn/mha_utils/get_start_and_end_for_partitions): Calculate start and end indices for a partition.
+- [mha_utils](https://docs.modular.com/mojo/kernels/nn/mha_utils): Mojo module nn.mha_utils documentation
+- [flare_mla_decoding](https://docs.modular.com/mojo/kernels/nn/mla/flare_mla_decoding): MLA decoding kernel that would only be called in the optimized compute graph.
+- [flare_mla_decoding_dispatch](https://docs.modular.com/mojo/kernels/nn/mla/flare_mla_decoding_dispatch): Mojo function `nn.mla.flare_mla_decoding_dispatch` documentation
+- [flare_mla_prefill](https://docs.modular.com/mojo/kernels/nn/mla/flare_mla_prefill): MLA prefill kernel that would only be called in the optimized compute graph. Only supports ragged Q/K/V inputs.
+- [flare_mla_prefill_dispatch](https://docs.modular.com/mojo/kernels/nn/mla/flare_mla_prefill_dispatch): Mojo function `nn.mla.flare_mla_prefill_dispatch` documentation
+- [mla](https://docs.modular.com/mojo/kernels/nn/mla): Mojo module nn.mla documentation
+- [mla_decoding](https://docs.modular.com/mojo/kernels/nn/mla/mla_decoding): Mojo function `nn.mla.mla_decoding` documentation
+- [mla_decoding_single_batch](https://docs.modular.com/mojo/kernels/nn/mla/mla_decoding_single_batch): Flash attention v2 algorithm.
+- [mla_prefill](https://docs.modular.com/mojo/kernels/nn/mla/mla_prefill): Mojo function `nn.mla.mla_prefill` documentation
+- [mla_prefill_plan](https://docs.modular.com/mojo/kernels/nn/mla/mla_prefill_plan): This calls a GPU kernel that plans how to process a batch of sequences with varying lengths using a fixed-size buffer.
+- [mla_prefill_plan_kernel](https://docs.modular.com/mojo/kernels/nn/mla/mla_prefill_plan_kernel): Mojo function `nn.mla.mla_prefill_plan_kernel` documentation
+- [mla_prefill_single_batch](https://docs.modular.com/mojo/kernels/nn/mla/mla_prefill_single_batch): MLA for encoding where seqlen > 1.
+- [set_buffer_lengths_to_zero](https://docs.modular.com/mojo/kernels/nn/mla/set_buffer_lengths_to_zero): Mojo function `nn.mla.set_buffer_lengths_to_zero` documentation
+- [moe](https://docs.modular.com/mojo/kernels/nn/moe): Mojo module nn.moe documentation
+- [moe_create_indices](https://docs.modular.com/mojo/kernels/nn/moe/moe_create_indices): Mojo function `nn.moe.moe_create_indices` documentation
+- [moe_create_indices_bucket_sort_kernel](https://docs.modular.com/mojo/kernels/nn/moe/moe_create_indices_bucket_sort_kernel): Create indices for MoE routing using bucket sort algorithm.
+- [moe_create_indices_kernel](https://docs.modular.com/mojo/kernels/nn/moe/moe_create_indices_kernel): Mojo function `nn.moe.moe_create_indices_kernel` documentation
+- [BoundingBox](https://docs.modular.com/mojo/kernels/nn/nms/BoundingBox): Represents a 2D bounding box for object detection.
+- [nms](https://docs.modular.com/mojo/kernels/nn/nms): Mojo module nn.nms documentation
+- [non_max_suppression](https://docs.modular.com/mojo/kernels/nn/nms/non_max_suppression): Perform Non-Maximum Suppression (NMS) on bounding boxes.
+- [non_max_suppression_shape_func](https://docs.modular.com/mojo/kernels/nn/nms/non_max_suppression_shape_func): Compute the output shape for NMS without allocating the output buffer.
+- [block_reduce](https://docs.modular.com/mojo/kernels/nn/normalization/block_reduce): Mojo function `nn.normalization.block_reduce` documentation
+- [group_norm](https://docs.modular.com/mojo/kernels/nn/normalization/group_norm): Mojo function `nn.normalization.group_norm` documentation
+- [group_norm_gpu](https://docs.modular.com/mojo/kernels/nn/normalization/group_norm_gpu): Mojo function `nn.normalization.group_norm_gpu` documentation
+- [group_norm_gpu_block](https://docs.modular.com/mojo/kernels/nn/normalization/group_norm_gpu_block): Mojo function `nn.normalization.group_norm_gpu_block` documentation
+- [group_norm_gpu_warp_tiling](https://docs.modular.com/mojo/kernels/nn/normalization/group_norm_gpu_warp_tiling): Mojo function `nn.normalization.group_norm_gpu_warp_tiling` documentation
+- [group_norm_reshape](https://docs.modular.com/mojo/kernels/nn/normalization/group_norm_reshape): Reshapes an input buffer for group normalization by flattening all dimensions except the group dimension. Returns a 2D buffer of shape (num_groups ...
+- [group_norm_shape](https://docs.modular.com/mojo/kernels/nn/normalization/group_norm_shape): Mojo function `nn.normalization.group_norm_shape` documentation
+- [normalization](https://docs.modular.com/mojo/kernels/nn/normalization): Mojo module nn.normalization documentation
+- [layer_norm](https://docs.modular.com/mojo/kernels/nn/normalization/layer_norm): Mojo function `nn.normalization.layer_norm` documentation
+- [layer_norm_cpu](https://docs.modular.com/mojo/kernels/nn/normalization/layer_norm_cpu): Computes layernorm(elementwise_fn(x)) across the last dimension of x, where layernorm is defined as $(x-mean(x))/(sqrt(var(x)+eps)*gamma_fn + beta$.
+- [layer_norm_gpu](https://docs.modular.com/mojo/kernels/nn/normalization/layer_norm_gpu): Mojo function `nn.normalization.layer_norm_gpu` documentation
+- [layer_norm_gpu_block](https://docs.modular.com/mojo/kernels/nn/normalization/layer_norm_gpu_block): Mojo function `nn.normalization.layer_norm_gpu_block` documentation
+- [layer_norm_gpu_warp_tiling](https://docs.modular.com/mojo/kernels/nn/normalization/layer_norm_gpu_warp_tiling): Mojo function `nn.normalization.layer_norm_gpu_warp_tiling` documentation
+- [layer_norm_reshape](https://docs.modular.com/mojo/kernels/nn/normalization/layer_norm_reshape): Mojo function `nn.normalization.layer_norm_reshape` documentation
+- [layer_norm_shape](https://docs.modular.com/mojo/kernels/nn/normalization/layer_norm_shape): Compute the output shape of a `layer_norm` operation.
+- [rms_norm](https://docs.modular.com/mojo/kernels/nn/normalization/rms_norm): Mojo function `nn.normalization.rms_norm` documentation
+- [rms_norm_cpu](https://docs.modular.com/mojo/kernels/nn/normalization/rms_norm_cpu): Mojo function `nn.normalization.rms_norm_cpu` documentation
+- [rms_norm_fused_residual_add](https://docs.modular.com/mojo/kernels/nn/normalization/rms_norm_fused_residual_add): Mojo function `nn.normalization.rms_norm_fused_residual_add` documentation
+- [rms_norm_fused_residual_add_cpu](https://docs.modular.com/mojo/kernels/nn/normalization/rms_norm_fused_residual_add_cpu): Mojo function `nn.normalization.rms_norm_fused_residual_add_cpu` documentation
+- [rms_norm_fused_residual_add_gpu](https://docs.modular.com/mojo/kernels/nn/normalization/rms_norm_fused_residual_add_gpu): Mojo function `nn.normalization.rms_norm_fused_residual_add_gpu` documentation
+- [rms_norm_fused_residual_add_gpu_block](https://docs.modular.com/mojo/kernels/nn/normalization/rms_norm_fused_residual_add_gpu_block): Mojo function `nn.normalization.rms_norm_fused_residual_add_gpu_block` documentation
+- [rms_norm_fused_residual_add_gpu_warp_tiling](https://docs.modular.com/mojo/kernels/nn/normalization/rms_norm_fused_residual_add_gpu_warp_tiling): Mojo function `nn.normalization.rms_norm_fused_residual_add_gpu_warp_tiling` documentation
+- [rms_norm_gpu](https://docs.modular.com/mojo/kernels/nn/normalization/rms_norm_gpu): Mojo function `nn.normalization.rms_norm_gpu` documentation
+- [rms_norm_gpu_block](https://docs.modular.com/mojo/kernels/nn/normalization/rms_norm_gpu_block): Mojo function `nn.normalization.rms_norm_gpu_block` documentation
+- [rms_norm_gpu_warp_tiling](https://docs.modular.com/mojo/kernels/nn/normalization/rms_norm_gpu_warp_tiling): Mojo function `nn.normalization.rms_norm_gpu_warp_tiling` documentation
+- [rms_norm_gpu_warp_tiling_128](https://docs.modular.com/mojo/kernels/nn/normalization/rms_norm_gpu_warp_tiling_128): Mojo function `nn.normalization.rms_norm_gpu_warp_tiling_128` documentation
+- [rms_norm_shape](https://docs.modular.com/mojo/kernels/nn/normalization/rms_norm_shape): Mojo function `nn.normalization.rms_norm_shape` documentation
+- [welford_block_all_reduce](https://docs.modular.com/mojo/kernels/nn/normalization/welford_block_all_reduce): Mojo function `nn.normalization.welford_block_all_reduce` documentation
+- [welford_combine](https://docs.modular.com/mojo/kernels/nn/normalization/welford_combine): Mojo function `nn.normalization.welford_combine` documentation
+- [welford_update](https://docs.modular.com/mojo/kernels/nn/normalization/welford_update): Mojo function `nn.normalization.welford_update` documentation
+- [welford_warp_all_reduce](https://docs.modular.com/mojo/kernels/nn/normalization/welford_warp_all_reduce): Mojo function `nn.normalization.welford_warp_all_reduce` documentation
+- [welford_warp_reduce](https://docs.modular.com/mojo/kernels/nn/normalization/welford_warp_reduce): Mojo function `nn.normalization.welford_warp_reduce` documentation
+- [pad](https://docs.modular.com/mojo/kernels/nn/pad): Mojo module nn.pad documentation
+- [pad_constant](https://docs.modular.com/mojo/kernels/nn/pad/pad_constant): Fill `output` with values from `input`, and edges padded with `constant` based on `paddings`.
+- [pad_reflect](https://docs.modular.com/mojo/kernels/nn/pad/pad_reflect): Fill `output` with values from `input`, and edges padded with reflected values from the unpadded region.
+- [pad_repeat](https://docs.modular.com/mojo/kernels/nn/pad/pad_repeat): Fill `output` with values from `input`, and edges padded boundary values from the unpadded region.
+- [pad_shape](https://docs.modular.com/mojo/kernels/nn/pad/pad_shape): Compute the output shape of a `pad` operation, and assert the inputs are compatible.
+- [get_padding_output_shape](https://docs.modular.com/mojo/kernels/nn/pad_gpu/get_padding_output_shape): Mojo function `nn.pad_gpu.get_padding_output_shape` documentation
+- [pad_gpu](https://docs.modular.com/mojo/kernels/nn/pad_gpu): Mojo module nn.pad_gpu documentation
+- [pad_constant](https://docs.modular.com/mojo/kernels/nn/pad_gpu/pad_constant): Fill `output` with values from `input`, and edges padded with `constant` based on `paddings`.
+- [PoolMethod](https://docs.modular.com/mojo/kernels/nn/pool/PoolMethod): Mojo struct `nn.pool.PoolMethod` documentation
+- [avg_pool](https://docs.modular.com/mojo/kernels/nn/pool/avg_pool): Mojo function `nn.pool.avg_pool` documentation
+- [avg_pool_cpu](https://docs.modular.com/mojo/kernels/nn/pool/avg_pool_cpu): Computes the average pool.
+- [avg_pool_gpu](https://docs.modular.com/mojo/kernels/nn/pool/avg_pool_gpu): Computes the average pool on GPU.
+- [pool](https://docs.modular.com/mojo/kernels/nn/pool): Mojo module nn.pool documentation
+- [max_pool](https://docs.modular.com/mojo/kernels/nn/pool/max_pool): Mojo function `nn.pool.max_pool` documentation
+- [max_pool_cpu](https://docs.modular.com/mojo/kernels/nn/pool/max_pool_cpu): Computes fp32 pooling.
+- [max_pool_gpu](https://docs.modular.com/mojo/kernels/nn/pool/max_pool_gpu): Computes max pooling on GPU.
+- [pool_shape](https://docs.modular.com/mojo/kernels/nn/pool/pool_shape): Mojo function `nn.pool.pool_shape` documentation
+- [pool_shape_ceil](https://docs.modular.com/mojo/kernels/nn/pool/pool_shape_ceil): Mojo function `nn.pool.pool_shape_ceil` documentation
+- [pool_shape_impl](https://docs.modular.com/mojo/kernels/nn/pool/pool_shape_impl): Compute the output shape of a pooling operation, and assert the inputs are compatible. Works for 2D pool operations only in the NHWC format.
+- [rand_normal](https://docs.modular.com/mojo/kernels/nn/rand_normal): Mojo module nn.rand_normal documentation
+- [random_normal](https://docs.modular.com/mojo/kernels/nn/rand_normal/random_normal): Call `output_fn` with values generated from a normal distribution with the specified mean and standard deviation.
+- [rand_uniform](https://docs.modular.com/mojo/kernels/nn/rand_uniform): Mojo module nn.rand_uniform documentation
+- [random_uniform](https://docs.modular.com/mojo/kernels/nn/rand_uniform/random_uniform): Call `output_fn` with values generated from a uniform distribution on [lower_bound, upper_bound] for floating-point types or [lower_bound, upper_bo...
+- [randn](https://docs.modular.com/mojo/kernels/nn/randn): Mojo module nn.randn documentation
+- [random_normal](https://docs.modular.com/mojo/kernels/nn/randn/random_normal): Fill `output` with values generated from Normal(mean, variance) distribution.
+- [repeat_interleave](https://docs.modular.com/mojo/kernels/nn/repeat_interleave): Mojo module nn.repeat_interleave documentation
+- [repeat_interleave](https://docs.modular.com/mojo/kernels/nn/repeat_interleave/repeat_interleave): Fill `output` by repeating values from `input` along `axis` based on the values in `repeats` buffer.
+- [repeat_interleave_shape](https://docs.modular.com/mojo/kernels/nn/repeat_interleave/repeat_interleave_shape): Mojo function `nn.repeat_interleave.repeat_interleave_shape` documentation
+- [reshape](https://docs.modular.com/mojo/kernels/nn/reshape): Mojo module nn.reshape documentation
+- [layout_tensor_reshape](https://docs.modular.com/mojo/kernels/nn/reshape/layout_tensor_reshape): Mojo function `nn.reshape.layout_tensor_reshape` documentation
+- [reshape](https://docs.modular.com/mojo/kernels/nn/reshape/reshape): Mojo function `nn.reshape.reshape` documentation
+- [reshape_shape](https://docs.modular.com/mojo/kernels/nn/reshape/reshape_shape): Mojo function `nn.reshape.reshape_shape` documentation
+- [CoordinateTransformationMode](https://docs.modular.com/mojo/kernels/nn/resize/CoordinateTransformationMode): Mojo struct `nn.resize.CoordinateTransformationMode` documentation
+- [InterpolationMode](https://docs.modular.com/mojo/kernels/nn/resize/InterpolationMode): Mojo struct `nn.resize.InterpolationMode` documentation
+- [Interpolator](https://docs.modular.com/mojo/kernels/nn/resize/Interpolator): Mojo struct `nn.resize.Interpolator` documentation
+- [RoundMode](https://docs.modular.com/mojo/kernels/nn/resize/RoundMode): Mojo struct `nn.resize.RoundMode` documentation
+- [coord_transform](https://docs.modular.com/mojo/kernels/nn/resize/coord_transform): Mojo function `nn.resize.coord_transform` documentation
+- [resize](https://docs.modular.com/mojo/kernels/nn/resize): Mojo module nn.resize documentation
+- [interpolate_point_1d](https://docs.modular.com/mojo/kernels/nn/resize/interpolate_point_1d): Mojo function `nn.resize.interpolate_point_1d` documentation
+- [linear_filter](https://docs.modular.com/mojo/kernels/nn/resize/linear_filter): This is a tent filter.
+- [resize_linear](https://docs.modular.com/mojo/kernels/nn/resize/resize_linear): Resizes input to output shape using linear interpolation.
+- [resize_nearest_neighbor](https://docs.modular.com/mojo/kernels/nn/resize/resize_nearest_neighbor): Mojo function `nn.resize.resize_nearest_neighbor` documentation
+- [Weighted2DPoint](https://docs.modular.com/mojo/kernels/nn/roi_align/Weighted2DPoint): Utility class to wrap 2-d point coordinates and floating point weight for bilinear interpolation.
+- [roi_align](https://docs.modular.com/mojo/kernels/nn/roi_align): Mojo module nn.roi_align documentation
+- [roi_align_nhwc](https://docs.modular.com/mojo/kernels/nn/roi_align/roi_align_nhwc): Compute ROIAlign a batch of rois of shape [M, 5] where the first dim is the batch index, followed by region box coordinates (y0, x0) (y1, x1). For ...
+- [apply_rope](https://docs.modular.com/mojo/kernels/nn/rope/apply_rope): Mojo function `nn.rope.apply_rope` documentation
+- [get_identity_rope_coeff](https://docs.modular.com/mojo/kernels/nn/rope/get_identity_rope_coeff): Mojo function `nn.rope.get_identity_rope_coeff` documentation
+- [get_safetensors_idx](https://docs.modular.com/mojo/kernels/nn/rope/get_safetensors_idx): Mojo function `nn.rope.get_safetensors_idx` documentation
+- [rope](https://docs.modular.com/mojo/kernels/nn/rope): Mojo module nn.rope documentation
+- [rope_ragged](https://docs.modular.com/mojo/kernels/nn/rope/rope_ragged): Mojo function `nn.rope.rope_ragged` documentation
+- [apply_penalties_to_logits](https://docs.modular.com/mojo/kernels/nn/sampling/apply_penalties_to_logits): Apply penalties to the logits based on the frequency of the tokens in the batch.
+- [sampling](https://docs.modular.com/mojo/kernels/nn/sampling): Mojo module nn.sampling documentation
+- [update_frequency_data](https://docs.modular.com/mojo/kernels/nn/sampling/update_frequency_data): Update the frequency data for the given new tokens.
+- [update_frequency_data_kernel](https://docs.modular.com/mojo/kernels/nn/sampling/update_frequency_data_kernel): GPU kernel to update token frequency data in CSR format.
+- [get_sliding_window_out_dim](https://docs.modular.com/mojo/kernels/nn/shapes/get_sliding_window_out_dim): Return output dimension for a sliding window operation along some dimension.
+- [shapes](https://docs.modular.com/mojo/kernels/nn/shapes): Mojo module nn.shapes documentation
+- [copy_to_slice](https://docs.modular.com/mojo/kernels/nn/slice/copy_to_slice): Mojo function `nn.slice.copy_to_slice` documentation
+- [slice](https://docs.modular.com/mojo/kernels/nn/slice): Mojo module nn.slice documentation
+- [slice_as_copy](https://docs.modular.com/mojo/kernels/nn/slice/slice_as_copy): Mojo function `nn.slice.slice_as_copy` documentation
+- [slice_as_view](https://docs.modular.com/mojo/kernels/nn/slice/slice_as_view): Mojo function `nn.slice.slice_as_view` documentation
+- [slice_dim_as_view](https://docs.modular.com/mojo/kernels/nn/slice/slice_dim_as_view): Mojo function `nn.slice.slice_dim_as_view` documentation
+- [slice_shape](https://docs.modular.com/mojo/kernels/nn/slice/slice_shape): Mojo function `nn.slice.slice_shape` documentation
+- [identity](https://docs.modular.com/mojo/kernels/nn/softmax/identity): Mojo function `nn.softmax.identity` documentation
+- [softmax](https://docs.modular.com/mojo/kernels/nn/softmax): Mojo module nn.softmax documentation
+- [logsoftmax](https://docs.modular.com/mojo/kernels/nn/softmax/logsoftmax): Mojo function `nn.softmax.logsoftmax` documentation
+- [mul](https://docs.modular.com/mojo/kernels/nn/softmax/mul): Mojo function `nn.softmax.mul` documentation
+- [reciprocal](https://docs.modular.com/mojo/kernels/nn/softmax/reciprocal): Mojo function `nn.softmax.reciprocal` documentation
+- [reduce_add_simd](https://docs.modular.com/mojo/kernels/nn/softmax/reduce_add_simd): This functions adds val to either the scalar value or the vector value depending on the step_simd_width. This is useful when the simd_width varies ...
+- [softmax](https://docs.modular.com/mojo/kernels/nn/softmax/softmax): Mojo function `nn.softmax.softmax` documentation
+- [softmax_2_pass](https://docs.modular.com/mojo/kernels/nn/softmax/softmax_2_pass): Performs an unbatched softmax on an input tensor using the two-pass online algorithm.
+- [softmax_3_pass](https://docs.modular.com/mojo/kernels/nn/softmax/softmax_3_pass): Performs an unbatched softmax on an input tensor using the three-pass algorithm.
+- [softmax_kernel](https://docs.modular.com/mojo/kernels/nn/softmax/softmax_kernel): Mojo function `nn.softmax.softmax_kernel` documentation
+- [sub](https://docs.modular.com/mojo/kernels/nn/softmax/sub): Mojo function `nn.softmax.sub` documentation
+- [split](https://docs.modular.com/mojo/kernels/nn/split): Mojo module nn.split documentation
+- [split](https://docs.modular.com/mojo/kernels/nn/split/split): Mojo function `nn.split.split` documentation
+- [tile](https://docs.modular.com/mojo/kernels/nn/tile): Mojo module nn.tile documentation
+- [tile](https://docs.modular.com/mojo/kernels/nn/tile/tile): Implements the `Tile` operator from the ONNX spec. This behaves like Numpy tile, but without broadcast.
+- [tile_shape](https://docs.modular.com/mojo/kernels/nn/tile/tile_shape): Compute the output shape of a `tile` operation, and assert the inputs are compatible.
+- [TopK_2](https://docs.modular.com/mojo/kernels/nn/topk/TopK_2): Mojo struct `nn.topk.TopK_2` documentation
+- [apply_gumbel_noise_kernel](https://docs.modular.com/mojo/kernels/nn/topk/apply_gumbel_noise_kernel): Mojo function `nn.topk.apply_gumbel_noise_kernel` documentation
+- [fused_token_sampling_cpu](https://docs.modular.com/mojo/kernels/nn/topk/fused_token_sampling_cpu): Generalized implementation of the Top K algorithm with sampling. Returns the sampled index from the innermost dimension of the input tensor for eac...
+- [fused_token_sampling_gpu](https://docs.modular.com/mojo/kernels/nn/topk/fused_token_sampling_gpu): Top K algorithm with fused sampling. Returns the sampled indices from the Top-K of the innermost dimension of the input tensor for each row/subvolume.
+- [gumbel_sampling_gpu](https://docs.modular.com/mojo/kernels/nn/topk/gumbel_sampling_gpu): Gumbel sampling using the Gumbel-max trick for categorical distributions.
+- [topk](https://docs.modular.com/mojo/kernels/nn/topk): Mojo module nn.topk documentation
+- [top_k](https://docs.modular.com/mojo/kernels/nn/topk/top_k): Implementation of the Top K algorithm. Returns the top or bottom K elements and their index along a specified axis.
+- [top_k_shape_impl](https://docs.modular.com/mojo/kernels/nn/topk/top_k_shape_impl): Compute the output shape of a top/bottom k operation.
+- [topk_gpu](https://docs.modular.com/mojo/kernels/nn/topk/topk_gpu): Generalized implementation of the Top K algorithm with/without sampling. Returns the sampled index from the innermost dimension of the input tensor...
+- [TopKMaskLogitsKernel](https://docs.modular.com/mojo/kernels/nn/topk_fi/TopKMaskLogitsKernel): Mojo function `nn.topk_fi.TopKMaskLogitsKernel` documentation
+- [get_min_max_value](https://docs.modular.com/mojo/kernels/nn/topk_fi/get_min_max_value): Compute the minimum and maximum values from input data using block reduction.
+- [topk_fi](https://docs.modular.com/mojo/kernels/nn/topk_fi): Mojo module nn.topk_fi documentation
+- [topk_mask_logits](https://docs.modular.com/mojo/kernels/nn/topk_fi/topk_mask_logits): Mojo function `nn.topk_fi.topk_mask_logits` documentation
+- [toppminp](https://docs.modular.com/mojo/kernels/nn/toppminp): Mojo module nn.toppminp documentation
+- [merge](https://docs.modular.com/mojo/kernels/nn/toppminp/merge): Merge two sorted subarrays into one sorted array.
+- [merge_sort_recursive](https://docs.modular.com/mojo/kernels/nn/toppminp/merge_sort_recursive): Recursive merge sort implementation.
+- [min_p_sampling](https://docs.modular.com/mojo/kernels/nn/toppminp/min_p_sampling): Naive CPU implementation of Min-P sampling for token selection. This function applies temperature scaling, softmax, a merge sort, and then samples ...
+- [sort_buf_descending](https://docs.modular.com/mojo/kernels/nn/toppminp/sort_buf_descending): Sort each batch separately in descending order using parallel merge sort.
+- [top_p_sampling](https://docs.modular.com/mojo/kernels/nn/toppminp/top_p_sampling): Naive CPU implementation of Top-P sampling for token selection. This function applies temperature scaling, softmax, a merge sort, and then samples ...
+- [DoubleBuffer](https://docs.modular.com/mojo/kernels/nn/toppminp_gpu/DoubleBuffer): Mojo struct `nn.toppminp_gpu.DoubleBuffer` documentation
+- [toppminp_gpu](https://docs.modular.com/mojo/kernels/nn/toppminp_gpu): Mojo module nn.toppminp_gpu documentation
+- [min_p_sampling_gpu](https://docs.modular.com/mojo/kernels/nn/toppminp_gpu/min_p_sampling_gpu): GPU implementation of Min-P sampling for token selection. This function applies temperature scaling, softmax, a radix sort, and then samples tokens...
+- [normalize](https://docs.modular.com/mojo/kernels/nn/toppminp_gpu/normalize): Mojo function `nn.toppminp_gpu.normalize` documentation
+- [normalize_u32](https://docs.modular.com/mojo/kernels/nn/toppminp_gpu/normalize_u32): Mojo function `nn.toppminp_gpu.normalize_u32` documentation
+- [radix_sort_pairs_kernel](https://docs.modular.com/mojo/kernels/nn/toppminp_gpu/radix_sort_pairs_kernel): Radix pair sort kernel for (default) descending order.
+- [run_radix_sort_pairs_gpu](https://docs.modular.com/mojo/kernels/nn/toppminp_gpu/run_radix_sort_pairs_gpu): Mojo function `nn.toppminp_gpu.run_radix_sort_pairs_gpu` documentation
+- [top_p_sampling_gpu](https://docs.modular.com/mojo/kernels/nn/toppminp_gpu/top_p_sampling_gpu): GPU implementation of Top-P sampling for token selection. This function applies temperature scaling, softmax, a radix sort, and then samples tokens...
+- [topk_wrapper](https://docs.modular.com/mojo/kernels/nn/toppminp_gpu/topk_wrapper): Copy of `Kernels/mojo/nn/topk.mojo:_topk_stage1` with the addition of max_vals and p_threshold arguments to determine if sorting is needed for top-...
+- [topp_minp_sampling_kernel](https://docs.modular.com/mojo/kernels/nn/toppminp_gpu/topp_minp_sampling_kernel): Top P-Min P sampling kernel.
+- [nvml](https://docs.modular.com/mojo/kernels/nvml): Implements wrappers around the NVIDIA Management Library (nvml).
+- [ClockType](https://docs.modular.com/mojo/kernels/nvml/nvml/ClockType): Mojo struct `nvml.nvml.ClockType` documentation
+- [Device](https://docs.modular.com/mojo/kernels/nvml/nvml/Device): Mojo struct `nvml.nvml.Device` documentation
+- [DriverVersion](https://docs.modular.com/mojo/kernels/nvml/nvml/DriverVersion): Mojo struct `nvml.nvml.DriverVersion` documentation
+- [EnableState](https://docs.modular.com/mojo/kernels/nvml/nvml/EnableState): Mojo struct `nvml.nvml.EnableState` documentation
+- [Result](https://docs.modular.com/mojo/kernels/nvml/nvml/Result): Mojo struct `nvml.nvml.Result` documentation
+- [nvml](https://docs.modular.com/mojo/kernels/nvml/nvml): Implements wrappers around the NVIDIA Management Library (nvml).
+- [quantization](https://docs.modular.com/mojo/kernels/quantization): This package contains a set of APIs for quantizing tensor data.
+- [Q4sym](https://docs.modular.com/mojo/kernels/quantization/per_channel_grouped_4bit/Q4sym): Q4sym: compresses values of type `float_dtype` to 4bit unsigned integers which have been dynamically symmetrically quantized with the given scale f...
+- [block_Q4_K](https://docs.modular.com/mojo/kernels/quantization/per_channel_grouped_4bit/block_Q4_K): Mojo struct `quantization.per_channel_grouped_4bit.block_Q4_K` documentation
+- [block_Q6_K](https://docs.modular.com/mojo/kernels/quantization/per_channel_grouped_4bit/block_Q6_K): Mojo struct `quantization.per_channel_grouped_4bit.block_Q6_K` documentation
+- [block_QK_K](https://docs.modular.com/mojo/kernels/quantization/per_channel_grouped_4bit/block_QK_K): Mojo struct `quantization.per_channel_grouped_4bit.block_QK_K` documentation
+- [calculate_symmetric_vector](https://docs.modular.com/mojo/kernels/quantization/per_channel_grouped_4bit/calculate_symmetric_vector): Symmetrically quantizes the given SIMD vector `data` with input type `input_dtype` and `simd_width` elements, assuming we want the results to fit i...
+- [per_channel_grouped_4bit](https://docs.modular.com/mojo/kernels/quantization/per_channel_grouped_4bit): Mojo module quantization.per_channel_grouped_4bit documentation
+- [q4_k_dequantize_impl](https://docs.modular.com/mojo/kernels/quantization/per_channel_grouped_4bit/q4_k_dequantize_impl): Mojo function `quantization.per_channel_grouped_4bit.q4_k_dequantize_impl` documentation
+- [q6_k_dequantize_impl](https://docs.modular.com/mojo/kernels/quantization/per_channel_grouped_4bit/q6_k_dequantize_impl): Mojo function `quantization.per_channel_grouped_4bit.q6_k_dequantize_impl` documentation
+- [scale_min_k4](https://docs.modular.com/mojo/kernels/quantization/per_channel_grouped_4bit/scale_min_k4): Mojo function `quantization.per_channel_grouped_4bit.scale_min_k4` documentation
+- [qmatmul](https://docs.modular.com/mojo/kernels/quantization/qmatmul): Mojo module quantization.qmatmul documentation
+- [matmul_qint4](https://docs.modular.com/mojo/kernels/quantization/qmatmul/matmul_qint4): Mojo function `quantization.qmatmul.matmul_qint4` documentation
+- [matmul_qint4_pack_b](https://docs.modular.com/mojo/kernels/quantization/qmatmul/matmul_qint4_pack_b): Mojo function `quantization.qmatmul.matmul_qint4_pack_b` documentation
+- [args_to_tuple](https://docs.modular.com/mojo/kernels/quantization/qmatmul_gpu/args_to_tuple): Mojo function `quantization.qmatmul_gpu.args_to_tuple` documentation
+- [gpu_qint4_repack_GPTQ](https://docs.modular.com/mojo/kernels/quantization/qmatmul_gpu/gpu_qint4_repack_GPTQ): Mojo function `quantization.qmatmul_gpu.gpu_qint4_repack_GPTQ` documentation
+- [gpu_qint4_repack_Q4_0](https://docs.modular.com/mojo/kernels/quantization/qmatmul_gpu/gpu_qint4_repack_Q4_0): Mojo function `quantization.qmatmul_gpu.gpu_qint4_repack_Q4_0` documentation
+- [qmatmul_gpu](https://docs.modular.com/mojo/kernels/quantization/qmatmul_gpu): Mojo module quantization.qmatmul_gpu documentation
+- [matmul_gpu_qint4](https://docs.modular.com/mojo/kernels/quantization/qmatmul_gpu/matmul_gpu_qint4): Mojo function `quantization.qmatmul_gpu.matmul_gpu_qint4` documentation
+- [matmul_gpu_qint4_impl](https://docs.modular.com/mojo/kernels/quantization/qmatmul_gpu/matmul_gpu_qint4_impl): Mojo function `quantization.qmatmul_gpu.matmul_gpu_qint4_impl` documentation
+- [multistage_gemm_q](https://docs.modular.com/mojo/kernels/quantization/qmatmul_gpu/multistage_gemm_q): Mojo function `quantization.qmatmul_gpu.multistage_gemm_q` documentation
+- [multistage_mma_q](https://docs.modular.com/mojo/kernels/quantization/qmatmul_gpu/multistage_mma_q): Mojo function `quantization.qmatmul_gpu.multistage_mma_q` documentation
+- [multistage_qgemm_kernel](https://docs.modular.com/mojo/kernels/quantization/qmatmul_gpu/multistage_qgemm_kernel): Mojo function `quantization.qmatmul_gpu.multistage_qgemm_kernel` documentation
+- [pack_Q_tile](https://docs.modular.com/mojo/kernels/quantization/qmatmul_gpu/pack_Q_tile): Mojo function `quantization.qmatmul_gpu.pack_Q_tile` documentation
+- [q_smem_usage](https://docs.modular.com/mojo/kernels/quantization/qmatmul_gpu/q_smem_usage): Mojo function `quantization.qmatmul_gpu.q_smem_usage` documentation
+- [repack_GPTQ_for_sm8x](https://docs.modular.com/mojo/kernels/quantization/qmatmul_gpu/repack_GPTQ_for_sm8x): Mojo function `quantization.qmatmul_gpu.repack_GPTQ_for_sm8x` documentation
+- [repack_Q4_0_for_sm8x](https://docs.modular.com/mojo/kernels/quantization/qmatmul_gpu/repack_Q4_0_for_sm8x): Mojo function `quantization.qmatmul_gpu.repack_Q4_0_for_sm8x` documentation
+- [unpack_4bit_int](https://docs.modular.com/mojo/kernels/quantization/qmatmul_gpu/unpack_4bit_int): Mojo function `quantization.qmatmul_gpu.unpack_4bit_int` documentation
+- [qmatmul_k](https://docs.modular.com/mojo/kernels/quantization/qmatmul_k): Mojo module quantization.qmatmul_k documentation
+- [matmul_Q4_K](https://docs.modular.com/mojo/kernels/quantization/qmatmul_k/matmul_Q4_K): Mojo function `quantization.qmatmul_k.matmul_Q4_K` documentation
+- [matmul_Q4_K_pack_b](https://docs.modular.com/mojo/kernels/quantization/qmatmul_k/matmul_Q4_K_pack_b): Mojo function `quantization.qmatmul_k.matmul_Q4_K_pack_b` documentation
+- [matmul_Q6_K](https://docs.modular.com/mojo/kernels/quantization/qmatmul_k/matmul_Q6_K): Mojo function `quantization.qmatmul_k.matmul_Q6_K` documentation
+- [matmul_Q6_K_pack_b](https://docs.modular.com/mojo/kernels/quantization/qmatmul_k/matmul_Q6_K_pack_b): Mojo function `quantization.qmatmul_k.matmul_Q6_K_pack_b` documentation
+- [Mojo reference](https://docs.modular.com/mojo/lib): Mojo standard library and other references
+- [Mojo language basics](https://docs.modular.com/mojo/manual/basics): An overview of the Mojo language.
+- [Control flow](https://docs.modular.com/mojo/manual/control-flow): Mojo control flow statements.
+- [@always_inline](https://docs.modular.com/mojo/manual/decorators/always-inline): Copies the body of a function directly into the body of the calling function.
+- [@compiler.register](https://docs.modular.com/mojo/manual/decorators/compiler-register): Registers a custom operation for use with the MAX Graph API.
+- [@__copy_capture](https://docs.modular.com/mojo/manual/decorators/copy-capture): Captures register-passable typed values by copy.
+- [@export](https://docs.modular.com/mojo/manual/decorators/export): Marks a function for export.
+- [@fieldwise_init](https://docs.modular.com/mojo/manual/decorators/fieldwise-init): Generates fieldwise constructor for a struct.
+- [@implicit](https://docs.modular.com/mojo/manual/decorators/implicit): Marks a constructor as eligible for implicit conversion.
+- [Mojo decorators](https://docs.modular.com/mojo/manual/decorators): A reference of Mojo's built-in decorators
+- [@no_inline](https://docs.modular.com/mojo/manual/decorators/no-inline): Prevents a function from being inlined.
+- [@nonmaterializable](https://docs.modular.com/mojo/manual/decorators/nonmaterializable): Declares that a type should exist only in the parameter domain.
+- [@parameter](https://docs.modular.com/mojo/manual/decorators/parameter): Executes a function or if statement at compile time.
+- [@register_passable](https://docs.modular.com/mojo/manual/decorators/register-passable): Declares that a type should be passed in machine registers.
+- [@staticmethod](https://docs.modular.com/mojo/manual/decorators/staticmethod): Declares a struct method as static.
+- [Errors, error handling, and context managers](https://docs.modular.com/mojo/manual/errors): This page discusses how to raise errors in Mojo programs and how to detect and
+- [Functions](https://docs.modular.com/mojo/manual/functions): Introduction to Mojo `fn` and `def` functions.
+- [Get started with Mojo](https://docs.modular.com/mojo/manual/get-started): Install Mojo and learn the language basics by building a complete Mojo program
+- [Intro to GPUs](https://docs.modular.com/mojo/manual/gpu/architecture): An overview of GPU architecture and terminology.
+- [Basics of GPU programming with Mojo](https://docs.modular.com/mojo/manual/gpu/basics): Learn the basics of GPU programming with Mojo.
+- [GPU programming fundamentals](https://docs.modular.com/mojo/manual/gpu/fundamentals): A description of the fundamental GPU APIs in Mojo.
+- [Get started with GPU programming](https://docs.modular.com/mojo/manual/gpu/intro-tutorial): Learn the basics of GPU programming with Mojo
+- [Mojo Manual](https://docs.modular.com/mojo/manual): A comprehensive guide to the Mojo programming language.
+- [Install Mojo](https://docs.modular.com/mojo/manual/install): You can install Mojo using pixi, uv, conda, pip, or other Python/Conda package managers.
+- [Introduction to layouts](https://docs.modular.com/mojo/manual/layout/layouts): Using layouts to describe multidimensional data.
+- [Using LayoutTensor](https://docs.modular.com/mojo/manual/layout/tensors): Using LayoutTensor to manipulate multidimensional data.
+- [Death of a value](https://docs.modular.com/mojo/manual/lifecycle/death): An explanation of when and how Mojo destroys values.
+- [Intro to value lifecycle](https://docs.modular.com/mojo/manual/lifecycle): An introduction to the value lifecycle.
+- [Life of a value](https://docs.modular.com/mojo/manual/lifecycle/life): An explanation of when and how Mojo creates values.
+- [Operators, expressions, and dunder methods](https://docs.modular.com/mojo/manual/operators): Mojo includes a variety of operators for manipulating values of different types.
+- [Modules and packages](https://docs.modular.com/mojo/manual/packages): Learn how to package Mojo code for distribution and importing.
+- [Parameterization: compile-time metaprogramming](https://docs.modular.com/mojo/manual/parameters): An introduction to parameters and compile-time metaprogramming.
+- [Intro to pointers](https://docs.modular.com/mojo/manual/pointers): An overview of accessing memory using Mojo's pointer types.
+- [Unsafe pointers](https://docs.modular.com/mojo/manual/pointers/unsafe-pointers): Using unsafe pointers to access dynamically-allocated memory.
+- [Python interoperability](https://docs.modular.com/mojo/manual/python): Using Python and Mojo together.
+- [Calling Mojo from Python](https://docs.modular.com/mojo/manual/python/mojo-from-python): How to import and use Mojo modules in Python code.
+- [Calling Python from Mojo](https://docs.modular.com/mojo/manual/python/python-from-mojo): How to import and use Python modules in Mojo code.
+- [Python types](https://docs.modular.com/mojo/manual/python/types): Using Mojo types in Python, and Python types in Mojo.
+- [Structs](https://docs.modular.com/mojo/manual/structs): Introduction to Mojo structures (structs).
+- [Traits](https://docs.modular.com/mojo/manual/traits): Define shared behavior for types.
+- [Types](https://docs.modular.com/mojo/manual/types): Standard Mojo data types.
+- [Intro to value ownership](https://docs.modular.com/mojo/manual/values): Introduction to Mojo value ownership.
+- [Lifetimes, origins, and references](https://docs.modular.com/mojo/manual/values/lifetimes): Working with origins and references.
+- [Ownership](https://docs.modular.com/mojo/manual/values/ownership): How Mojo shares references through function arguments.
+- [Value semantics](https://docs.modular.com/mojo/manual/values/value-semantics): An explanation of Mojo's value-semantic defaults.
+- [Variables](https://docs.modular.com/mojo/manual/variables): Introduction to Mojo variables.
+- [Mojo roadmap](https://docs.modular.com/mojo/roadmap): A summary of our plans and priorities to improve the Mojo language
+- [elementwise](https://docs.modular.com/mojo/stdlib/algorithm/functional/elementwise): Executes `func[width, rank](indices)`, possibly as sub-tasks, for a suitable combination of width and indices so as to cover shape. Returns when al...
+- [functional](https://docs.modular.com/mojo/stdlib/algorithm/functional): Implements higher-order functions.
+- [map](https://docs.modular.com/mojo/stdlib/algorithm/functional/map): Maps a function over a range from 0 to size.
+- [parallelize](https://docs.modular.com/mojo/stdlib/algorithm/functional/parallelize): Executes func(0) ... func(num_work_items-1) as sub-tasks in parallel, and returns when all are complete.
+- [parallelize_over_rows](https://docs.modular.com/mojo/stdlib/algorithm/functional/parallelize_over_rows): Parallelize func over non-axis dims of shape.
+- [sync_parallelize](https://docs.modular.com/mojo/stdlib/algorithm/functional/sync_parallelize): Executes func(0) ... func(num_work_items-1) as parallel sub-tasks, and returns when all are complete.
+- [tile](https://docs.modular.com/mojo/stdlib/algorithm/functional/tile): A generator that launches work groups in specified list of tile sizes.
+- [tile_and_unswitch](https://docs.modular.com/mojo/stdlib/algorithm/functional/tile_and_unswitch): Performs time and unswitch functional transformation.
+- [tile_middle_unswitch_boundaries](https://docs.modular.com/mojo/stdlib/algorithm/functional/tile_middle_unswitch_boundaries): Divides 1d iteration space into three parts and tiles them with different steps.
+- [unswitch](https://docs.modular.com/mojo/stdlib/algorithm/functional/unswitch): Performs a functional unswitch transformation.
+- [vectorize](https://docs.modular.com/mojo/stdlib/algorithm/functional/vectorize): Simplifies SIMD optimized loops by mapping a function across a range from 0 to `size`, incrementing by `simd_width` at each step. The remainder of ...
+- [algorithm](https://docs.modular.com/mojo/stdlib/algorithm): Implements the algorithm package.
+- [memory](https://docs.modular.com/mojo/stdlib/algorithm/memory): Implements `parallel_memcpy`.
+- [parallel_memcpy](https://docs.modular.com/mojo/stdlib/algorithm/memory/parallel_memcpy): Copies `count` elements from a memory buffer `src` to `dest` in parallel by spawning `num_tasks` tasks each copying `count_per_task` elements.
+- [all_true](https://docs.modular.com/mojo/stdlib/algorithm/reduction/all_true): Returns True if all the elements in a buffer are True and False otherwise.
+- [any_true](https://docs.modular.com/mojo/stdlib/algorithm/reduction/any_true): Returns True if any the elements in a buffer are True and False otherwise.
+- [cumsum](https://docs.modular.com/mojo/stdlib/algorithm/reduction/cumsum): Computes the cumulative sum of all elements in a buffer.    dst[i] = src[i] + src[i-1] + ... + src[0].
+- [reduction](https://docs.modular.com/mojo/stdlib/algorithm/reduction): Implements SIMD reductions.
+- [map_reduce](https://docs.modular.com/mojo/stdlib/algorithm/reduction/map_reduce): Stores the result of calling input_gen_fn in dst and simultaneously reduce the result using a custom reduction function.
+- [max](https://docs.modular.com/mojo/stdlib/algorithm/reduction/max): Computes the max element in a buffer.
+- [mean](https://docs.modular.com/mojo/stdlib/algorithm/reduction/mean): Computes the mean value of the elements in a buffer.
+- [min](https://docs.modular.com/mojo/stdlib/algorithm/reduction/min): Computes the min element in a buffer.
+- [none_true](https://docs.modular.com/mojo/stdlib/algorithm/reduction/none_true): Returns True if none of the elements in a buffer are True and False otherwise.
+- [product](https://docs.modular.com/mojo/stdlib/algorithm/reduction/product): Computes the product of the buffer elements.
+- [reduce](https://docs.modular.com/mojo/stdlib/algorithm/reduction/reduce): Computes a custom reduction of buffer elements.
+- [reduce_boolean](https://docs.modular.com/mojo/stdlib/algorithm/reduction/reduce_boolean): Computes a bool reduction of buffer elements. The reduction will early exit if the `continue_fn` returns False.
+- [sum](https://docs.modular.com/mojo/stdlib/algorithm/reduction/sum): Computes the sum of buffer elements.
+- [variance](https://docs.modular.com/mojo/stdlib/algorithm/reduction/variance): Given a mean, computes the variance of elements in a buffer.
+- [b16decode](https://docs.modular.com/mojo/stdlib/base64/base64/b16decode): Performs base16 decoding on the input string.
+- [b16encode](https://docs.modular.com/mojo/stdlib/base64/base64/b16encode): Performs base16 encoding on the input string slice.
+- [b64decode](https://docs.modular.com/mojo/stdlib/base64/base64/b64decode): Performs base64 decoding on the input string.
+- [b64encode](https://docs.modular.com/mojo/stdlib/base64/base64/b64encode): Performs base64 encoding on the input string.
+- [base64](https://docs.modular.com/mojo/stdlib/base64/base64): Provides functions for base64 encoding strings.
+- [base64](https://docs.modular.com/mojo/stdlib/base64): Implements the base64 package.
+- [Bench](https://docs.modular.com/mojo/stdlib/benchmark/bencher/Bench): Constructs a Benchmark object, used for running multiple benchmarks and comparing the results.
+- [BenchConfig](https://docs.modular.com/mojo/stdlib/benchmark/bencher/BenchConfig): Defines a benchmark configuration struct to control execution times and frequency.
+- [BenchId](https://docs.modular.com/mojo/stdlib/benchmark/bencher/BenchId): Defines a benchmark Id struct to identify and represent a particular benchmark execution.
+- [BenchMetric](https://docs.modular.com/mojo/stdlib/benchmark/bencher/BenchMetric): Defines a benchmark throughput metric.
+- [Bencher](https://docs.modular.com/mojo/stdlib/benchmark/bencher/Bencher): Defines a Bencher struct which facilitates the timing of a target function.
+- [BenchmarkInfo](https://docs.modular.com/mojo/stdlib/benchmark/bencher/BenchmarkInfo): Defines a Benchmark Info struct to record execution Statistics.
+- [Format](https://docs.modular.com/mojo/stdlib/benchmark/bencher/Format): Defines a format for the benchmark output when printing or writing to a file.
+- [Mode](https://docs.modular.com/mojo/stdlib/benchmark/bencher/Mode): Defines a Benchmark Mode to distinguish between test runs and actual benchmarks.
+- [ThroughputMeasure](https://docs.modular.com/mojo/stdlib/benchmark/bencher/ThroughputMeasure): Records a throughput metric of metric BenchMetric and value.
+- [bencher](https://docs.modular.com/mojo/stdlib/benchmark/bencher): Mojo module stdlib.benchmark.bencher documentation
+- [Batch](https://docs.modular.com/mojo/stdlib/benchmark/benchmark/Batch): A batch of benchmarks, the benchmark.run() function works out how many iterations to run in each batch based the how long the previous iterations t...
+- [Report](https://docs.modular.com/mojo/stdlib/benchmark/benchmark/Report): Contains the average execution time, iterations, min and max of each batch.
+- [Unit](https://docs.modular.com/mojo/stdlib/benchmark/benchmark/Unit): Time Unit used by Benchmark Report.
+- [benchmark](https://docs.modular.com/mojo/stdlib/benchmark/benchmark): Implements the benchmark module for runtime benchmarking.
+- [run](https://docs.modular.com/mojo/stdlib/benchmark/benchmark/run): Benchmarks the function passed in as a parameter.
+- [compiler](https://docs.modular.com/mojo/stdlib/benchmark/compiler): Mojo module stdlib.benchmark.compiler documentation
+- [keep](https://docs.modular.com/mojo/stdlib/benchmark/compiler/keep): Provides a hint to the compiler to not optimize the variable use away.
+- [benchmark](https://docs.modular.com/mojo/stdlib/benchmark): Implements the benchmark package for runtime benchmarking.
+- [clobber_memory](https://docs.modular.com/mojo/stdlib/benchmark/memory/clobber_memory): Forces all pending memory writes to be flushed to memory.
+- [memory](https://docs.modular.com/mojo/stdlib/benchmark/memory): Mojo module stdlib.benchmark.memory documentation
+- [QuickBench](https://docs.modular.com/mojo/stdlib/benchmark/quick_bench/QuickBench): Defines a struct to facilitate benchmarking and avoiding `Bencher` boilerplate.
+- [quick_bench](https://docs.modular.com/mojo/stdlib/benchmark/quick_bench): Mojo module stdlib.benchmark.quick_bench documentation
+- [bit_not](https://docs.modular.com/mojo/stdlib/bit/bit/bit_not): Performs a bitwise NOT operation on an SIMD vector of integer values.
+- [bit_reverse](https://docs.modular.com/mojo/stdlib/bit/bit/bit_reverse): Reverses the bitpattern of an integer value.
+- [bit_width](https://docs.modular.com/mojo/stdlib/bit/bit/bit_width): Computes the minimum number of bits required to represent the integer.
+- [byte_swap](https://docs.modular.com/mojo/stdlib/bit/bit/byte_swap): Byte-swaps an integer value with an even number of bytes.
+- [count_leading_zeros](https://docs.modular.com/mojo/stdlib/bit/bit/count_leading_zeros): Counts the number of leading zeros of an integer.
+- [count_trailing_zeros](https://docs.modular.com/mojo/stdlib/bit/bit/count_trailing_zeros): Counts the number of trailing zeros for an integer.
+- [bit](https://docs.modular.com/mojo/stdlib/bit/bit): Provides functions for bit manipulation.
+- [log2_ceil](https://docs.modular.com/mojo/stdlib/bit/bit/log2_ceil): Returns the ceiling of the base-2 logarithm of an integer value.
+- [log2_floor](https://docs.modular.com/mojo/stdlib/bit/bit/log2_floor): Returns the floor of the base-2 logarithm of an integer value.
+- [next_power_of_two](https://docs.modular.com/mojo/stdlib/bit/bit/next_power_of_two): Computes the smallest power of 2 that is greater than or equal to the input value. Any integral value less than or equal to 1 will be ceiled to 1.
+- [pop_count](https://docs.modular.com/mojo/stdlib/bit/bit/pop_count): Counts the number of bits set in an integer value.
+- [prev_power_of_two](https://docs.modular.com/mojo/stdlib/bit/bit/prev_power_of_two): Computes the largest power of 2 that is less than or equal to the input value. Any integral value less than or equal to 0 will be floored to 0.
+- [rotate_bits_left](https://docs.modular.com/mojo/stdlib/bit/bit/rotate_bits_left): Shifts the bits of an input to the left by `shift` bits (with wrap-around).
+- [rotate_bits_right](https://docs.modular.com/mojo/stdlib/bit/bit/rotate_bits_right): Shifts the bits of an input to the right by `shift` bits (with wrap-around).
+- [bit](https://docs.modular.com/mojo/stdlib/bit): Implements the bit package.
+- [NDBuffer](https://docs.modular.com/mojo/stdlib/buffer/buffer/NDBuffer): An N-dimensional buffer.
+- [buffer](https://docs.modular.com/mojo/stdlib/buffer/buffer): Implements the NDBuffer struct.
+- [partial_simd_load](https://docs.modular.com/mojo/stdlib/buffer/buffer/partial_simd_load): Loads a vector with dynamic bound.
+- [partial_simd_store](https://docs.modular.com/mojo/stdlib/buffer/buffer/partial_simd_store): Stores a vector with dynamic bound.
+- [prod_dims](https://docs.modular.com/mojo/stdlib/buffer/buffer/prod_dims): Computes the product of a slice of the given buffer's dimensions.
+- [Dim](https://docs.modular.com/mojo/stdlib/buffer/dimlist/Dim): A static or dynamic dimension modeled with an optional integer.
+- [DimList](https://docs.modular.com/mojo/stdlib/buffer/dimlist/DimList): This type represents a list of dimensions. Each dimension may have a static value or not have a value, which represents a dynamic dimension.
+- [dimlist](https://docs.modular.com/mojo/stdlib/buffer/dimlist): Provides utilities for working with static and variadic lists.
+- [buffer](https://docs.modular.com/mojo/stdlib/buffer): Implements the buffer package.
+- [AnyType](https://docs.modular.com/mojo/stdlib/builtin/anytype/AnyType): A trait for types that require lifetime management through destructors.
+- [UnknownDestructibility](https://docs.modular.com/mojo/stdlib/builtin/anytype/UnknownDestructibility): The most basic trait that all Mojo types extend by default.
+- [anytype](https://docs.modular.com/mojo/stdlib/builtin/anytype): Defines the core traits for object lifetime management in Mojo.
+- [Bool](https://docs.modular.com/mojo/stdlib/builtin/bool/Bool): The primitive Bool scalar value used in Mojo.
+- [Boolable](https://docs.modular.com/mojo/stdlib/builtin/bool/Boolable): The `Boolable` trait describes a type that can be explicitly converted to a `Bool` or evaluated as a boolean expression in `if` or `while` conditions.
+- [ImplicitlyBoolable](https://docs.modular.com/mojo/stdlib/builtin/bool/ImplicitlyBoolable): The `ImplicitlyBoolable` trait describes a type that can be implicitly converted to a `Bool`.
+- [all](https://docs.modular.com/mojo/stdlib/builtin/bool/all): Checks if **all** elements in the list are truthy.
+- [any](https://docs.modular.com/mojo/stdlib/builtin/bool/any): Checks if **any** element in the list is truthy.
+- [bool](https://docs.modular.com/mojo/stdlib/builtin/bool): Implements the Bool class.
+- [breakpoint](https://docs.modular.com/mojo/stdlib/builtin/breakpoint/breakpoint): Cause an execution trap with the intention of requesting the attention of a debugger.
+- [breakpoint](https://docs.modular.com/mojo/stdlib/builtin/breakpoint): This module includes the builtin breakpoint function.
+- [Slice](https://docs.modular.com/mojo/stdlib/builtin/builtin_slice/Slice): Represents a slice expression.
+- [builtin_slice](https://docs.modular.com/mojo/stdlib/builtin/builtin_slice): Implements slice.
+- [slice](https://docs.modular.com/mojo/stdlib/builtin/builtin_slice/slice-function): Construct slice given the end value.
+- [GreaterThanComparable](https://docs.modular.com/mojo/stdlib/builtin/comparable/GreaterThanComparable): A type which can be greater than compared with other instances of itself.
+- [GreaterThanOrEqualComparable](https://docs.modular.com/mojo/stdlib/builtin/comparable/GreaterThanOrEqualComparable): A type which can be greater than or equal to compared with other instances of itself.
+- [LessThanComparable](https://docs.modular.com/mojo/stdlib/builtin/comparable/LessThanComparable): A type which can be less than compared with other instances of itself.
+- [LessThanOrEqualComparable](https://docs.modular.com/mojo/stdlib/builtin/comparable/LessThanOrEqualComparable): A type which can be less than or equal to compared with other instances of itself.
+- [comparable](https://docs.modular.com/mojo/stdlib/builtin/comparable): Mojo module stdlib.builtin.comparable documentation
+- [constrained](https://docs.modular.com/mojo/stdlib/builtin/constrained/constrained): Asserts that the condition must be true at compile time.
+- [constrained](https://docs.modular.com/mojo/stdlib/builtin/constrained): Implements compile-time constraints.
+- [Coroutine](https://docs.modular.com/mojo/stdlib/builtin/coroutine/Coroutine): Represents a coroutine.
+- [RaisingCoroutine](https://docs.modular.com/mojo/stdlib/builtin/coroutine/RaisingCoroutine): Represents a coroutine that can raise.
+- [coroutine](https://docs.modular.com/mojo/stdlib/builtin/coroutine): Implements classes and methods for coroutines.
+- [debug_assert](https://docs.modular.com/mojo/stdlib/builtin/debug_assert/debug_assert): Asserts that the condition is true at run time.
+- [debug_assert](https://docs.modular.com/mojo/stdlib/builtin/debug_assert): Implements run-time assertions.
+- [DevicePassable](https://docs.modular.com/mojo/stdlib/builtin/device_passable/DevicePassable): This trait marks types as passable to accelerator devices.
+- [device_passable](https://docs.modular.com/mojo/stdlib/builtin/device_passable): Mojo module stdlib.builtin.device_passable documentation
+- [DType](https://docs.modular.com/mojo/stdlib/builtin/dtype/DType): Represents a data type specification and provides methods for working with it.
+- [dtype](https://docs.modular.com/mojo/stdlib/builtin/dtype): Implements the DType class.
+- [EqualityComparable](https://docs.modular.com/mojo/stdlib/builtin/equality_comparable/EqualityComparable): A type which can be compared for equality with other instances of itself.
+- [equality_comparable](https://docs.modular.com/mojo/stdlib/builtin/equality_comparable): Mojo module stdlib.builtin.equality_comparable documentation
+- [Error](https://docs.modular.com/mojo/stdlib/builtin/error/Error): This type represents an Error.
+- [StackTrace](https://docs.modular.com/mojo/stdlib/builtin/error/StackTrace): Holds a stack trace of a location when StackTrace is constructed.
+- [error](https://docs.modular.com/mojo/stdlib/builtin/error): Implements the Error class.
+- [FloatLiteral](https://docs.modular.com/mojo/stdlib/builtin/float_literal/FloatLiteral): Mojo floating point literal type.
+- [float_literal](https://docs.modular.com/mojo/stdlib/builtin/float_literal): Implements the FloatLiteral class.
+- [Floatable](https://docs.modular.com/mojo/stdlib/builtin/floatable/Floatable): The `Floatable` trait describes a type that can be converted to a Float64.
+- [FloatableRaising](https://docs.modular.com/mojo/stdlib/builtin/floatable/FloatableRaising): The `FloatableRaising` trait describes a type that can be converted to a Float64, but the conversion might raise an error (e.g.: a string).
+- [floatable](https://docs.modular.com/mojo/stdlib/builtin/floatable): Implements the `Floatable` and `FloatableRaising` traits.
+- [bin](https://docs.modular.com/mojo/stdlib/builtin/format_int/bin): Return the binary string representation an integral value.
+- [hex](https://docs.modular.com/mojo/stdlib/builtin/format_int/hex): Returns the hex string representation of the given integer.
+- [format_int](https://docs.modular.com/mojo/stdlib/builtin/format_int): Provides the `hex` and `bin` functions.
+- [oct](https://docs.modular.com/mojo/stdlib/builtin/format_int/oct): Returns the octal string representation of the given integer.
+- [Identifiable](https://docs.modular.com/mojo/stdlib/builtin/identifiable/Identifiable): The Identifiable trait denotes a type with an identity which can be compared with other instances of itself.
+- [identifiable](https://docs.modular.com/mojo/stdlib/builtin/identifiable): Mojo module stdlib.builtin.identifiable documentation
+- [builtin](https://docs.modular.com/mojo/stdlib/builtin): Implements the builtin package.
+- [ImplicitlyIntable](https://docs.modular.com/mojo/stdlib/builtin/int/ImplicitlyIntable): The `ImplicitlyIntable` trait describes a type that can be converted to an Int implicitly.
+- [Indexer](https://docs.modular.com/mojo/stdlib/builtin/int/Indexer): The `Indexer` trait is used for types that can index into a collection or pointer. The type returned is the underlying __mlir_type.index, enabling ...
+- [Int](https://docs.modular.com/mojo/stdlib/builtin/int/Int): This type represents an integer value.
+- [Intable](https://docs.modular.com/mojo/stdlib/builtin/int/Intable): The `Intable` trait describes a type that can be converted to an Int.
+- [IntableRaising](https://docs.modular.com/mojo/stdlib/builtin/int/IntableRaising): The `IntableRaising` trait describes a type can be converted to an Int, but the conversion might raise an error.
+- [index](https://docs.modular.com/mojo/stdlib/builtin/int/index-function): Returns the value of `__mlir_index__` for the given value.
+- [int](https://docs.modular.com/mojo/stdlib/builtin/int): Implements the Int class.
+- [IntLiteral](https://docs.modular.com/mojo/stdlib/builtin/int_literal/IntLiteral): This type represents a static integer literal value with infinite precision.  This type is a compile-time construct which stores its value as a par...
+- [int_literal](https://docs.modular.com/mojo/stdlib/builtin/int_literal): Implements the IntLiteral class.
+- [Sized](https://docs.modular.com/mojo/stdlib/builtin/len/Sized): The `Sized` trait describes a type that has an integer length (such as a string or array).
+- [SizedRaising](https://docs.modular.com/mojo/stdlib/builtin/len/SizedRaising): The `SizedRaising` trait describes a type that has an integer length, which might raise an error if the length can't be determined.
+- [UIntSized](https://docs.modular.com/mojo/stdlib/builtin/len/UIntSized): The `Sized` trait describes a type that has an integer length (such as a string or array).
+- [len](https://docs.modular.com/mojo/stdlib/builtin/len): Provides the `len()` function and its associated traits.
+- [len](https://docs.modular.com/mojo/stdlib/builtin/len/len): Get the length of a value.
+- [Absable](https://docs.modular.com/mojo/stdlib/builtin/math/Absable): The `Absable` trait describes a type that defines an absolute value operation.
+- [DivModable](https://docs.modular.com/mojo/stdlib/builtin/math/DivModable): The `DivModable` trait describes a type that defines division and modulo operations returning both quotient and remainder.
+- [Powable](https://docs.modular.com/mojo/stdlib/builtin/math/Powable): The `Powable` trait describes a type that defines a power operation (i.e. exponentiation) with the same base and exponent types.
+- [Roundable](https://docs.modular.com/mojo/stdlib/builtin/math/Roundable): The `Roundable` trait describes a type that defines a rounding operation.
+- [abs](https://docs.modular.com/mojo/stdlib/builtin/math/abs): Get the absolute value of the given object.
+- [divmod](https://docs.modular.com/mojo/stdlib/builtin/math/divmod): Performs division and returns the quotient and the remainder.
+- [math](https://docs.modular.com/mojo/stdlib/builtin/math): Defines basic math functions for use in the open source parts of the standard library since the `math` package is currently closed source and canno...
+- [max](https://docs.modular.com/mojo/stdlib/builtin/math/max): Gets the maximum of two integers.
+- [min](https://docs.modular.com/mojo/stdlib/builtin/math/min): Gets the minimum of two integers.
+- [pow](https://docs.modular.com/mojo/stdlib/builtin/math/pow): Computes the `base` raised to the power of the `exp`.
+- [round](https://docs.modular.com/mojo/stdlib/builtin/math/round): Get the rounded value of the given object.
+- [NoneType](https://docs.modular.com/mojo/stdlib/builtin/none/NoneType): Represents the absence of a value.
+- [none](https://docs.modular.com/mojo/stdlib/builtin/none): Defines the builtin `NoneType`.
+- [range](https://docs.modular.com/mojo/stdlib/builtin/range): Implements a 'range' call.
+- [range](https://docs.modular.com/mojo/stdlib/builtin/range/range): Constructs a [0; end) Range.
+- [rebind](https://docs.modular.com/mojo/stdlib/builtin/rebind): Implements type rebind/trait downcast
+- [rebind](https://docs.modular.com/mojo/stdlib/builtin/rebind/rebind): Statically assert that a parameter input type `src_type` resolves to the same type as a parameter result type `dest_type` after function instantiat...
+- [rebind_var](https://docs.modular.com/mojo/stdlib/builtin/rebind/rebind_var): Statically assert that a parameter input type `src_type` resolves to the same type as a parameter result type `dest_type` after function instantiat...
+- [trait_downcast](https://docs.modular.com/mojo/stdlib/builtin/rebind/trait_downcast): Downcast a parameter input type `T` and rebind the type such that the return value's type conforms the provided `Trait`. If `T`, after resolving to...
+- [Representable](https://docs.modular.com/mojo/stdlib/builtin/repr/Representable): A trait that describes a type that has a String representation.
+- [repr](https://docs.modular.com/mojo/stdlib/builtin/repr): Provide the `repr` function.
+- [repr](https://docs.modular.com/mojo/stdlib/builtin/repr/repr): Returns the string representation of the given value.
+- [ReversibleRange](https://docs.modular.com/mojo/stdlib/builtin/reversed/ReversibleRange): The `ReversibleRange` trait describes a range that can be reversed.
+- [reversed](https://docs.modular.com/mojo/stdlib/builtin/reversed): Provides the `reversed` function for reverse iteration over collections.
+- [reversed](https://docs.modular.com/mojo/stdlib/builtin/reversed/reversed): Get a reversed iterator of the input range.
+- [FastMathFlag](https://docs.modular.com/mojo/stdlib/builtin/simd/FastMathFlag): Flags for controlling fast-math optimizations in floating-point operations.
+- [SIMD](https://docs.modular.com/mojo/stdlib/builtin/simd/SIMD): Represents a vector type that leverages hardware acceleration to process multiple data elements with a single operation.
+- [simd](https://docs.modular.com/mojo/stdlib/builtin/simd): Implements SIMD primitives and abstractions.
+- [sort](https://docs.modular.com/mojo/stdlib/builtin/sort): Implements the built-in `sort` function.
+- [partition](https://docs.modular.com/mojo/stdlib/builtin/sort/partition): Partition the input buffer inplace such that first k elements are the largest (or smallest if cmp_fn is < operator) elements. The ordering of the f...
+- [sort](https://docs.modular.com/mojo/stdlib/builtin/sort/sort): Sort a span in-place. The function doesn't return anything, the span is updated in-place.
+- [Stringable](https://docs.modular.com/mojo/stdlib/builtin/str/Stringable): The `Stringable` trait describes a type that can be converted to a [`String`](/mojo/stdlib/collections/string/String).
+- [StringableRaising](https://docs.modular.com/mojo/stdlib/builtin/str/StringableRaising): The StringableRaising trait describes a type that can be converted to a [`String`](/mojo/stdlib/collections/string/String).
+- [str](https://docs.modular.com/mojo/stdlib/builtin/str): Provides the `Stringable` and `StringableRaising` traits.
+- [StringLiteral](https://docs.modular.com/mojo/stdlib/builtin/string_literal/StringLiteral): This type represents a string literal.
+- [string_literal](https://docs.modular.com/mojo/stdlib/builtin/string_literal): Implements the StringLiteral struct.
+- [swap](https://docs.modular.com/mojo/stdlib/builtin/swap): Implements the built-in `swap` function.
+- [swap](https://docs.modular.com/mojo/stdlib/builtin/swap/swap): Swaps the two given arguments.
+- [Tuple](https://docs.modular.com/mojo/stdlib/builtin/tuple/Tuple): The type of a literal tuple expression.
+- [tuple](https://docs.modular.com/mojo/stdlib/builtin/tuple): Implements the Tuple type.
+- [Origin](https://docs.modular.com/mojo/stdlib/builtin/type_aliases/Origin): This represents a origin reference for a memory value.
+- [type_aliases](https://docs.modular.com/mojo/stdlib/builtin/type_aliases): Defines some type aliases.
+- [UInt](https://docs.modular.com/mojo/stdlib/builtin/uint/UInt): This type represents an unsigned integer.
+- [uint](https://docs.modular.com/mojo/stdlib/builtin/uint): Implements the UInt class.
+- [Copyable](https://docs.modular.com/mojo/stdlib/builtin/value/Copyable): The Copyable trait denotes a type whose value can be explicitly copied.
+- [Defaultable](https://docs.modular.com/mojo/stdlib/builtin/value/Defaultable): The `Defaultable` trait describes a type with a default constructor.
+- [ImplicitlyCopyable](https://docs.modular.com/mojo/stdlib/builtin/value/ImplicitlyCopyable): A marker trait to permit compiler to insert implicit calls to `__copyinit__` in order to make a copy of the object when needed.
+- [Movable](https://docs.modular.com/mojo/stdlib/builtin/value/Movable): The Movable trait denotes a type whose value can be moved.
+- [value](https://docs.modular.com/mojo/stdlib/builtin/value): Defines core value traits.
+- [materialize](https://docs.modular.com/mojo/stdlib/builtin/value/materialize): Explicitly materialize a compile-time parameter into a run-time value.
+- [VariadicList](https://docs.modular.com/mojo/stdlib/builtin/variadics/VariadicList): A utility class to access homogeneous variadic function arguments.
+- [VariadicListMem](https://docs.modular.com/mojo/stdlib/builtin/variadics/VariadicListMem): A utility class to access variadic function arguments of memory-only types that may have ownership. It exposes references to the elements in a way ...
+- [VariadicPack](https://docs.modular.com/mojo/stdlib/builtin/variadics/VariadicPack): A utility class to access heterogeneous variadic function arguments.
+- [variadics](https://docs.modular.com/mojo/stdlib/builtin/variadics): Implements the VariadicList and VariadicPack types.
+- [variadic_size](https://docs.modular.com/mojo/stdlib/builtin/variadics/variadic_size): Returns the length of a variadic sequence.
+- [BitSet](https://docs.modular.com/mojo/stdlib/collections/bitset/BitSet): A grow-only set storing non-negative integers efficiently using bits.
+- [bitset](https://docs.modular.com/mojo/stdlib/collections/bitset): Provides a compact, grow-only set of non-negative integers.
+- [CountTuple](https://docs.modular.com/mojo/stdlib/collections/counter/CountTuple): A tuple representing a value and its count in a Counter.
+- [Counter](https://docs.modular.com/mojo/stdlib/collections/counter/Counter): A container for counting hashable items.
+- [counter](https://docs.modular.com/mojo/stdlib/collections/counter): Defines the `Counter` type.
+- [Deque](https://docs.modular.com/mojo/stdlib/collections/deque/Deque): Implements a double-ended queue.
+- [deque](https://docs.modular.com/mojo/stdlib/collections/deque): Defines the Deque type.
+- [Dict](https://docs.modular.com/mojo/stdlib/collections/dict/Dict): A container that stores key-value pairs.
+- [DictEntry](https://docs.modular.com/mojo/stdlib/collections/dict/DictEntry): Store a key-value pair entry inside a dictionary.
+- [OwnedKwargsDict](https://docs.modular.com/mojo/stdlib/collections/dict/OwnedKwargsDict): Container used to pass owned variadic keyword arguments to functions.
+- [dict](https://docs.modular.com/mojo/stdlib/collections/dict): Defines `Dict`, a collection that stores key-value pairs.
+- [collections](https://docs.modular.com/mojo/stdlib/collections): Implements the collections package.
+- [InlineArray](https://docs.modular.com/mojo/stdlib/collections/inline_array/InlineArray): A fixed-size sequence of homogeneous elements where size is a constant expression.
+- [inline_array](https://docs.modular.com/mojo/stdlib/collections/inline_array): Provides a fixed-size array implementation with compile-time size checking.
+- [Interval](https://docs.modular.com/mojo/stdlib/collections/interval/Interval): A half-open interval [start, end) that represents a range of values.
+- [IntervalElement](https://docs.modular.com/mojo/stdlib/collections/interval/IntervalElement): The trait denotes a trait composition of the `Copyable`, `Movable`, `Writable`, `Intable`, and `Comparable` traits. Which is also subtractable.
+- [IntervalTree](https://docs.modular.com/mojo/stdlib/collections/interval/IntervalTree): An interval tree data structure for efficient range queries.
+- [interval](https://docs.modular.com/mojo/stdlib/collections/interval): A self-balancing interval tree is a specialized binary search tree designed to efficiently store and query intervals.
+- [LinkedList](https://docs.modular.com/mojo/stdlib/collections/linked_list/LinkedList): A doubly-linked list implementation.
+- [Node](https://docs.modular.com/mojo/stdlib/collections/linked_list/Node): A node in a linked list data structure.
+- [linked_list](https://docs.modular.com/mojo/stdlib/collections/linked_list): Mojo module stdlib.collections.linked_list documentation
+- [List](https://docs.modular.com/mojo/stdlib/collections/list/List): A dynamically-allocated and resizable list.
+- [list](https://docs.modular.com/mojo/stdlib/collections/list): Defines the List type.
+- [Optional](https://docs.modular.com/mojo/stdlib/collections/optional/Optional): A type modeling a value which may or may not be present.
+- [OptionalReg](https://docs.modular.com/mojo/stdlib/collections/optional/OptionalReg): A register-passable optional type.
+- [optional](https://docs.modular.com/mojo/stdlib/collections/optional): Defines Optional, a type modeling a value which may or may not be present.
+- [Set](https://docs.modular.com/mojo/stdlib/collections/set/Set): A set data type.
+- [set](https://docs.modular.com/mojo/stdlib/collections/set): Implements the  Set datatype.
+- [Codepoint](https://docs.modular.com/mojo/stdlib/collections/string/codepoint/Codepoint): A Unicode codepoint, typically a single user-recognizable character; restricted to valid Unicode scalar values.
+- [codepoint](https://docs.modular.com/mojo/stdlib/collections/string/codepoint): Unicode codepoint handling.
+- [format](https://docs.modular.com/mojo/stdlib/collections/string/format): String formatting utilities for Mojo.
+- [string](https://docs.modular.com/mojo/stdlib/collections/string): The string package provides comprehensive Unicode string handling functionality for Mojo.
+- [String](https://docs.modular.com/mojo/stdlib/collections/string/string/String): Represents a mutable string.
+- [ascii](https://docs.modular.com/mojo/stdlib/collections/string/string/ascii): Get the ASCII representation of the object.
+- [atof](https://docs.modular.com/mojo/stdlib/collections/string/string/atof): Parses the given string as a floating point and returns that value.
+- [atol](https://docs.modular.com/mojo/stdlib/collections/string/string/atol): Parses and returns the given string as an integer in the given base.
+- [chr](https://docs.modular.com/mojo/stdlib/collections/string/string/chr): Returns a String based on the given Unicode code point. This is the inverse of the `ord()` function.
+- [string](https://docs.modular.com/mojo/stdlib/collections/string/string): The core `String` type implementation for Mojo.
+- [ord](https://docs.modular.com/mojo/stdlib/collections/string/string/ord): Returns an integer that represents the codepoint of a single-character string.
+- [CodepointSliceIter](https://docs.modular.com/mojo/stdlib/collections/string/string_slice/CodepointSliceIter): Iterator for `StringSlice` over substring slices containing a single Unicode codepoint.
+- [CodepointsIter](https://docs.modular.com/mojo/stdlib/collections/string/string_slice/CodepointsIter): Iterator over the `Codepoint`s in a string slice, constructed by `StringSlice.codepoints()`.
+- [StringSlice](https://docs.modular.com/mojo/stdlib/collections/string/string_slice/StringSlice): A non-owning view to encoded string data.
+- [get_static_string](https://docs.modular.com/mojo/stdlib/collections/string/string_slice/get_static_string): Form a StaticString from compile-time StringSlice values. This guarantees that the returned string is compile-time constant in static memory.  It a...
+- [string_slice](https://docs.modular.com/mojo/stdlib/collections/string/string_slice): The `StringSlice` type implementation for efficient string operations.
+- [CompiledFunctionInfo](https://docs.modular.com/mojo/stdlib/compile/compile/CompiledFunctionInfo): Contains compilation information and results for a function.
+- [compile_info](https://docs.modular.com/mojo/stdlib/compile/compile/compile_info): Compiles a function and returns detailed compilation information.
+- [compile](https://docs.modular.com/mojo/stdlib/compile/compile): Provides utilities for compiling and inspecting Mojo code.
+- [compile](https://docs.modular.com/mojo/stdlib/compile): Provides utilities for compiling and inspecting Mojo code at runtime.
+- [get_linkage_name](https://docs.modular.com/mojo/stdlib/compile/reflection/get_linkage_name): Returns `func` symbol name.
+- [get_type_name](https://docs.modular.com/mojo/stdlib/compile/reflection/get_type_name): Returns the struct name of the given type parameter.
+- [reflection](https://docs.modular.com/mojo/stdlib/compile/reflection): Mojo module stdlib.compile.reflection documentation
+- [ComplexSIMD](https://docs.modular.com/mojo/stdlib/complex/complex/ComplexSIMD): Represents a complex SIMD value.
+- [abs](https://docs.modular.com/mojo/stdlib/complex/complex/abs): Performs elementwise abs (norm) on each element of the complex value.
+- [complex](https://docs.modular.com/mojo/stdlib/complex/complex): Implements the Complex dtype.
+- [complex](https://docs.modular.com/mojo/stdlib/complex): Provides types and functions for working with complex numbers.
+- [doc_private](https://docs.modular.com/mojo/stdlib/documentation/documentation/doc_private): Indicate that the decorated declaration is private from the viewpoint of documentation generation.
+- [documentation](https://docs.modular.com/mojo/stdlib/documentation/documentation): Provides decorators and utilities for interacting with Mojo documentation generation and validation.
+- [documentation](https://docs.modular.com/mojo/stdlib/documentation): Implements the documentation package.
+- [block](https://docs.modular.com/mojo/stdlib/gpu/block): Compatibility wrapper for gpu.block module.
+- [cluster](https://docs.modular.com/mojo/stdlib/gpu/cluster): GPU cluster operations (deprecated - use `gpu.primitives.cluster` or `gpu`).
+- [arch](https://docs.modular.com/mojo/stdlib/gpu/compute/arch): Architecture-specific MMA implementations.
+- [mma_amd](https://docs.modular.com/mojo/stdlib/gpu/compute/arch/mma_amd): AMD CDNA Matrix Cores implementation for matrix multiply-accumulate operations.
+- [mma_amd_rdna](https://docs.modular.com/mojo/stdlib/gpu/compute/arch/mma_amd_rdna): AMD RDNA3/4 WMMA implementation for matrix multiply-accumulate operations.
+- [mma_nvidia](https://docs.modular.com/mojo/stdlib/gpu/compute/arch/mma_nvidia): NVIDIA Tensor Cores implementation for matrix multiply-accumulate operations.
+- [MMASmemDescriptor](https://docs.modular.com/mojo/stdlib/gpu/compute/arch/mma_nvidia_sm100/MMASmemDescriptor): Descriptor for shared memory operands tcgen05 mma instructions.
+- [UMMAInsDescriptor](https://docs.modular.com/mojo/stdlib/gpu/compute/arch/mma_nvidia_sm100/UMMAInsDescriptor): Descriptor for UMMA instructions.
+- [UMMAKind](https://docs.modular.com/mojo/stdlib/gpu/compute/arch/mma_nvidia_sm100/UMMAKind): Struct for UMMA instruction types.
+- [mma_nvidia_sm100](https://docs.modular.com/mojo/stdlib/gpu/compute/arch/mma_nvidia_sm100): This module includes utilities for working with the SM100 MMA instructions.
+- [mma](https://docs.modular.com/mojo/stdlib/gpu/compute/arch/mma_nvidia_sm100/mma): Perform a matrix multiply-accumulate operation using the tcgen05.mma instruction.
+- [mma_arrive](https://docs.modular.com/mojo/stdlib/gpu/compute/arch/mma_nvidia_sm100/mma_arrive): Arrive at the mbar pointer for the MMA instruction.
+- [mma_arrive_multicast](https://docs.modular.com/mojo/stdlib/gpu/compute/arch/mma_nvidia_sm100/mma_arrive_multicast): Arrive at the mbar pointer for the MMA instruction for multiple ctas.
+- [compute](https://docs.modular.com/mojo/stdlib/gpu/compute): GPU compute operations package - MMA and tensor core operations.
+- [WGMMADescriptor](https://docs.modular.com/mojo/stdlib/gpu/compute/mma/WGMMADescriptor): Descriptor for shared memory operands used in warp group matrix multiply operations.
+- [get_amd_bf8_dtype](https://docs.modular.com/mojo/stdlib/gpu/compute/mma/get_amd_bf8_dtype): Gets the appropriate BF8 dtype for the current AMD GPU architecture.
+- [get_amd_fp8_dtype](https://docs.modular.com/mojo/stdlib/gpu/compute/mma/get_amd_fp8_dtype): Gets the appropriate FP8 dtype for the current AMD GPU architecture.
+- [mma](https://docs.modular.com/mojo/stdlib/gpu/compute/mma): This module includes utilities for working with the warp-matrix-matrix-multiplication (wmma) instructions.
+- [ld_matrix](https://docs.modular.com/mojo/stdlib/gpu/compute/mma/ld_matrix): Loads a matrix from shared memory into registers in a format suitable for tensor core operations.
+- [mma](https://docs.modular.com/mojo/stdlib/gpu/compute/mma/mma): Performs warp sync Tensor Core based Matrix-multiply and accumulate (MMA) operation.
+- [st_matrix](https://docs.modular.com/mojo/stdlib/gpu/compute/mma/st_matrix): Performs warp-synchronized copy from registers to shared memory.
+- [wgmma_async](https://docs.modular.com/mojo/stdlib/gpu/compute/mma/wgmma_async): Performs warp group async Matrix-multiply and accumulate (WGMMA) operation.
+- [wgmma_commit_group_sync](https://docs.modular.com/mojo/stdlib/gpu/compute/mma/wgmma_commit_group_sync): Commits pending warp group matrix multiply operations.
+- [wgmma_fence_aligned](https://docs.modular.com/mojo/stdlib/gpu/compute/mma/wgmma_fence_aligned): Inserts a memory fence for warp group matrix multiply operations.
+- [wgmma_wait_group_sync](https://docs.modular.com/mojo/stdlib/gpu/compute/mma/wgmma_wait_group_sync): Waits for all pending warp group matrix multiply operations to complete.
+- [MMAOperandDescriptor](https://docs.modular.com/mojo/stdlib/gpu/compute/mma_operand_descriptor/MMAOperandDescriptor): Trait for abstracting MMA (Matrix Multiply-Accumulate) operand descriptors.
+- [mma_operand_descriptor](https://docs.modular.com/mojo/stdlib/gpu/compute/mma_operand_descriptor): Mojo module stdlib.gpu.compute.mma_operand_descriptor documentation
+- [mma_util](https://docs.modular.com/mojo/stdlib/gpu/compute/mma_util): Matrix multiply accumulate (MMA) utilities for GPU tensor cores.
+- [load_matrix_a](https://docs.modular.com/mojo/stdlib/gpu/compute/mma_util/load_matrix_a): Loads a tile of matrix A from memory to registers for TF32 tensor core operations.
+- [load_matrix_a_amd](https://docs.modular.com/mojo/stdlib/gpu/compute/mma_util/load_matrix_a_amd): Loads a tile of matrix A from memory to registers for AMD FP32 tensor core operations.
+- [load_matrix_b](https://docs.modular.com/mojo/stdlib/gpu/compute/mma_util/load_matrix_b): Loads a tile of matrix B from memory to registers for TF32 tensor core operations.
+- [load_matrix_b_amd](https://docs.modular.com/mojo/stdlib/gpu/compute/mma_util/load_matrix_b_amd): Loads a tile of matrix B from memory to registers for AMD FP32 tensor core operations.
+- [store_matrix_d](https://docs.modular.com/mojo/stdlib/gpu/compute/mma_util/store_matrix_d): Stores matrix D tile from registers to memory after tensor core operation.
+- [TensorMemory](https://docs.modular.com/mojo/stdlib/gpu/compute/tcgen05/TensorMemory): A wrapper around tensor memory allocated for tcgen05 instructions.
+- [tcgen05](https://docs.modular.com/mojo/stdlib/gpu/compute/tcgen05): This module includes utilities for working with the tensorcore 5th generation (tcgen05) instructions.
+- [tcgen05_alloc](https://docs.modular.com/mojo/stdlib/gpu/compute/tcgen05/tcgen05_alloc): Allocates tensor memory for use with tcgen05 instructions.
+- [tcgen05_cp](https://docs.modular.com/mojo/stdlib/gpu/compute/tcgen05/tcgen05_cp): Copies data from shared memory described by the matrix descriptor `s_desc` to tensor memory `tmem_addr`.
+- [tcgen05_dealloc](https://docs.modular.com/mojo/stdlib/gpu/compute/tcgen05/tcgen05_dealloc): Deallocates tensor memory allocated by tcgen05_alloc().
+- [tcgen05_fence_after](https://docs.modular.com/mojo/stdlib/gpu/compute/tcgen05/tcgen05_fence_after): Orders all the subsequent asynchronous `tcgen05` operations.
+- [tcgen05_fence_before](https://docs.modular.com/mojo/stdlib/gpu/compute/tcgen05/tcgen05_fence_before): Orders all the prior asynchronous `tcgen05` operations.
+- [tcgen05_ld](https://docs.modular.com/mojo/stdlib/gpu/compute/tcgen05/tcgen05_ld): Loads data from tensor memory into registers.
+- [tcgen05_load_wait](https://docs.modular.com/mojo/stdlib/gpu/compute/tcgen05/tcgen05_load_wait): Waits for tensor memory loads to complete.
+- [tcgen05_release_allocation_lock](https://docs.modular.com/mojo/stdlib/gpu/compute/tcgen05/tcgen05_release_allocation_lock): Releases the allocation lock for the current CTA group.
+- [tcgen05_st](https://docs.modular.com/mojo/stdlib/gpu/compute/tcgen05/tcgen05_st): Stores data from registers into tensor memory.
+- [tcgen05_store_wait](https://docs.modular.com/mojo/stdlib/gpu/compute/tcgen05/tcgen05_store_wait): Waits for tensor memory stores to complete.
+- [tensor_ops](https://docs.modular.com/mojo/stdlib/gpu/compute/tensor_ops): This module provides tensor core operations and utilities for GPU computation.
+- [tc_reduce](https://docs.modular.com/mojo/stdlib/gpu/compute/tensor_ops/tc_reduce): Performs tensor core based reduction on a SIMD vector.
+- [tc_reduce_gevm_4x](https://docs.modular.com/mojo/stdlib/gpu/compute/tensor_ops/tc_reduce_gevm_4x): Performs a 4x GEVM reduction using tensor cores.
+- [tc_reduce_gevm_8x](https://docs.modular.com/mojo/stdlib/gpu/compute/tensor_ops/tc_reduce_gevm_8x): Performs an 8x GEVM reduction using tensor cores.
+- [globals](https://docs.modular.com/mojo/stdlib/gpu/globals): This module provides GPU-specific global constants and configuration values.
+- [grid_controls](https://docs.modular.com/mojo/stdlib/gpu/grid_controls): GPU grid dependency control (deprecated - use `gpu.primitives.grid_controls` or `gpu`).
+- [get_gpu_target](https://docs.modular.com/mojo/stdlib/gpu/host/compile/get_gpu_target): Gets the GPU target information for the specified architecture.
+- [compile](https://docs.modular.com/mojo/stdlib/gpu/host/compile): Implements CUDA compilation operations.
+- [ConstantMemoryMapping](https://docs.modular.com/mojo/stdlib/gpu/host/constant_memory_mapping/ConstantMemoryMapping): Represents a mapping of constant memory between host and device.
+- [constant_memory_mapping](https://docs.modular.com/mojo/stdlib/gpu/host/constant_memory_mapping): This module provides functionality for mapping constant memory between host and device.
+- [DeviceAttribute](https://docs.modular.com/mojo/stdlib/gpu/host/device_attribute/DeviceAttribute): Represents CUDA device attributes that can be queried from a GPU device.
+- [device_attribute](https://docs.modular.com/mojo/stdlib/gpu/host/device_attribute): This module defines GPU device attributes that can be queried from CUDA-compatible devices.
+- [DeviceBuffer](https://docs.modular.com/mojo/stdlib/gpu/host/device_context/DeviceBuffer): Represents a block of device-resident storage. For GPU devices, a device buffer is allocated in the device's global memory.
+- [DeviceContext](https://docs.modular.com/mojo/stdlib/gpu/host/device_context/DeviceContext): Represents a single stream of execution on a particular accelerator (GPU).
+- [DeviceEvent](https://docs.modular.com/mojo/stdlib/gpu/host/device_context/DeviceEvent): Represents a GPU event for synchronization between streams.
+- [DeviceExternalFunction](https://docs.modular.com/mojo/stdlib/gpu/host/device_context/DeviceExternalFunction): Represents an external device function loaded from PTX/SASS assembly.
+- [DeviceFunction](https://docs.modular.com/mojo/stdlib/gpu/host/device_context/DeviceFunction): Represents a compiled device function for GPU execution.
+- [DeviceMulticastBuffer](https://docs.modular.com/mojo/stdlib/gpu/host/device_context/DeviceMulticastBuffer): Represents a multicast memory object enables special memory operations to be broadcast across a group of devices.
+- [DeviceStream](https://docs.modular.com/mojo/stdlib/gpu/host/device_context/DeviceStream): Represents a CUDA/HIP stream for asynchronous GPU operations.
+- [EventFlags](https://docs.modular.com/mojo/stdlib/gpu/host/device_context/EventFlags): Provides flags for creating events.
+- [HostBuffer](https://docs.modular.com/mojo/stdlib/gpu/host/device_context/HostBuffer): Represents a block of host-resident storage. For GPU devices, a host buffer is allocated in the host's global memory.
+- [StreamPriorityRange](https://docs.modular.com/mojo/stdlib/gpu/host/device_context/StreamPriorityRange): Represents the range of valid stream priorities for a GPU device.
+- [device_context](https://docs.modular.com/mojo/stdlib/gpu/host/device_context): This module provides functionality for interacting with accelerators. In particular the [`DeviceContext`](/mojo/stdlib/gpu/host/device_context/Devi...
+- [Dim](https://docs.modular.com/mojo/stdlib/gpu/host/dim/Dim): Represents a dimension with up to three components (x, y, z).
+- [dim](https://docs.modular.com/mojo/stdlib/gpu/host/dim): This module implements the dim type.
+- [Attribute](https://docs.modular.com/mojo/stdlib/gpu/host/func_attribute/Attribute): Represents GPU kernel function attributes.
+- [FuncAttribute](https://docs.modular.com/mojo/stdlib/gpu/host/func_attribute/FuncAttribute): Implements CUDA's CUfunction_attribute enum for GPU kernel function attributes.
+- [func_attribute](https://docs.modular.com/mojo/stdlib/gpu/host/func_attribute): GPU Kernel Function Attributes Module
+- [host](https://docs.modular.com/mojo/stdlib/gpu/host): Implements the gpu host package.
+- [AcceleratorArchitectureFamily](https://docs.modular.com/mojo/stdlib/gpu/host/info/AcceleratorArchitectureFamily): Defines common defaults for a GPU architecture family.
+- [GPUInfo](https://docs.modular.com/mojo/stdlib/gpu/host/info/GPUInfo): Comprehensive information about a GPU architecture.
+- [Vendor](https://docs.modular.com/mojo/stdlib/gpu/host/info/Vendor): Represents GPU vendors.
+- [info](https://docs.modular.com/mojo/stdlib/gpu/host/info): Contains information about GPU architectures and their capabilities.
+- [is_cpu](https://docs.modular.com/mojo/stdlib/gpu/host/info/is_cpu): Checks if the target is a CPU (compile-time version).
+- [is_gpu](https://docs.modular.com/mojo/stdlib/gpu/host/info/is_gpu): Checks if the target is a GPU (compile-time version).
+- [is_valid_target](https://docs.modular.com/mojo/stdlib/gpu/host/info/is_valid_target): Checks if the target is valid (compile-time version).
+- [AccessPolicyWindow](https://docs.modular.com/mojo/stdlib/gpu/host/launch_attribute/AccessPolicyWindow): Specifies an access policy for a window of memory.
+- [AccessProperty](https://docs.modular.com/mojo/stdlib/gpu/host/launch_attribute/AccessProperty): Specifies performance hint with AccessPolicyWindow for hit_prop and miss_prop fields.
+- [LaunchAttribute](https://docs.modular.com/mojo/stdlib/gpu/host/launch_attribute/LaunchAttribute): Represents a complete launch attribute with ID and value.
+- [LaunchAttributeID](https://docs.modular.com/mojo/stdlib/gpu/host/launch_attribute/LaunchAttributeID): Identifies the type of launch attribute for GPU kernel execution.
+- [LaunchAttributeValue](https://docs.modular.com/mojo/stdlib/gpu/host/launch_attribute/LaunchAttributeValue): Represents a value for a CUDA launch attribute.
+- [launch_attribute](https://docs.modular.com/mojo/stdlib/gpu/host/launch_attribute): GPU Launch Attributes for Kernel Execution Control
+- [id](https://docs.modular.com/mojo/stdlib/gpu/id): GPU thread and block indexing (deprecated - use `gpu` package directly).
+- [gpu](https://docs.modular.com/mojo/stdlib/gpu): Provides low-level programming constructs for working with GPUs.
+- [AMDBufferResource](https://docs.modular.com/mojo/stdlib/gpu/intrinsics/AMDBufferResource): 128-bit descriptor for a buffer resource on AMD GPUs.
+- [Scope](https://docs.modular.com/mojo/stdlib/gpu/intrinsics/Scope): Represents memory synchronization scope levels for GPU memory operations.
+- [byte_permute](https://docs.modular.com/mojo/stdlib/gpu/intrinsics/byte_permute): Permutes bytes from two 32-bit integers based on a control mask.
+- [ds_read_tr16_b64](https://docs.modular.com/mojo/stdlib/gpu/intrinsics/ds_read_tr16_b64): Reads a 64-bit LDS transpose block using TR16 layout and returns SIMD[dtype, 4] of 16-bit types.
+- [get_ib_sts](https://docs.modular.com/mojo/stdlib/gpu/intrinsics/get_ib_sts): Returns the IB status of the current thread.
+- [intrinsics](https://docs.modular.com/mojo/stdlib/gpu/intrinsics): Provides low-level GPU intrinsic operations and memory access primitives.
+- [ldg](https://docs.modular.com/mojo/stdlib/gpu/intrinsics/ldg): Load data from global memory through the non-coherent cache.
+- [load_acquire](https://docs.modular.com/mojo/stdlib/gpu/intrinsics/load_acquire): Performs an atomic load operation with acquire memory ordering semantics.
+- [load_relaxed](https://docs.modular.com/mojo/stdlib/gpu/intrinsics/load_relaxed): Performs an atomic load with relaxed memory ordering semantics.
+- [load_volatile](https://docs.modular.com/mojo/stdlib/gpu/intrinsics/load_volatile): Performs a volatile load operation that cannot be optimized away.
+- [lop](https://docs.modular.com/mojo/stdlib/gpu/intrinsics/lop): Performs an arbitrary logical operation on 3 inputs using a lookup table.
+- [mulhi](https://docs.modular.com/mojo/stdlib/gpu/intrinsics/mulhi): Calculates the most significant 32 bits of the product of two 16-bit unsigned integers.
+- [mulwide](https://docs.modular.com/mojo/stdlib/gpu/intrinsics/mulwide): Performs a wide multiplication of two 32-bit unsigned integers.
+- [permlane_shuffle](https://docs.modular.com/mojo/stdlib/gpu/intrinsics/permlane_shuffle): Shuffles SIMD values across lanes using AMD permlane operations.
+- [permlane_swap](https://docs.modular.com/mojo/stdlib/gpu/intrinsics/permlane_swap): Swaps values between lanes using AMD permlane swap instruction.
+- [store_relaxed](https://docs.modular.com/mojo/stdlib/gpu/intrinsics/store_relaxed): Performs an atomic store with relaxed memory ordering semantics.
+- [store_release](https://docs.modular.com/mojo/stdlib/gpu/intrinsics/store_release): Performs an atomic store with release memory ordering semantics.
+- [store_volatile](https://docs.modular.com/mojo/stdlib/gpu/intrinsics/store_volatile): Performs a volatile store operation that cannot be optimized away.
+- [threadfence](https://docs.modular.com/mojo/stdlib/gpu/intrinsics/threadfence): Enforces ordering of memory operations across threads.
+- [warpgroup_reg_alloc](https://docs.modular.com/mojo/stdlib/gpu/intrinsics/warpgroup_reg_alloc): Allocates additional registers for the executing warp group.
+- [warpgroup_reg_dealloc](https://docs.modular.com/mojo/stdlib/gpu/intrinsics/warpgroup_reg_dealloc): Deallocates additional registers for the executing warp group.
+- [memory](https://docs.modular.com/mojo/stdlib/gpu/memory): GPU memory operations package.
+- [CacheEviction](https://docs.modular.com/mojo/stdlib/gpu/memory/memory/CacheEviction): Represents cache eviction policies for GPU memory operations.
+- [CacheOperation](https://docs.modular.com/mojo/stdlib/gpu/memory/memory/CacheOperation): Represents different GPU cache operation policies.
+- [Consistency](https://docs.modular.com/mojo/stdlib/gpu/memory/memory/Consistency): Represents memory consistency models for GPU memory operations.
+- [Fill](https://docs.modular.com/mojo/stdlib/gpu/memory/memory/Fill): Represents memory fill patterns for GPU memory operations.
+- [ReduceOp](https://docs.modular.com/mojo/stdlib/gpu/memory/memory/ReduceOp): Represents reduction operations for parallel reduction algorithms.
+- [async_copy](https://docs.modular.com/mojo/stdlib/gpu/memory/memory/async_copy): Asynchronously copies data from global memory to shared memory.
+- [async_copy_commit_group](https://docs.modular.com/mojo/stdlib/gpu/memory/memory/async_copy_commit_group): Commits all prior initiated but uncommitted cp.async instructions into a cp.async-group.
+- [async_copy_wait_all](https://docs.modular.com/mojo/stdlib/gpu/memory/memory/async_copy_wait_all): Waits for completion of all committed cp.async-groups.
+- [async_copy_wait_group](https://docs.modular.com/mojo/stdlib/gpu/memory/memory/async_copy_wait_group): Waits for the completion of `n` most recently committed cp.async-groups.
+- [cp_async_bulk_tensor_global_shared_cta](https://docs.modular.com/mojo/stdlib/gpu/memory/memory/cp_async_bulk_tensor_global_shared_cta): Initiates an asynchronous copy operation to transfer tensor data from shared CTA memory to global memory using NVIDIA's Tensor Memory Access (TMA) ...
+- [cp_async_bulk_tensor_reduce](https://docs.modular.com/mojo/stdlib/gpu/memory/memory/cp_async_bulk_tensor_reduce): Initiates an asynchronous reduction operation between shared CTA memory and global memory using NVIDIA's Tensor Memory Access (TMA) mechanism.
+- [cp_async_bulk_tensor_shared_cluster_global](https://docs.modular.com/mojo/stdlib/gpu/memory/memory/cp_async_bulk_tensor_shared_cluster_global): Initiates an asynchronous bulk copy operation of tensor data from global memory to shared memory.
+- [cp_async_bulk_tensor_shared_cluster_global_multicast](https://docs.modular.com/mojo/stdlib/gpu/memory/memory/cp_async_bulk_tensor_shared_cluster_global_multicast): Initiates an asynchronous multicast load operation using NVIDIA's Tensor Memory Access (TMA) to copy tensor data from global memory to shared memor...
+- [external_memory](https://docs.modular.com/mojo/stdlib/gpu/memory/memory/external_memory): Gets a pointer to dynamically allocated external memory.
+- [fence_async_view_proxy](https://docs.modular.com/mojo/stdlib/gpu/memory/memory/fence_async_view_proxy): Establishes a memory fence for shared memory view operations.
+- [fence_mbarrier_init](https://docs.modular.com/mojo/stdlib/gpu/memory/memory/fence_mbarrier_init): Creates a memory fence after mbarrier initialization.
+- [fence_proxy_tensormap_generic_sys_acquire](https://docs.modular.com/mojo/stdlib/gpu/memory/memory/fence_proxy_tensormap_generic_sys_acquire): Acquires a system-wide memory fence for tensor map operations.
+- [fence_proxy_tensormap_generic_sys_release](https://docs.modular.com/mojo/stdlib/gpu/memory/memory/fence_proxy_tensormap_generic_sys_release): Releases the system-wide memory fence for tensor map operations.
+- [memory](https://docs.modular.com/mojo/stdlib/gpu/memory/memory): This module provides GPU memory operations and utilities.
+- [load](https://docs.modular.com/mojo/stdlib/gpu/memory/memory/load): Loads data from global memory into a SIMD vector.
+- [multimem_ld_reduce](https://docs.modular.com/mojo/stdlib/gpu/memory/memory/multimem_ld_reduce): Performs a vectorized load-reduce operation using NVIDIA's multimem feature.
+- [multimem_st](https://docs.modular.com/mojo/stdlib/gpu/memory/memory/multimem_st): Stages an inline multimem.st instruction.
+- [mma](https://docs.modular.com/mojo/stdlib/gpu/mma): Matrix multiply-accumulate operations (deprecated - use `gpu.compute.mma`).
+- [mma_operand_descriptor](https://docs.modular.com/mojo/stdlib/gpu/mma_operand_descriptor): MMA operand descriptor trait (deprecated - use `gpu.compute.mma_operand_descriptor`).
+- [mma_sm100](https://docs.modular.com/mojo/stdlib/gpu/mma_sm100): SM100 (Blackwell) matrix multiply operations (deprecated - use `gpu.compute.arch.mma_nvidia_sm100`).
+- [mma_util](https://docs.modular.com/mojo/stdlib/gpu/mma_util): Matrix multiply utilities (deprecated - use `gpu.compute.mma_util`).
+- [broadcast](https://docs.modular.com/mojo/stdlib/gpu/primitives/block/broadcast): Broadcasts a value from a source thread to all threads in a block.
+- [block](https://docs.modular.com/mojo/stdlib/gpu/primitives/block): GPU block-level operations and utilities.
+- [max](https://docs.modular.com/mojo/stdlib/gpu/primitives/block/max): Computes the maximum value across all threads in a block.
+- [min](https://docs.modular.com/mojo/stdlib/gpu/primitives/block/min): Computes the minimum value across all threads in a block.
+- [prefix_sum](https://docs.modular.com/mojo/stdlib/gpu/primitives/block/prefix_sum): Performs a prefix sum (scan) operation across all threads in a block.
+- [sum](https://docs.modular.com/mojo/stdlib/gpu/primitives/block/sum): Computes the sum of values across all threads in a block.
+- [block_rank_in_cluster](https://docs.modular.com/mojo/stdlib/gpu/primitives/cluster/block_rank_in_cluster): Returns the unique identifier (rank) for the current thread block within its cluster.
+- [cluster_arrive](https://docs.modular.com/mojo/stdlib/gpu/primitives/cluster/cluster_arrive): Signals arrival at a cluster synchronization point with memory ordering guarantees.
+- [cluster_arrive_relaxed](https://docs.modular.com/mojo/stdlib/gpu/primitives/cluster/cluster_arrive_relaxed): Signals arrival at a cluster synchronization point with relaxed memory ordering.
+- [cluster_mask_base](https://docs.modular.com/mojo/stdlib/gpu/primitives/cluster/cluster_mask_base): Computes the base mask for a cluster. Base mask in an axis masks the first cta in cluster and all ctas along the same axis. Example for cluster sha...
+- [cluster_sync](https://docs.modular.com/mojo/stdlib/gpu/primitives/cluster/cluster_sync): Performs a full cluster synchronization with memory ordering guarantees.
+- [cluster_sync_acquire](https://docs.modular.com/mojo/stdlib/gpu/primitives/cluster/cluster_sync_acquire): Acquires the cluster sync proxy.
+- [cluster_sync_relaxed](https://docs.modular.com/mojo/stdlib/gpu/primitives/cluster/cluster_sync_relaxed): Performs a full cluster synchronization with relaxed memory ordering.
+- [cluster_sync_release](https://docs.modular.com/mojo/stdlib/gpu/primitives/cluster/cluster_sync_release): Release the cluster sync proxy.
+- [cluster_wait](https://docs.modular.com/mojo/stdlib/gpu/primitives/cluster/cluster_wait): Waits for all thread blocks in the cluster to arrive at the synchronization point.
+- [clusterlaunchcontrol_query_cancel_get_first_ctaid](https://docs.modular.com/mojo/stdlib/gpu/primitives/cluster/clusterlaunchcontrol_query_cancel_get_first_ctaid): Decodes the cancellation request.
+- [clusterlaunchcontrol_query_cancel_get_first_ctaid_v4](https://docs.modular.com/mojo/stdlib/gpu/primitives/cluster/clusterlaunchcontrol_query_cancel_get_first_ctaid_v4): Decodes the cancellation request.
+- [clusterlaunchcontrol_query_cancel_is_canceled](https://docs.modular.com/mojo/stdlib/gpu/primitives/cluster/clusterlaunchcontrol_query_cancel_is_canceled): Decodes the cancellation request.
+- [clusterlaunchcontrol_try_cancel](https://docs.modular.com/mojo/stdlib/gpu/primitives/cluster/clusterlaunchcontrol_try_cancel): Requests to atomically cancel the cluster launch if it has not started running yet.
+- [elect_one_sync](https://docs.modular.com/mojo/stdlib/gpu/primitives/cluster/elect_one_sync): Elects a single thread within a warp to perform an operation.
+- [elect_one_sync_with_mask](https://docs.modular.com/mojo/stdlib/gpu/primitives/cluster/elect_one_sync_with_mask): Elects a single thread within a warp to perform an operation.
+- [cluster](https://docs.modular.com/mojo/stdlib/gpu/primitives/cluster): This module provides low-level NVIDIA GPU cluster synchronization primitives for SM90+ architectures.
+- [PDL](https://docs.modular.com/mojo/stdlib/gpu/primitives/grid_controls/PDL): Programmatic Dependency Launch (PDL) control structure.
+- [PDLLevel](https://docs.modular.com/mojo/stdlib/gpu/primitives/grid_controls/PDLLevel): Programmatic Dependency Launch (PDL) level.
+- [grid_controls](https://docs.modular.com/mojo/stdlib/gpu/primitives/grid_controls): Grid Dependent Control primitives for NVIDIA Hopper (SM90+) GPUs.
+- [launch_dependent_grids](https://docs.modular.com/mojo/stdlib/gpu/primitives/grid_controls/launch_dependent_grids): Launches dependent grids that were previously configured to depend on the current grid.
+- [wait_on_dependent_grids](https://docs.modular.com/mojo/stdlib/gpu/primitives/grid_controls/wait_on_dependent_grids): Waits for all dependent grids launched by this grid to complete execution.
+- [id](https://docs.modular.com/mojo/stdlib/gpu/primitives/id): This module provides GPU thread and block indexing functionality.
+- [lane_id](https://docs.modular.com/mojo/stdlib/gpu/primitives/id/lane_id): Returns the lane ID of the current thread within its warp.
+- [sm_id](https://docs.modular.com/mojo/stdlib/gpu/primitives/id/sm_id): Returns the Streaming Multiprocessor (SM) ID of the current thread.
+- [warp_id](https://docs.modular.com/mojo/stdlib/gpu/primitives/id/warp_id): Returns the warp ID of the current thread within its block. The warp ID is a unique identifier for each warp within a block, ranging from 0 to BLOC...
+- [primitives](https://docs.modular.com/mojo/stdlib/gpu/primitives): GPU primitives package - warp, block, cluster, and grid-level operations.
+- [ReductionMethod](https://docs.modular.com/mojo/stdlib/gpu/primitives/warp/ReductionMethod): Enumerates the supported reduction methods.
+- [broadcast](https://docs.modular.com/mojo/stdlib/gpu/primitives/warp/broadcast): Broadcasts a SIMD value from lane 0 to all lanes in the warp.
+- [warp](https://docs.modular.com/mojo/stdlib/gpu/primitives/warp): GPU warp-level operations and utilities.
+- [lane_group_max](https://docs.modular.com/mojo/stdlib/gpu/primitives/warp/lane_group_max): Reduces a SIMD value to its maximum within a lane group using warp-level operations.
+- [lane_group_max_and_broadcast](https://docs.modular.com/mojo/stdlib/gpu/primitives/warp/lane_group_max_and_broadcast): Reduces and broadcasts the maximum value within a lane group using warp-level operations.
+- [lane_group_min](https://docs.modular.com/mojo/stdlib/gpu/primitives/warp/lane_group_min): Reduces a SIMD value to its minimum within a lane group using warp-level operations.
+- [lane_group_reduce](https://docs.modular.com/mojo/stdlib/gpu/primitives/warp/lane_group_reduce): Performs a generic warp-level reduction operation using shuffle operations.
+- [lane_group_sum](https://docs.modular.com/mojo/stdlib/gpu/primitives/warp/lane_group_sum): Computes the sum of values across a group of lanes using warp-level operations.
+- [lane_group_sum_and_broadcast](https://docs.modular.com/mojo/stdlib/gpu/primitives/warp/lane_group_sum_and_broadcast): Computes the sum across a lane group and broadcasts the result to all lanes.
+- [max](https://docs.modular.com/mojo/stdlib/gpu/primitives/warp/max): Computes the maximum value across all lanes in a warp.
+- [min](https://docs.modular.com/mojo/stdlib/gpu/primitives/warp/min): Computes the minimum value across all lanes in a warp.
+- [prefix_sum](https://docs.modular.com/mojo/stdlib/gpu/primitives/warp/prefix_sum): Computes a warp-level prefix sum (scan) operation.
+- [reduce](https://docs.modular.com/mojo/stdlib/gpu/primitives/warp/reduce): Performs a generic warp-wide reduction operation using shuffle operations.
+- [shuffle_down](https://docs.modular.com/mojo/stdlib/gpu/primitives/warp/shuffle_down): Copies values from threads with higher lane IDs in the warp.
+- [shuffle_idx](https://docs.modular.com/mojo/stdlib/gpu/primitives/warp/shuffle_idx): Copies a value from a source lane to other lanes in a warp.
+- [shuffle_up](https://docs.modular.com/mojo/stdlib/gpu/primitives/warp/shuffle_up): Copies values from threads with lower lane IDs in the warp.
+- [shuffle_xor](https://docs.modular.com/mojo/stdlib/gpu/primitives/warp/shuffle_xor): Exchanges values between threads in a warp using a butterfly pattern.
+- [sum](https://docs.modular.com/mojo/stdlib/gpu/primitives/warp/sum): Computes the sum of values across all lanes in a warp.
+- [vote](https://docs.modular.com/mojo/stdlib/gpu/primitives/warp/vote): Creates a 32 or 64 bit mask among all threads in the warp, where each bit is set to 1 if the corresponding thread voted True, and 0 otherwise.
+- [ProfileBlock](https://docs.modular.com/mojo/stdlib/gpu/profiler/ProfileBlock): A struct for profiling code blocks.
+- [profiler](https://docs.modular.com/mojo/stdlib/gpu/profiler): This module provides GPU profiling functionality.
+- [NormalRandom](https://docs.modular.com/mojo/stdlib/gpu/random/NormalRandom): A high-performance random number generator using the Box-Muller transform.
+- [Random](https://docs.modular.com/mojo/stdlib/gpu/random/Random): A high-performance random number generator using the Philox algorithm.
+- [random](https://docs.modular.com/mojo/stdlib/gpu/random): Random number generation for GPU kernels.
+- [semaphore](https://docs.modular.com/mojo/stdlib/gpu/semaphore): GPU semaphore operations (deprecated - use `gpu.sync.semaphore`).
+- [sync](https://docs.modular.com/mojo/stdlib/gpu/sync): GPU synchronization primitives package.
+- [NamedBarrierSemaphore](https://docs.modular.com/mojo/stdlib/gpu/sync/semaphore/NamedBarrierSemaphore): A device-wide semaphore implementation for NVIDIA GPUs with named barriers.
+- [Semaphore](https://docs.modular.com/mojo/stdlib/gpu/sync/semaphore/Semaphore): A device-wide semaphore implementation for GPUs.
+- [semaphore](https://docs.modular.com/mojo/stdlib/gpu/sync/semaphore): This module provides a device-wide semaphore implementation for NVIDIA GPUs.
+- [AMDScheduleBarrierMask](https://docs.modular.com/mojo/stdlib/gpu/sync/sync/AMDScheduleBarrierMask): Represents different instruction scheduling masks for AMDGPU scheduling instructions.
+- [async_copy_arrive](https://docs.modular.com/mojo/stdlib/gpu/sync/sync/async_copy_arrive): Makes a memory barrier track all prior async copy operations from this thread.
+- [barrier](https://docs.modular.com/mojo/stdlib/gpu/sync/sync/barrier): Performs a synchronization barrier at the block level.
+- [cp_async_bulk_commit_group](https://docs.modular.com/mojo/stdlib/gpu/sync/sync/cp_async_bulk_commit_group): Commits all prior initiated but uncommitted cp.async.bulk instructions into a cp.async.bulk-group.
+- [cp_async_bulk_wait_group](https://docs.modular.com/mojo/stdlib/gpu/sync/sync/cp_async_bulk_wait_group): Waits for completion of asynchronous bulk memory transfer groups.
+- [sync](https://docs.modular.com/mojo/stdlib/gpu/sync/sync): This module provides GPU synchronization primitives and barriers.
+- [mbarrier_arrive](https://docs.modular.com/mojo/stdlib/gpu/sync/sync/mbarrier_arrive): Signal thread arrival at a shared memory barrier.
+- [mbarrier_arrive_expect_tx_relaxed](https://docs.modular.com/mojo/stdlib/gpu/sync/sync/mbarrier_arrive_expect_tx_relaxed): Configure a shared memory barrier to expect additional async transactions.
+- [mbarrier_arrive_expect_tx_shared](https://docs.modular.com/mojo/stdlib/gpu/sync/sync/mbarrier_arrive_expect_tx_shared): Configure a shared memory barrier to expect additional async transactions.
+- [mbarrier_init](https://docs.modular.com/mojo/stdlib/gpu/sync/sync/mbarrier_init): Initialize a shared memory barrier for synchronizing multiple threads.
+- [mbarrier_test_wait](https://docs.modular.com/mojo/stdlib/gpu/sync/sync/mbarrier_test_wait): Test if all threads have arrived at the memory barrier.
+- [mbarrier_try_wait_parity_shared](https://docs.modular.com/mojo/stdlib/gpu/sync/sync/mbarrier_try_wait_parity_shared): Wait for completion of a barrier phase with timeout.
+- [named_barrier](https://docs.modular.com/mojo/stdlib/gpu/sync/sync/named_barrier): Performs a named synchronization barrier at the block level.
+- [named_barrier_arrive](https://docs.modular.com/mojo/stdlib/gpu/sync/sync/named_barrier_arrive): Arrives at a named synchronization barrier at the block level.
+- [schedule_barrier](https://docs.modular.com/mojo/stdlib/gpu/sync/sync/schedule_barrier): Controls instruction scheduling across a barrier point in AMD GPU code.
+- [schedule_group_barrier](https://docs.modular.com/mojo/stdlib/gpu/sync/sync/schedule_group_barrier): Controls instruction scheduling across a barrier point in AMD GPU code by creating schedule groups.
+- [syncwarp](https://docs.modular.com/mojo/stdlib/gpu/sync/sync/syncwarp): Synchronizes threads within a warp using a barrier.
+- [umma_arrive_leader_cta](https://docs.modular.com/mojo/stdlib/gpu/sync/sync/umma_arrive_leader_cta): Signal arrival at the barrier to the leader CTA of the pair.
+- [tcgen05](https://docs.modular.com/mojo/stdlib/gpu/tcgen05): Tensor core generation 05 operations (deprecated - use `gpu.compute.tcgen05`).
+- [warp](https://docs.modular.com/mojo/stdlib/gpu/warp): GPU warp-level operations (deprecated - use `gpu.primitives.warp` module).
+- [Hashable](https://docs.modular.com/mojo/stdlib/hashlib/hash/Hashable): A trait for types which specify a function to hash their data.
+- [hash](https://docs.modular.com/mojo/stdlib/hashlib/hash/hash): Hash a Hashable type using its underlying hash implementation.
+- [hash](https://docs.modular.com/mojo/stdlib/hashlib/hash): Implements the `Hashable` trait and `hash()` built-in function.
+- [Hasher](https://docs.modular.com/mojo/stdlib/hashlib/hasher/Hasher): A trait for types that can incrementally compute hash values.
+- [hasher](https://docs.modular.com/mojo/stdlib/hashlib/hasher): Mojo module stdlib.hashlib.hasher documentation
+- [hashlib](https://docs.modular.com/mojo/stdlib/hashlib): Implements the hashlib package that provides various hash algorithms.
+- [stdlib](https://docs.modular.com/mojo/stdlib): Mojo package stdlib.stdlib documentation
+- [FileHandle](https://docs.modular.com/mojo/stdlib/io/file/FileHandle): File handle to an opened file.
+- [file](https://docs.modular.com/mojo/stdlib/io/file): Provides APIs to read and write files.
+- [open](https://docs.modular.com/mojo/stdlib/io/file/open): Opens the file specified by path using the mode provided, returning a FileHandle.
+- [FileDescriptor](https://docs.modular.com/mojo/stdlib/io/file_descriptor/FileDescriptor): File descriptor of a file.
+- [file_descriptor](https://docs.modular.com/mojo/stdlib/io/file_descriptor): Higher level abstraction for file stream.
+- [io](https://docs.modular.com/mojo/stdlib/io): Helpers and types for core input and output functionality.
+- [io](https://docs.modular.com/mojo/stdlib/io/io): Provides utilities for working with input/output.
+- [input](https://docs.modular.com/mojo/stdlib/io/io/input): Reads a line of input from the user.
+- [print](https://docs.modular.com/mojo/stdlib/io/io/print): Prints elements to the text stream. Each element is separated by `sep` and followed by `end`.
+- [Writable](https://docs.modular.com/mojo/stdlib/io/write/Writable): The `Writable` trait describes how a type is written into a `Writer`.
+- [Writer](https://docs.modular.com/mojo/stdlib/io/write/Writer): Describes a type that can be written to by any type that implements the `write_to` function.
+- [write](https://docs.modular.com/mojo/stdlib/io/write): Establishes the contract between `Writer` and `Writable` types.
+- [Iterable](https://docs.modular.com/mojo/stdlib/iter/Iterable): The `Iterable` trait describes a type that can be turned into an iterator.
+- [Iterator](https://docs.modular.com/mojo/stdlib/iter/Iterator): The `Iterator` trait describes a type that can be used as an iterator, e.g. in a `for` loop.
+- [enumerate](https://docs.modular.com/mojo/stdlib/iter/enumerate): Returns an iterator that yields tuples of the index and the element of the original iterator.
+- [iter](https://docs.modular.com/mojo/stdlib/iter): Provides traits and utilities for iteration.
+- [iter](https://docs.modular.com/mojo/stdlib/iter/iter): Constructs an iterator from an iterable.
+- [map](https://docs.modular.com/mojo/stdlib/iter/map): Returns an iterator that applies `function` to each element of the input iterable.
+- [next](https://docs.modular.com/mojo/stdlib/iter/next): Advances the iterator and returns the next element.
+- [zip](https://docs.modular.com/mojo/stdlib/iter/zip): Returns an iterator that yields tuples of the elements of the original iterables.
+- [itertools](https://docs.modular.com/mojo/stdlib/itertools): Mojo package stdlib.itertools.itertools documentation
+- [count](https://docs.modular.com/mojo/stdlib/itertools/itertools/count): Constructs an iterator that starts at the value `start` with a stride of `step`.
+- [itertools](https://docs.modular.com/mojo/stdlib/itertools/itertools): Mojo module stdlib.itertools.itertools documentation
+- [product](https://docs.modular.com/mojo/stdlib/itertools/itertools/product): Returns an iterator that yields tuples of the elements of the outer product of the iterables.
+- [repeat](https://docs.modular.com/mojo/stdlib/itertools/itertools/repeat): Constructs an iterator that repeats the given element a specified number of times.
+- [logger](https://docs.modular.com/mojo/stdlib/logger): Provides logging functionality with different severity levels.
+- [Level](https://docs.modular.com/mojo/stdlib/logger/logger/Level): Represents logging severity levels.
+- [Logger](https://docs.modular.com/mojo/stdlib/logger/logger/Logger): A logger that outputs messages at or above a specified severity level.
+- [logger](https://docs.modular.com/mojo/stdlib/logger/logger): Provides logging functionality with different severity levels.
+- [constants](https://docs.modular.com/mojo/stdlib/math/constants): Defines math utilities.
+- [fast](https://docs.modular.com/mojo/stdlib/math/fast): Defines fast math approximation utilities.
+- [math](https://docs.modular.com/mojo/stdlib/math): Implements the math package.
+- [CeilDivable](https://docs.modular.com/mojo/stdlib/math/math/CeilDivable): The `CeilDivable` trait describes a type that defines a ceil division operation.
+- [CeilDivableRaising](https://docs.modular.com/mojo/stdlib/math/math/CeilDivableRaising): The `CeilDivable` trait describes a type that define a floor division and negation operation that can raise.
+- [Ceilable](https://docs.modular.com/mojo/stdlib/math/math/Ceilable): The `Ceilable` trait describes a type that defines a ceiling operation.
+- [Floorable](https://docs.modular.com/mojo/stdlib/math/math/Floorable): The `Floorable` trait describes a type that defines a floor operation.
+- [Truncable](https://docs.modular.com/mojo/stdlib/math/math/Truncable): The `Truncable` trait describes a type that defines a truncation operation.
+- [acos](https://docs.modular.com/mojo/stdlib/math/math/acos): Computes the `acos` of the inputs.
+- [acosh](https://docs.modular.com/mojo/stdlib/math/math/acosh): Computes the `acosh` of the inputs.
+- [align_down](https://docs.modular.com/mojo/stdlib/math/math/align_down): Returns the closest multiple of alignment that is less than or equal to value.
+- [align_up](https://docs.modular.com/mojo/stdlib/math/math/align_up): Returns the closest multiple of alignment that is greater than or equal to value.
+- [asin](https://docs.modular.com/mojo/stdlib/math/math/asin): Computes the `asin` of the inputs.
+- [asinh](https://docs.modular.com/mojo/stdlib/math/math/asinh): Computes the `asinh` of the inputs.
+- [atan](https://docs.modular.com/mojo/stdlib/math/math/atan): Computes the `atan` of the inputs.
+- [atan2](https://docs.modular.com/mojo/stdlib/math/math/atan2): Computes the `atan2` of the inputs.
+- [atanh](https://docs.modular.com/mojo/stdlib/math/math/atanh): Computes the `atanh` of the inputs.
+- [cbrt](https://docs.modular.com/mojo/stdlib/math/math/cbrt): Computes the `cbrt` of the inputs.
+- [ceil](https://docs.modular.com/mojo/stdlib/math/math/ceil): Get the ceiling value of the given object.
+- [ceildiv](https://docs.modular.com/mojo/stdlib/math/math/ceildiv): Return the rounded-up result of dividing numerator by denominator.
+- [clamp](https://docs.modular.com/mojo/stdlib/math/math/clamp): Clamps the integer value vector to be in a certain range.
+- [copysign](https://docs.modular.com/mojo/stdlib/math/math/copysign): Returns a value with the magnitude of the first operand and the sign of the second operand.
+- [cos](https://docs.modular.com/mojo/stdlib/math/math/cos): Computes the `cos` of the inputs.
+- [cosh](https://docs.modular.com/mojo/stdlib/math/math/cosh): Computes the `cosh` of the inputs.
+- [erf](https://docs.modular.com/mojo/stdlib/math/math/erf): Performs the elementwise Erf on a SIMD vector.
+- [erfc](https://docs.modular.com/mojo/stdlib/math/math/erfc): Computes the `erfc` of the inputs.
+- [exp](https://docs.modular.com/mojo/stdlib/math/math/exp): Calculates elementwise exponential of the input vector.
+- [exp2](https://docs.modular.com/mojo/stdlib/math/math/exp2): Computes elementwise 2 raised to the power of n, where n is an element of the input SIMD vector.
+- [exp_approx_f32](https://docs.modular.com/mojo/stdlib/math/math/exp_approx_f32): Computes a fast approximate e^x for SIMD vectors of 32-bit floats using the base-2 approximation as a backend.
+- [expm1](https://docs.modular.com/mojo/stdlib/math/math/expm1): Computes the `expm1` of the inputs.
+- [factorial](https://docs.modular.com/mojo/stdlib/math/math/factorial): Computes the factorial of the integer.
+- [floor](https://docs.modular.com/mojo/stdlib/math/math/floor): Get the floor value of the given object.
+- [fma](https://docs.modular.com/mojo/stdlib/math/math/fma): Performs `fma` (fused multiply-add) on the inputs.
+- [frexp](https://docs.modular.com/mojo/stdlib/math/math/frexp): Breaks floating point values into a fractional part and an exponent part. This follows C and Python in increasing the exponent by 1 and normalizing...
+- [gamma](https://docs.modular.com/mojo/stdlib/math/math/gamma): Computes the Gamma of the input.
+- [gcd](https://docs.modular.com/mojo/stdlib/math/math/gcd): Compute the greatest common divisor of two integers.
+- [hypot](https://docs.modular.com/mojo/stdlib/math/math/hypot): Computes the `hypot` of the inputs.
+- [math](https://docs.modular.com/mojo/stdlib/math/math): Defines math utilities.
+- [iota](https://docs.modular.com/mojo/stdlib/math/math/iota): Creates a SIMD vector containing an increasing sequence, starting from offset.
+- [isclose](https://docs.modular.com/mojo/stdlib/math/math/isclose): Returns a boolean SIMD vector indicating which element pairs of `a` and `b` are equal within a given tolerance.
+- [j0](https://docs.modular.com/mojo/stdlib/math/math/j0): Computes the Bessel function of the first kind of order 0 for each input value.
+- [j1](https://docs.modular.com/mojo/stdlib/math/math/j1): Computes the Bessel function of the first kind of order 1 for each input value.
+- [lcm](https://docs.modular.com/mojo/stdlib/math/math/lcm): Computes the least common multiple of two integers.
+- [ldexp](https://docs.modular.com/mojo/stdlib/math/math/ldexp): Computes elementwise ldexp function.
+- [lgamma](https://docs.modular.com/mojo/stdlib/math/math/lgamma): Computes the `lgamma` of the inputs.
+- [log](https://docs.modular.com/mojo/stdlib/math/math/log): Performs elementwise natural log (base E) of a SIMD vector.
+- [log10](https://docs.modular.com/mojo/stdlib/math/math/log10): Computes the `log10` of the inputs.
+- [log1p](https://docs.modular.com/mojo/stdlib/math/math/log1p): Computes the `log1p` of the inputs.
+- [log2](https://docs.modular.com/mojo/stdlib/math/math/log2): Performs elementwise log (base 2) of a SIMD vector.
+- [logb](https://docs.modular.com/mojo/stdlib/math/math/logb): Computes the `logb` of the inputs.
+- [modf](https://docs.modular.com/mojo/stdlib/math/math/modf): Computes the integral and fractional part of the value.
+- [recip](https://docs.modular.com/mojo/stdlib/math/math/recip): Performs elementwise reciprocal on a SIMD vector.
+- [remainder](https://docs.modular.com/mojo/stdlib/math/math/remainder): Computes the `remainder` of the inputs.
+- [rsqrt](https://docs.modular.com/mojo/stdlib/math/math/rsqrt): Performs elementwise reciprocal square root on a SIMD vector.
+- [scalb](https://docs.modular.com/mojo/stdlib/math/math/scalb): Computes the `scalb` of the inputs.
+- [sin](https://docs.modular.com/mojo/stdlib/math/math/sin): Computes the `sin` of the inputs.
+- [sinh](https://docs.modular.com/mojo/stdlib/math/math/sinh): Computes the `sinh` of the inputs.
+- [sqrt](https://docs.modular.com/mojo/stdlib/math/math/sqrt): Performs square root on an integer.
+- [tan](https://docs.modular.com/mojo/stdlib/math/math/tan): Computes the `tan` of the inputs.
+- [tanh](https://docs.modular.com/mojo/stdlib/math/math/tanh): Performs elementwise evaluation of the tanh function.
+- [trunc](https://docs.modular.com/mojo/stdlib/math/math/trunc): Get the truncated value of the given object.
+- [ulp](https://docs.modular.com/mojo/stdlib/math/math/ulp): Computes the ULP (units of last place) or (units of least precision) of the number.
+- [y0](https://docs.modular.com/mojo/stdlib/math/math/y0): Computes the Bessel function of the second kind of order 0 for each input value.
+- [y1](https://docs.modular.com/mojo/stdlib/math/math/y1): Computes the Bessel function of the second kind of order 1 for each input value.
+- [polynomial](https://docs.modular.com/mojo/stdlib/math/polynomial): Provides two implementations for evaluating polynomials.
+- [polynomial_evaluate](https://docs.modular.com/mojo/stdlib/math/polynomial/polynomial_evaluate): Evaluates the polynomial.
+- [ArcPointer](https://docs.modular.com/mojo/stdlib/memory/arc/ArcPointer): Atomic reference-counted pointer.
+- [arc](https://docs.modular.com/mojo/stdlib/memory/arc): Reference-counted smart pointers.
+- [memory](https://docs.modular.com/mojo/stdlib/memory): The memory package provides several pointer types, as well as utility functions for dealing with memory.
+- [UnsafeMaybeUninitialized](https://docs.modular.com/mojo/stdlib/memory/maybe_uninitialized/UnsafeMaybeUninitialized): A memory location that may or may not be initialized.
+- [maybe_uninitialized](https://docs.modular.com/mojo/stdlib/memory/maybe_uninitialized): Mojo module stdlib.memory.maybe_uninitialized documentation
+- [memory](https://docs.modular.com/mojo/stdlib/memory/memory): Defines functions for memory manipulations.
+- [memcmp](https://docs.modular.com/mojo/stdlib/memory/memory/memcmp): Compares two buffers. Both strings are assumed to be of the same length.
+- [memcpy](https://docs.modular.com/mojo/stdlib/memory/memory/memcpy): Copies a memory area.
+- [memset](https://docs.modular.com/mojo/stdlib/memory/memory/memset): Fills memory with the given value.
+- [memset_zero](https://docs.modular.com/mojo/stdlib/memory/memory/memset_zero): Fills memory with zeros.
+- [stack_allocation](https://docs.modular.com/mojo/stdlib/memory/memory/stack_allocation): Allocates data buffer space on the stack given a data type and number of elements.
+- [OwnedPointer](https://docs.modular.com/mojo/stdlib/memory/owned_pointer/OwnedPointer): A safe, owning, smart pointer.
+- [owned_pointer](https://docs.modular.com/mojo/stdlib/memory/owned_pointer): Implements `OwnedPointer`, a safe, single-ownership smart pointer.
+- [AddressSpace](https://docs.modular.com/mojo/stdlib/memory/pointer/AddressSpace): Address space of the pointer.
+- [Pointer](https://docs.modular.com/mojo/stdlib/memory/pointer/Pointer): Defines a non-nullable safe pointer.
+- [pointer](https://docs.modular.com/mojo/stdlib/memory/pointer): Implements the Pointer type.
+- [Span](https://docs.modular.com/mojo/stdlib/memory/span/Span): A non-owning view of contiguous data.
+- [span](https://docs.modular.com/mojo/stdlib/memory/span): Implements the `Span` type.
+- [bitcast](https://docs.modular.com/mojo/stdlib/memory/unsafe/bitcast): Bitcasts a SIMD value to another SIMD value.
+- [unsafe](https://docs.modular.com/mojo/stdlib/memory/unsafe): Provides utility functions for unsafe manipulation of SIMD values.
+- [pack_bits](https://docs.modular.com/mojo/stdlib/memory/unsafe/pack_bits): Packs a SIMD vector of `bool` values into an integer.
+- [UnsafePointer](https://docs.modular.com/mojo/stdlib/memory/unsafe_pointer/UnsafePointer): `UnsafePointer[T]` represents an indirect reference to one or more values of type `T` consecutively in memory, and can refer to uninitialized memory.
+- [unsafe_pointer](https://docs.modular.com/mojo/stdlib/memory/unsafe_pointer): Implement a generic unsafe pointer type.
+- [Atomic](https://docs.modular.com/mojo/stdlib/os/atomic/Atomic): Represents a value with atomic operations.
+- [Consistency](https://docs.modular.com/mojo/stdlib/os/atomic/Consistency): Represents the consistency model for atomic operations.
+- [fence](https://docs.modular.com/mojo/stdlib/os/atomic/fence): Creates an atomic fence.
+- [atomic](https://docs.modular.com/mojo/stdlib/os/atomic): Implements the `Atomic` struct.
+- [getenv](https://docs.modular.com/mojo/stdlib/os/env/getenv): Returns the value of the given environment variable.
+- [env](https://docs.modular.com/mojo/stdlib/os/env): Provides functions for working with environment variables.
+- [setenv](https://docs.modular.com/mojo/stdlib/os/env/setenv): Changes or adds an environment variable.
+- [unsetenv](https://docs.modular.com/mojo/stdlib/os/env/unsetenv): Unsets an environment variable.
+- [fstat](https://docs.modular.com/mojo/stdlib/os/fstat): Implements file system status operations.
+- [lstat](https://docs.modular.com/mojo/stdlib/os/fstat/lstat): Get the status of a file or a file descriptor (similar to stat, but does not follow symlinks).
+- [stat](https://docs.modular.com/mojo/stdlib/os/fstat/stat): Get the status of a file or a file descriptor.
+- [stat_result](https://docs.modular.com/mojo/stdlib/os/fstat/stat_result): Object whose fields correspond  to the members of the stat structure.
+- [os](https://docs.modular.com/mojo/stdlib/os): Provides access to operating-system dependent functionality.
+- [abort](https://docs.modular.com/mojo/stdlib/os/os/abort): Calls a target dependent trap instruction if available.
+- [getuid](https://docs.modular.com/mojo/stdlib/os/os/getuid): Retrieve the user ID of the calling process.
+- [os](https://docs.modular.com/mojo/stdlib/os/os): Provides functions to access operating-system dependent functionality, including file system operations.
+- [isatty](https://docs.modular.com/mojo/stdlib/os/os/isatty): Checks whether a file descriptor refers to a terminal.
+- [listdir](https://docs.modular.com/mojo/stdlib/os/os/listdir): Gets the list of entries contained in the path provided.
+- [makedirs](https://docs.modular.com/mojo/stdlib/os/os/makedirs): Creates a specified leaf directory along with any necessary intermediate directories that don't already exist.
+- [mkdir](https://docs.modular.com/mojo/stdlib/os/os/mkdir): Creates a directory at the specified path.
+- [remove](https://docs.modular.com/mojo/stdlib/os/os/remove): Removes the specified file.
+- [removedirs](https://docs.modular.com/mojo/stdlib/os/os/removedirs): Removes a leaf directory and all empty intermediate ones.
+- [rmdir](https://docs.modular.com/mojo/stdlib/os/os/rmdir): Removes the specified directory.
+- [unlink](https://docs.modular.com/mojo/stdlib/os/os/unlink): Removes the specified file.
+- [path](https://docs.modular.com/mojo/stdlib/os/path): Provides a set of operating-system independent functions for manipulating file system paths.
+- [basename](https://docs.modular.com/mojo/stdlib/os/path/path/basename): Returns the tail section of a path.
+- [dirname](https://docs.modular.com/mojo/stdlib/os/path/path/dirname): Returns the directory component of a pathname.
+- [exists](https://docs.modular.com/mojo/stdlib/os/path/path/exists): Return True if path exists.
+- [expanduser](https://docs.modular.com/mojo/stdlib/os/path/path/expanduser): Expands a tilde "~" prefix in `path` to the user's home directory.
+- [expandvars](https://docs.modular.com/mojo/stdlib/os/path/path/expandvars): Replaces `${var}` or `$var` in the path with values from the current environment variables. Malformed variable names and references to non-existing...
+- [getsize](https://docs.modular.com/mojo/stdlib/os/path/path/getsize): Return the size, in bytes, of the specified path.
+- [path](https://docs.modular.com/mojo/stdlib/os/path/path): Provides a set of operating-system independent functions for manipulating file system paths.
+- [is_absolute](https://docs.modular.com/mojo/stdlib/os/path/path/is_absolute): Return True if `path` is an absolute path name. On Unix, that means it begins with a slash.
+- [isdir](https://docs.modular.com/mojo/stdlib/os/path/path/isdir): Return True if path is an existing directory. This follows symbolic links, so both islink() and isdir() can be true for the same path.
+- [isfile](https://docs.modular.com/mojo/stdlib/os/path/path/isfile): Test whether a path is a regular file.
+- [islink](https://docs.modular.com/mojo/stdlib/os/path/path/islink): Return True if path refers to an existing directory entry that is a symbolic link.
+- [join](https://docs.modular.com/mojo/stdlib/os/path/path/join): Join two or more pathname components, inserting '/' as needed. If any component is an absolute path, all previous path components will be discarded...
+- [lexists](https://docs.modular.com/mojo/stdlib/os/path/path/lexists): Return True if path exists or is a broken symlink.
+- [realpath](https://docs.modular.com/mojo/stdlib/os/path/path/realpath): Expands all symbolic links and resolves references to /./, /../ and extra '/' characters in the null-terminated string named by path to produce a c...
+- [split](https://docs.modular.com/mojo/stdlib/os/path/path/split): Split a given pathname into two components: head and tail. This is useful for separating the directory path from the filename. If the input path en...
+- [split_extension](https://docs.modular.com/mojo/stdlib/os/path/path/split_extension): Splits `path` into the root and extension.
+- [splitroot](https://docs.modular.com/mojo/stdlib/os/path/path/splitroot): Splits `path` into drive, root and tail. The tail contains anything after the root.
+- [PathLike](https://docs.modular.com/mojo/stdlib/os/pathlike/PathLike): A trait representing file system paths.
+- [pathlike](https://docs.modular.com/mojo/stdlib/os/pathlike): Implements the `PathLike` trait.
+- [pathlib](https://docs.modular.com/mojo/stdlib/pathlib): Implements the pathlib package.
+- [Path](https://docs.modular.com/mojo/stdlib/pathlib/path/Path): The Path object.
+- [cwd](https://docs.modular.com/mojo/stdlib/pathlib/path/cwd): Gets the current directory.
+- [path](https://docs.modular.com/mojo/stdlib/pathlib/path): Implements `Path` and related functions.
+- [prelude](https://docs.modular.com/mojo/stdlib/prelude): Implements the prelude package.  This package provide the public entities that are automatically imported into every Mojo program.
+- [pwd](https://docs.modular.com/mojo/stdlib/pwd): Provides access to user and group information from the password database.
+- [Passwd](https://docs.modular.com/mojo/stdlib/pwd/pwd/Passwd): Represents user account information retrieved from the user password database related to a user ID.
+- [getpwnam](https://docs.modular.com/mojo/stdlib/pwd/pwd/getpwnam): Retrieves the user ID in the password database for the given user name.
+- [getpwuid](https://docs.modular.com/mojo/stdlib/pwd/pwd/getpwuid): Retrieve the password database entry for a given user ID.
+- [pwd](https://docs.modular.com/mojo/stdlib/pwd/pwd): Mojo module stdlib.pwd.pwd documentation
+- [PyMojoObject](https://docs.modular.com/mojo/stdlib/python/bindings/PyMojoObject): Storage backing a PyObject* wrapping a Mojo value.
+- [PythonModuleBuilder](https://docs.modular.com/mojo/stdlib/python/bindings/PythonModuleBuilder): A builder for creating Python modules with Mojo function and type bindings.
+- [PythonTypeBuilder](https://docs.modular.com/mojo/stdlib/python/bindings/PythonTypeBuilder): A builder for a Python 'type' binding.
+- [check_and_get_arg](https://docs.modular.com/mojo/stdlib/python/bindings/check_and_get_arg): Get the argument at the given index and downcast it to a given Mojo type.
+- [check_and_get_or_convert_arg](https://docs.modular.com/mojo/stdlib/python/bindings/check_and_get_or_convert_arg): Get the argument at the given index and convert it to a given Mojo type.
+- [check_arguments_arity](https://docs.modular.com/mojo/stdlib/python/bindings/check_arguments_arity): Validate that the provided arguments match the expected function arity.
+- [bindings](https://docs.modular.com/mojo/stdlib/python/bindings): Mojo module stdlib.python.bindings documentation
+- [lookup_py_type_object](https://docs.modular.com/mojo/stdlib/python/bindings/lookup_py_type_object): Retrieve a reference to the unique Python type describing Python objects containing Mojo values of type `T`.
+- [ConvertibleFromPython](https://docs.modular.com/mojo/stdlib/python/conversions/ConvertibleFromPython): Denotes a type that can attempt construction from a read-only Python object.
+- [ConvertibleToPython](https://docs.modular.com/mojo/stdlib/python/conversions/ConvertibleToPython): A trait that indicates a type can be converted to a PythonObject, and that specifies the behavior with a `to_python_object` method.
+- [conversions](https://docs.modular.com/mojo/stdlib/python/conversions): Implements conversion traits to and from PythonObject.
+- [python](https://docs.modular.com/mojo/stdlib/python): Implements the python package.
+- [Python](https://docs.modular.com/mojo/stdlib/python/python/Python): Provides methods that help you use Python code in Mojo.
+- [python](https://docs.modular.com/mojo/stdlib/python/python): Implements Python interoperability.
+- [PythonObject](https://docs.modular.com/mojo/stdlib/python/python_object/PythonObject): A Python object.
+- [python_object](https://docs.modular.com/mojo/stdlib/python/python_object): Implements PythonObject.
+- [random](https://docs.modular.com/mojo/stdlib/random): Implements the random package.
+- [random](https://docs.modular.com/mojo/stdlib/random/random): Provides functions for random numbers.
+- [rand](https://docs.modular.com/mojo/stdlib/random/random/rand): Fills memory with random values from a uniform distribution.
+- [randint](https://docs.modular.com/mojo/stdlib/random/random/randint): Fills memory with uniform random in range [low, high].
+- [randn](https://docs.modular.com/mojo/stdlib/random/random/randn): Fills memory with random values from a Normal(mean, standard_deviation) distribution.
+- [randn_float64](https://docs.modular.com/mojo/stdlib/random/random/randn_float64): Returns a random double sampled from a Normal(mean, standard_deviation) distribution.
+- [random_float64](https://docs.modular.com/mojo/stdlib/random/random/random_float64): Returns a random `Float64` number from the given range.
+- [random_si64](https://docs.modular.com/mojo/stdlib/random/random/random_si64): Returns a random `Int64` number from the given range.
+- [random_ui64](https://docs.modular.com/mojo/stdlib/random/random/random_ui64): Returns a random `UInt64` number from the given range.
+- [seed](https://docs.modular.com/mojo/stdlib/random/random/seed): Seeds the random number generator using the current time.
+- [shuffle](https://docs.modular.com/mojo/stdlib/random/random/shuffle): Shuffles the elements of the list randomly.
+- [DeviceContextPtr](https://docs.modular.com/mojo/stdlib/runtime/asyncrt/DeviceContextPtr): Exposes a pointer to a C++ DeviceContext to Mojo.
+- [DeviceContextPtrList](https://docs.modular.com/mojo/stdlib/runtime/asyncrt/DeviceContextPtrList): A fixed-size collection of `DeviceContextPtr` objects.
+- [Task](https://docs.modular.com/mojo/stdlib/runtime/asyncrt/Task): Represents an asynchronous task that will produce a value of the specified type.
+- [TaskGroup](https://docs.modular.com/mojo/stdlib/runtime/asyncrt/TaskGroup): A group of tasks that can be executed concurrently.
+- [TaskGroupContext](https://docs.modular.com/mojo/stdlib/runtime/asyncrt/TaskGroupContext): Context structure for task group operations.
+- [create_task](https://docs.modular.com/mojo/stdlib/runtime/asyncrt/create_task): Run the coroutine as a task on the AsyncRT Runtime.
+- [asyncrt](https://docs.modular.com/mojo/stdlib/runtime/asyncrt): This module implements the low level concurrency library.
+- [parallelism_level](https://docs.modular.com/mojo/stdlib/runtime/asyncrt/parallelism_level): Gets the parallelism level of the Runtime.
+- [runtime](https://docs.modular.com/mojo/stdlib/runtime): Implements the runtime package.
+- [Trace](https://docs.modular.com/mojo/stdlib/runtime/tracing/Trace): An object representing a specific trace.
+- [TraceCategory](https://docs.modular.com/mojo/stdlib/runtime/tracing/TraceCategory): An enum-like struct specifying the type of tracing to perform.
+- [TraceLevel](https://docs.modular.com/mojo/stdlib/runtime/tracing/TraceLevel): An enum-like struct specifying the level of tracing to perform.
+- [get_current_trace_id](https://docs.modular.com/mojo/stdlib/runtime/tracing/get_current_trace_id): Returns the id of last created trace entry on the current thread.
+- [get_safe_task_id](https://docs.modular.com/mojo/stdlib/runtime/tracing/get_safe_task_id): Safely extract task_id from DeviceContextPtr, returning None if null/invalid.
+- [tracing](https://docs.modular.com/mojo/stdlib/runtime/tracing): Provides tracing utilities.
+- [is_profiling_disabled](https://docs.modular.com/mojo/stdlib/runtime/tracing/is_profiling_disabled): Returns False if the profiling is enabled for that specific type and level and True otherwise.
+- [is_profiling_enabled](https://docs.modular.com/mojo/stdlib/runtime/tracing/is_profiling_enabled): Returns True if the profiling is enabled for that specific type and level and False otherwise.
+- [trace_arg](https://docs.modular.com/mojo/stdlib/runtime/tracing/trace_arg): Helper to stringify the type and shape of a kernel argument for tracing.
+- [stat](https://docs.modular.com/mojo/stdlib/stat): Implements the stat package.
+- [S_ISBLK](https://docs.modular.com/mojo/stdlib/stat/stat/S_ISBLK): Returns True if the mode is a block device.
+- [S_ISCHR](https://docs.modular.com/mojo/stdlib/stat/stat/S_ISCHR): Returns True if the mode is a character device.
+- [S_ISDIR](https://docs.modular.com/mojo/stdlib/stat/stat/S_ISDIR): Returns True if the mode is a directory.
+- [S_ISFIFO](https://docs.modular.com/mojo/stdlib/stat/stat/S_ISFIFO): Returns True if the mode is a fifo.
+- [S_ISLNK](https://docs.modular.com/mojo/stdlib/stat/stat/S_ISLNK): Returns True if the mode is a symlink.
+- [S_ISREG](https://docs.modular.com/mojo/stdlib/stat/stat/S_ISREG): Returns True if the mode is a regular file.
+- [S_ISSOCK](https://docs.modular.com/mojo/stdlib/stat/stat/S_ISSOCK): Returns True if the mode is a socket.
+- [stat](https://docs.modular.com/mojo/stdlib/stat/stat): Implements the stat module.
+- [subprocess](https://docs.modular.com/mojo/stdlib/subprocess): Implements the subprocess package.
+- [subprocess](https://docs.modular.com/mojo/stdlib/subprocess/subprocess): Implements the subprocess package.
+- [run](https://docs.modular.com/mojo/stdlib/subprocess/subprocess/run): Runs the specified command and returns the output as a string.
+- [argv](https://docs.modular.com/mojo/stdlib/sys/arg/argv): Gets the list of command line arguments given to the `mojo` CLI.
+- [arg](https://docs.modular.com/mojo/stdlib/sys/arg): Implements functions and variables for interacting with execution and system environment.
+- [compile](https://docs.modular.com/mojo/stdlib/sys/compile): Implements functions that return compile-time information.
+- [is_compile_time](https://docs.modular.com/mojo/stdlib/sys/compile/is_compile_time): Returns true if the current code is executed at compile time, false otherwise.
+- [breakpointhook](https://docs.modular.com/mojo/stdlib/sys/debug/breakpointhook): Cause an execution trap with the intention of requesting the attention of a debugger.
+- [debug](https://docs.modular.com/mojo/stdlib/sys/debug): This module includes the debug hook functions.
+- [DLHandle](https://docs.modular.com/mojo/stdlib/sys/ffi/DLHandle): Represents a dynamically linked library that can be loaded and unloaded.
+- [RTLD](https://docs.modular.com/mojo/stdlib/sys/ffi/RTLD): Enumeration of the RTLD flags used during dynamic library loading.
+- [external_call](https://docs.modular.com/mojo/stdlib/sys/ffi/external_call): Calls an external function.
+- [ffi](https://docs.modular.com/mojo/stdlib/sys/ffi): Implements a foreign functions interface (FFI).
+- [sys](https://docs.modular.com/mojo/stdlib/sys): Implements the sys package.
+- [CompilationTarget](https://docs.modular.com/mojo/stdlib/sys/info/CompilationTarget): A struct that provides information about a target architecture.
+- [align_of](https://docs.modular.com/mojo/stdlib/sys/info/align_of): Returns the align of (in bytes) of the type.
+- [bit_width_of](https://docs.modular.com/mojo/stdlib/sys/info/bit_width_of): Returns the size of (in bits) of the type.
+- [has_accelerator](https://docs.modular.com/mojo/stdlib/sys/info/has_accelerator): Returns True if the host system has an accelerator and False otherwise.
+- [has_amd_gpu_accelerator](https://docs.modular.com/mojo/stdlib/sys/info/has_amd_gpu_accelerator): Returns True if the host system has an AMD GPU and False otherwise.
+- [has_apple_gpu_accelerator](https://docs.modular.com/mojo/stdlib/sys/info/has_apple_gpu_accelerator): Returns True if the host system has a Metal GPU and False otherwise.
+- [has_nvidia_gpu_accelerator](https://docs.modular.com/mojo/stdlib/sys/info/has_nvidia_gpu_accelerator): Returns True if the host system has an NVIDIA GPU and False otherwise.
+- [info](https://docs.modular.com/mojo/stdlib/sys/info): Implements methods for querying the host target info.
+- [is_32bit](https://docs.modular.com/mojo/stdlib/sys/info/is_32bit): Returns True if the maximum integral value is 32 bit.
+- [is_64bit](https://docs.modular.com/mojo/stdlib/sys/info/is_64bit): Returns True if the maximum integral value is 64 bit.
+- [is_amd_gpu](https://docs.modular.com/mojo/stdlib/sys/info/is_amd_gpu): Returns True if the target triple of the compiler is `amdgcn-amd-amdhsa` False otherwise.
+- [is_apple_gpu](https://docs.modular.com/mojo/stdlib/sys/info/is_apple_gpu): Returns True if the target triple is for Apple GPU (Metal) and False otherwise.
+- [is_big_endian](https://docs.modular.com/mojo/stdlib/sys/info/is_big_endian): Returns True if the target's endianness is big and False otherwise.
+- [is_gpu](https://docs.modular.com/mojo/stdlib/sys/info/is_gpu): Returns True if the target triple is GPU and False otherwise.
+- [is_little_endian](https://docs.modular.com/mojo/stdlib/sys/info/is_little_endian): Returns True if the target's endianness is little and False otherwise.
+- [is_nvidia_gpu](https://docs.modular.com/mojo/stdlib/sys/info/is_nvidia_gpu): Returns True if the target triple of the compiler is `nvptx64-nvidia-cuda` False otherwise.
+- [is_triple](https://docs.modular.com/mojo/stdlib/sys/info/is_triple): Returns True if the target triple of the compiler matches the input and False otherwise.
+- [num_logical_cores](https://docs.modular.com/mojo/stdlib/sys/info/num_logical_cores): Returns the number of hardware threads, including hyperthreads across all CPU sockets.
+- [num_performance_cores](https://docs.modular.com/mojo/stdlib/sys/info/num_performance_cores): Returns the number of physical performance cores across all CPU sockets. If not known, returns the total number of physical cores.
+- [num_physical_cores](https://docs.modular.com/mojo/stdlib/sys/info/num_physical_cores): Returns the number of physical cores across all CPU sockets.
+- [platform_map](https://docs.modular.com/mojo/stdlib/sys/info/platform_map): Helper for defining a compile time value depending on the current compilation target, raising a compilation error if trying to access the value on ...
+- [simd_bit_width](https://docs.modular.com/mojo/stdlib/sys/info/simd_bit_width): Returns the vector size (in bits) of the specified target.
+- [simd_byte_width](https://docs.modular.com/mojo/stdlib/sys/info/simd_byte_width): Returns the vector size (in bytes) of the specified target.
+- [simd_width_of](https://docs.modular.com/mojo/stdlib/sys/info/simd_width_of): Returns the vector size of the type on the host system.
+- [size_of](https://docs.modular.com/mojo/stdlib/sys/info/size_of): Returns the size of (in bytes) of the type.
+- [PrefetchCache](https://docs.modular.com/mojo/stdlib/sys/intrinsics/PrefetchCache): Prefetch cache type.
+- [PrefetchLocality](https://docs.modular.com/mojo/stdlib/sys/intrinsics/PrefetchLocality): The prefetch locality.
+- [PrefetchOptions](https://docs.modular.com/mojo/stdlib/sys/intrinsics/PrefetchOptions): Collection of configuration parameters for a prefetch intrinsic call.
+- [PrefetchRW](https://docs.modular.com/mojo/stdlib/sys/intrinsics/PrefetchRW): Prefetch read or write.
+- [assume](https://docs.modular.com/mojo/stdlib/sys/intrinsics/assume): Signals to the optimizer that the condition is always true. This allows the optimizer to optimize the code.
+- [ballot](https://docs.modular.com/mojo/stdlib/sys/intrinsics/ballot): Returns a bitfield(Int32 or Int64) containing the result of its Bool argument in all active lanes, and zero in all inactive lanes. For example, bal...
+- [compressed_store](https://docs.modular.com/mojo/stdlib/sys/intrinsics/compressed_store): Compresses the lanes of `value`, skipping `mask` lanes, and stores at `addr`.
+- [expect](https://docs.modular.com/mojo/stdlib/sys/intrinsics/expect): Provides information about expected (the most probable) value of `val`, which can be used by optimizers.
+- [gather](https://docs.modular.com/mojo/stdlib/sys/intrinsics/gather): Reads scalar values from a SIMD vector, and gathers them into one vector.
+- [implicitarg_ptr](https://docs.modular.com/mojo/stdlib/sys/intrinsics/implicitarg_ptr): Get a pointer to AMD's implicit arguments table.
+- [intrinsics](https://docs.modular.com/mojo/stdlib/sys/intrinsics): Defines intrinsics.
+- [lane_id](https://docs.modular.com/mojo/stdlib/sys/intrinsics/lane_id): Returns the lane ID of the current thread.
+- [likely](https://docs.modular.com/mojo/stdlib/sys/intrinsics/likely): Provides information that the most probable value of `val` is going to be `True`. This information can be used by optimizers.
+- [llvm_intrinsic](https://docs.modular.com/mojo/stdlib/sys/intrinsics/llvm_intrinsic): Calls an LLVM intrinsic with the name `intrin` and return type `type`.
+- [masked_load](https://docs.modular.com/mojo/stdlib/sys/intrinsics/masked_load): Loads data from memory and return it, replacing masked lanes with values from the passthrough vector.
+- [masked_store](https://docs.modular.com/mojo/stdlib/sys/intrinsics/masked_store): Stores a value at a memory location, skipping masked lanes.
+- [prefetch](https://docs.modular.com/mojo/stdlib/sys/intrinsics/prefetch): Prefetches an instruction or data into cache before it is used.
+- [readfirstlane](https://docs.modular.com/mojo/stdlib/sys/intrinsics/readfirstlane): Get the value in the lowest active lane of the input operand.
+- [scatter](https://docs.modular.com/mojo/stdlib/sys/intrinsics/scatter): Takes scalar values from a SIMD vector and `scatters` them into a vector of pointers.
+- [sendmsg](https://docs.modular.com/mojo/stdlib/sys/intrinsics/sendmsg): Send a message to fixed function hardware. Refer to the specific ISA manual for the ops and messages.
+- [strided_load](https://docs.modular.com/mojo/stdlib/sys/intrinsics/strided_load): Loads values from addr according to a specific stride.
+- [strided_store](https://docs.modular.com/mojo/stdlib/sys/intrinsics/strided_store): Loads values from addr according to a specific stride.
+- [unlikely](https://docs.modular.com/mojo/stdlib/sys/intrinsics/unlikely): Provides information that the most probable value of `val` is going to be `False`. This information can be used by optimizers.
+- [env_get_bool](https://docs.modular.com/mojo/stdlib/sys/param_env/env_get_bool): Try to get an boolean-valued define. Compilation fails if the name is not defined or the value is neither `True` or `False`.
+- [env_get_dtype](https://docs.modular.com/mojo/stdlib/sys/param_env/env_get_dtype): Try to get an DType-valued define. If the name is not defined, return a default value instead.
+- [env_get_int](https://docs.modular.com/mojo/stdlib/sys/param_env/env_get_int): Try to get an integer-valued define. Compilation fails if the name is not defined.
+- [env_get_string](https://docs.modular.com/mojo/stdlib/sys/param_env/env_get_string): Try to get a string-valued define. Compilation fails if the name is not defined.
+- [param_env](https://docs.modular.com/mojo/stdlib/sys/param_env): Implements functions for retrieving compile-time defines.
+- [is_defined](https://docs.modular.com/mojo/stdlib/sys/param_env/is_defined): Return true if the named value is defined.
+- [exit](https://docs.modular.com/mojo/stdlib/sys/terminate/exit): Exits from Mojo. Unlike the Python implementation this does not raise an exception to exit.
+- [terminate](https://docs.modular.com/mojo/stdlib/sys/terminate): This module includes the exit functions.
+- [tempfile](https://docs.modular.com/mojo/stdlib/tempfile): Implements the tempfile package.
+- [NamedTemporaryFile](https://docs.modular.com/mojo/stdlib/tempfile/tempfile/NamedTemporaryFile): A handle to a temporary file.
+- [TemporaryDirectory](https://docs.modular.com/mojo/stdlib/tempfile/tempfile/TemporaryDirectory): A temporary directory.
+- [gettempdir](https://docs.modular.com/mojo/stdlib/tempfile/tempfile/gettempdir): Return the default directory to use for temporary files.
+- [tempfile](https://docs.modular.com/mojo/stdlib/tempfile/tempfile): Implements tempfile methods.
+- [mkdtemp](https://docs.modular.com/mojo/stdlib/tempfile/tempfile/mkdtemp): Create a temporary directory. Caller is responsible for deleting the directory when done with it.
+- [testing](https://docs.modular.com/mojo/stdlib/testing): Implements the testing package.
+- [prop](https://docs.modular.com/mojo/stdlib/testing/prop): A property testing package.
+- [Rng](https://docs.modular.com/mojo/stdlib/testing/prop/random/Rng): A seeded pseudo-random number generator.
+- [random](https://docs.modular.com/mojo/stdlib/testing/prop/random): Mojo module stdlib.testing.prop.random documentation
+- [TestReport](https://docs.modular.com/mojo/stdlib/testing/suite/TestReport): A report for a single unit test.
+- [TestResult](https://docs.modular.com/mojo/stdlib/testing/suite/TestResult): A test result code.
+- [TestSuite](https://docs.modular.com/mojo/stdlib/testing/suite/TestSuite): A suite of tests to run.
+- [TestSuiteReport](https://docs.modular.com/mojo/stdlib/testing/suite/TestSuiteReport): A report for an entire test suite.
+- [suite](https://docs.modular.com/mojo/stdlib/testing/suite): Mojo module stdlib.testing.suite documentation
+- [assert_almost_equal](https://docs.modular.com/mojo/stdlib/testing/testing/assert_almost_equal): Asserts that the input values are equal up to a tolerance. If it is not then an Error is raised.
+- [assert_equal](https://docs.modular.com/mojo/stdlib/testing/testing/assert_equal): Asserts that the input values are equal. If it is not then an Error is raised.
+- [assert_equal_pyobj](https://docs.modular.com/mojo/stdlib/testing/testing/assert_equal_pyobj): Asserts that the `PythonObject`s are equal. If it is not then an Error is raised.
+- [assert_false](https://docs.modular.com/mojo/stdlib/testing/testing/assert_false): Asserts that the input value is False and raises an Error if it's not.
+- [assert_is](https://docs.modular.com/mojo/stdlib/testing/testing/assert_is): Asserts that the input values have the same identity. If they do not then an Error is raised.
+- [assert_is_not](https://docs.modular.com/mojo/stdlib/testing/testing/assert_is_not): Asserts that the input values have different identities. If they do not then an Error is raised.
+- [assert_not_equal](https://docs.modular.com/mojo/stdlib/testing/testing/assert_not_equal): Asserts that the input values are not equal. If it is not then an Error is raised.
+- [assert_raises](https://docs.modular.com/mojo/stdlib/testing/testing/assert_raises): Context manager that asserts that the block raises an exception.
+- [assert_true](https://docs.modular.com/mojo/stdlib/testing/testing/assert_true): Asserts that the input value is True and raises an Error if it's not.
+- [testing](https://docs.modular.com/mojo/stdlib/testing/testing): Implements various testing utils.
+- [time](https://docs.modular.com/mojo/stdlib/time): Implements the time package.
+- [global_perf_counter_ns](https://docs.modular.com/mojo/stdlib/time/time/global_perf_counter_ns): Returns the current value in the global nanosecond resolution timer. This value is common across all SM's. Currently, this is only supported on NVI...
+- [time](https://docs.modular.com/mojo/stdlib/time/time): Implements basic utils for working with time.
+- [monotonic](https://docs.modular.com/mojo/stdlib/time/time/monotonic): Returns the current monotonic time time in nanoseconds. This function queries the current platform's monotonic clock, making it useful for measurin...
+- [perf_counter](https://docs.modular.com/mojo/stdlib/time/time/perf_counter): Return the value (in fractional seconds) of a performance counter, i.e. a clock with the highest available resolution to measure a short duration. ...
+- [perf_counter_ns](https://docs.modular.com/mojo/stdlib/time/time/perf_counter_ns): Return the value (in nanoseconds) of a performance counter, i.e. a clock with the highest available resolution to measure a short duration. It does...
+- [sleep](https://docs.modular.com/mojo/stdlib/time/time/sleep): Suspends the current thread for the seconds specified.
+- [time_function](https://docs.modular.com/mojo/stdlib/time/time/time_function): Measures the time spent in the function.
+- [FastDiv](https://docs.modular.com/mojo/stdlib/utils/fast_div/FastDiv): Implements fast division for a given type.
+- [fast_div](https://docs.modular.com/mojo/stdlib/utils/fast_div): Implements the fast division algorithm.
+- [utils](https://docs.modular.com/mojo/stdlib/utils): Implements the utils package.
+- [Index](https://docs.modular.com/mojo/stdlib/utils/index_/Index-function): Constructs a 1-D Index from the given value.
+- [IndexList](https://docs.modular.com/mojo/stdlib/utils/index_/IndexList): A base struct that implements size agnostic index functions.
+- [index](https://docs.modular.com/mojo/stdlib/utils/index_): Implements `IndexList` which is commonly used to represent N-D indices.
+- [product](https://docs.modular.com/mojo/stdlib/utils/index_/product): Computes a product of values in the tuple up to the given index.
+- [BlockingScopedLock](https://docs.modular.com/mojo/stdlib/utils/lock/BlockingScopedLock): A scope adapter for BlockingSpinLock.
+- [BlockingSpinLock](https://docs.modular.com/mojo/stdlib/utils/lock/BlockingSpinLock): A basic locking implementation that uses an integer to represent the owner of the lock.
+- [SpinWaiter](https://docs.modular.com/mojo/stdlib/utils/lock/SpinWaiter): A proxy for the C++ runtime's SpinWaiter type.
+- [lock](https://docs.modular.com/mojo/stdlib/utils/lock): Mojo module stdlib.utils.lock documentation
+- [FPUtils](https://docs.modular.com/mojo/stdlib/utils/numerics/FPUtils): Collection of utility functions for working with FP values.
+- [FlushDenormals](https://docs.modular.com/mojo/stdlib/utils/numerics/FlushDenormals): Flushes and denormals are set to zero within the context and the state is restored to the prior value on exit.
+- [get_accum_type](https://docs.modular.com/mojo/stdlib/utils/numerics/get_accum_type): Returns the recommended dtype for accumulation operations.
+- [numerics](https://docs.modular.com/mojo/stdlib/utils/numerics): Defines utilities to work with numeric types.
+- [inf](https://docs.modular.com/mojo/stdlib/utils/numerics/inf): Gets a +inf value for the given dtype.
+- [isfinite](https://docs.modular.com/mojo/stdlib/utils/numerics/isfinite): Checks if the value is not infinite.
+- [isinf](https://docs.modular.com/mojo/stdlib/utils/numerics/isinf): Checks if the value is infinite.
+- [isnan](https://docs.modular.com/mojo/stdlib/utils/numerics/isnan): Checks if the value is Not a Number (NaN).
+- [max_finite](https://docs.modular.com/mojo/stdlib/utils/numerics/max_finite): Returns the maximum finite value of type.
+- [max_or_inf](https://docs.modular.com/mojo/stdlib/utils/numerics/max_or_inf): Returns the maximum (potentially infinite) value of type.
+- [min_finite](https://docs.modular.com/mojo/stdlib/utils/numerics/min_finite): Returns the minimum (lowest) finite value of type.
+- [min_or_neg_inf](https://docs.modular.com/mojo/stdlib/utils/numerics/min_or_neg_inf): Returns the minimum (potentially negative infinite) value of type.
+- [nan](https://docs.modular.com/mojo/stdlib/utils/numerics/nan): Gets a NaN value for the given dtype.
+- [neg_inf](https://docs.modular.com/mojo/stdlib/utils/numerics/neg_inf): Gets a -inf value for the given dtype.
+- [nextafter](https://docs.modular.com/mojo/stdlib/utils/numerics/nextafter): Computes next representable value of `arg0` in the direction of `arg1`.
+- [StaticTuple](https://docs.modular.com/mojo/stdlib/utils/static_tuple/StaticTuple): A statically sized tuple type which contains elements of homogeneous types.
+- [static_tuple](https://docs.modular.com/mojo/stdlib/utils/static_tuple): Implements StaticTuple, a statically-sized uniform container.
+- [Variant](https://docs.modular.com/mojo/stdlib/utils/variant/Variant): A union that can hold a runtime-variant value from a set of predefined types.
+- [variant](https://docs.modular.com/mojo/stdlib/utils/variant): Defines a Variant type.
+- [Debugging](https://docs.modular.com/mojo/tools/debugging): Debugging Mojo programs.
+- [GPU debugging](https://docs.modular.com/mojo/tools/gpu-debugging): Debugging Mojo programs on GPU.
+- [Testing](https://docs.modular.com/mojo/tools/testing): Testing Mojo programs.
+- [Mojo vision](https://docs.modular.com/mojo/vision): Our motivations and the design decisions that define the Mojo programming language
+- [Pixi basics](https://docs.modular.com/pixi): import Tabs from '@theme/Tabs';
